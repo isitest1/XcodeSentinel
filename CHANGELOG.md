@@ -6,6 +6,21 @@
 
 ## [Unreleased]
 
+### 追加（M4: スケジューラと通知、公開サイト）
+
+- `WebhookPayloadBuilder`：Webhook ペイロード生成（ntfy / Pushover / Discord / Slack /
+  custom テンプレート）を `SentinelCore` に集約し単体テスト化。送信内容は対象名・状態・
+  時刻のみ。`App/Notifications/WebhookSender` はネットワーク送信だけを担う。
+- `MenuBarStatus`：全対象の `SessionState` を集約してメニューバーアイコンの状態
+  （ok / working / waiting / limited / error）を決める純関数。
+- 公開サイト `docs/site/`（CLAUDE.md 第14章）：素の HTML/CSS/最小 JS、EN/JA 切替、
+  7 ページ（index / getting-started / guide / troubleshooting / privacy / faq / changelog）、
+  i18n を `i18n/*.json` に集約、`sitemap.xml` / `robots.txt` / OGP、ポートフォリオ相互リンク。
+  GitHub Pages へ自動デプロイ（`.github/workflows/pages.yml`、EN/JA パリティ検査付き）。
+  スクリーンショットのみ未撮影。
+- `docs/xcode-handoff.md`：ホストの Mac / Xcode への引き継ぎ手順。
+- 単体テスト 合計 ~126 件。
+
 ### 追加（M3: 再開）
 
 - `ResumeOrchestrator`：検出結果・`SafetyPolicy`・`ResumeScheduler`・`ResetTimeParser`

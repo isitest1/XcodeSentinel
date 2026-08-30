@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "targetName": "DemoKit",
+  "xcodeVersion": "16.0 (provisional sample, not a real dump)",
+  "root": {
+    "role": "AXGroup",
+    "identifier": "claude-panel",
+    "children": [
+      { "role": "AXStaticText", "value": "Response was cut off." },
+      { "role": "AXButton", "title": "Continue generating", "isEnabled": true },
+      { "role": "AXTextArea", "title": "Ask Claude", "value": "" }
+    ]
+  }
+}

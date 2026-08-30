@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "targetName": "SampleApp",
+  "xcodeVersion": "16.0 (provisional sample, not a real dump)",
+  "root": {
+    "role": "AXWindow",
+    "title": "SampleApp — ContentView.swift",
+    "children": [
+      {
+        "role": "AXGroup",
+        "identifier": "editor-area",
+        "children": [
+          { "role": "AXStaticText", "value": "import SwiftUI" },
+          { "role": "AXStaticText", "value": "struct ContentView: View {" }
+        ]
+      },
+      {
+        "role": "AXSplitGroup",
+        "children": [
+          {
+            "role": "AXGroup",
+            "identifier": "inspector-area",
+            "children": [
+              { "role": "AXStaticText", "value": "Attributes inspector" }
+            ]
+          },
+          {
+            "role": "AXScrollArea",
+            "children": [
+              {
+                "role": "AXGroup",
+                "children": [
+                  { "role": "AXStaticText", "value": "You've hit your usage limit. Resets at 2:15 PM." },
+                  { "role": "AXStaticText", "value": "Send a message to Claude" },
+                  { "role": "AXTextArea", "title": "Ask Claude", "value": "" },
+                  { "role": "AXButton", "title": "Send", "isEnabled": false }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

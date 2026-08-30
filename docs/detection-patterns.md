@@ -13,6 +13,11 @@
 ```jsonc
 {
   "version": 1,
+  "panelHints": {                     // 省略可。全ウィンドウの AX ツリーから
+    "identifiers": ["claude-panel"],  // Claude パネルの部分木を先に絞り込む
+    "anchorTexts": ["ask claude"],    // これを含む最小の部分木を候補にする
+    "containerRoles": ["AXGroup"]     // 候補にするコンテナの role（省略可）
+  },
   "patterns": [
     {
       "id": "session-limit",          // 一意。ログや設定画面で参照される
@@ -47,6 +52,31 @@
 
 どのルールにもマッチしない場合は `.unknown` になります。`.unknown` を `.working` と
 誤認させないでください（CLAUDE.md 第 6.2 / 17 章）。
+
+## パネルの絞り込み（`panelHints`）
+
+`DetectionEngine.classify` は、パターン評価の前に `panelHints` を使って
+Claude パネルの部分木を特定します（`locatePanel`）。
+
+1. `identifiers` に一致する `AXIdentifier` を持つノード（先頭から順に、最優先）
+2. `anchorTexts` のいずれかを部分木テキストに含み、`containerRoles`（指定時）に
+   合致する **最小の部分木**
+3. どれも当たらなければツリー全体にフォールバック（検出は失敗しない。走査量が増えるだけ）
+
+結果の `panelLocated` で絞り込めたかどうかが分かります。`identifiers` は実機の
+AX ダンプが取れてから埋めてください（`docs/accessibility-tree.md`）。
+
+## 「Test Detection」向けの near-miss
+
+`classify` の結果には `nearMisses`（惜しかったルール）が入ります。
+
+| 理由 | 意味 |
+|---|---|
+| `wouldMatchIfEnabled` | 文言は一致したが `enabled: false` |
+| `blockedByNoneOf(term)` | 文言は一致したが `noneOf` の `term` も出現した |
+| `blockedByRole` | 文言はツリー内にあるが、指定 `role` のノード上には無い |
+
+設定画面の "Test Detection" はこれを表示して、ユーザーがルールを調整できるようにします。
 
 ## 順序の注意
 

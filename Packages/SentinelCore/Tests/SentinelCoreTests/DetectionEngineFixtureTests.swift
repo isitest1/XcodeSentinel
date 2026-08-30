@@ -27,6 +27,33 @@ final class DetectionEngineFixtureTests: XCTestCase {
         XCTAssertEqual(result.matchedPatternID, "working")
     }
 
+    func testWeeklyLimitedFixtureBeatsSessionLimitRule() throws {
+        let result = try engine().classify(try Fixture.snapshot("weekly-limited"))
+        XCTAssertEqual(result.state, .weeklyLimited(resetAt: nil))
+        XCTAssertEqual(result.matchedPatternID, "weekly-limit")
+    }
+
+    func testAwaitingContinueFixtureNotMisreadAsWorking() throws {
+        // "Continue generating" contains "generating"; the continue rule must
+        // still win because it precedes the working rule.
+        let result = try engine().classify(try Fixture.snapshot("awaiting-continue"))
+        XCTAssertEqual(result.state, .awaitingContinue)
+        XCTAssertEqual(result.matchedPatternID, "awaiting-continue")
+    }
+
+    func testIdleFixture() throws {
+        let result = try engine().classify(try Fixture.snapshot("idle"))
+        XCTAssertEqual(result.state, .idle)
+        XCTAssertEqual(result.matchedPatternID, "idle")
+    }
+
+    func testWholeWindowFixtureIsNarrowedToThePanel() throws {
+        let snapshot = try Fixture.snapshot("whole-window")
+        let result = try engine().classify(snapshot)
+        XCTAssertTrue(result.panelLocated)
+        XCTAssertEqual(result.state, .sessionLimited(resetAt: makeDate(2026, 8, 30, 14, 15)))
+    }
+
     func testAwaitingApprovalFixtureIsNeverAutoResumed() throws {
         let snapshot = try Fixture.snapshot("awaiting-approval")
         let result = try engine().classify(snapshot)
@@ -35,7 +62,11 @@ final class DetectionEngineFixtureTests: XCTestCase {
     }
 
     func testFixturesCarryNoObviousPII() throws {
-        for name in ["session-limited", "working", "awaiting-approval"] {
+        let names = [
+            "session-limited", "working", "awaiting-approval",
+            "weekly-limited", "awaiting-continue", "idle", "whole-window"
+        ]
+        for name in names {
             let raw = try String(data: Fixture.data(name), encoding: .utf8) ?? ""
             XCTAssertFalse(raw.contains("/Users/"), "\(name).json leaks a home path")
             XCTAssertFalse(raw.lowercased().contains(".xcodeproj/users"), "\(name).json leaks user data")

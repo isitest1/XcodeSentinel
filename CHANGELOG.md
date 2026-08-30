@@ -6,6 +6,20 @@
 
 ## [Unreleased]
 
+### 追加（M2: 検出）
+
+- `TargetIdentity` / `WindowDescriptor` / `TargetResolver`：永続化した対象を
+  実行中の Xcode ウィンドウへ再解決（`AXDocument` パス → タイトル内ワークスペース名 →
+  表示名 の優先度、同点は `.ambiguous`）。`WorkspacePath` ヘルパ（拡張子除去、`file://`
+  正規化）。
+- `DetectionEngine` にパネル絞り込み（`PatternSet.panelHints`：`identifiers` /
+  `anchorTexts` / `containerRoles`）。当たらなければツリー全体にフォールバック。
+- `DetectionEngine.Result` に `panelLocated` と `nearMisses`（`wouldMatchIfEnabled` /
+  `blockedByNoneOf` / `blockedByRole`）。設定画面の "Test Detection" 用。
+- AX スナップショットのフィクスチャを追加（weekly-limited / awaiting-continue / idle /
+  whole-window）。単体テストは合計 ~97 件。
+- `App/`：`XcodeWindowEnumerator`、`TargetBinder`、"Test Detection" 結果表示の骨組み。
+
 ### 追加（M1: 土台）
 
 - リポジトリの初期構成と Dev Container 設定。

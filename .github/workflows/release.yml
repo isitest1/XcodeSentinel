@@ -1,16 +1,8 @@
 name: Release
 
-# Builds, signs, notarizes and publishes a DMG when a version tag is pushed
-# (CLAUDE.md sections 1.6 and 11 M5). SKELETON: the signing / notarization /
-# DMG steps need an Xcode project under App/ and repository secrets, and can
-# only run on a macOS runner. Fill the TODOs on the host.
-#
-# Required repository secrets (add under Settings → Secrets and variables):
-#   DEVELOPER_ID_APP_CERT_P12_BASE64   Developer ID Application cert (.p12), base64
-#   DEVELOPER_ID_APP_CERT_PASSWORD     password for the .p12
-#   KEYCHAIN_PASSWORD                  any throwaway string for the temp keychain
-#   AC_API_KEY_ID / AC_API_ISSUER_ID / AC_API_KEY_P8_BASE64
-#                                     App Store Connect API key for notarytool
+# Skeleton. Builds, signs, notarizes and publishes a DMG on a version tag.
+# The signing / notarization / DMG steps need an Xcode project under App/ and
+# repository secrets, and only run on macOS. See docs/xcode-handoff.md.
 
 on:
   push:
@@ -30,26 +22,18 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.app
 
-      - name: Core tests (native)
+      - name: Core tests
         run: swift test --package-path Packages/SentinelCore
 
-      - name: Guard — Xcode project present
+      - name: Guard - Xcode project present
         run: |
           if [ ! -e App/XcodeSentinel.xcodeproj ]; then
-            echo "::error::App/XcodeSentinel.xcodeproj is not present yet (see docs/xcode-handoff.md)."
+            echo "::error::App/XcodeSentinel.xcodeproj is missing (see docs/xcode-handoff.md)."
             exit 1
           fi
 
-      # TODO(host):
-      # - import the Developer ID cert into a temporary keychain
-      # - xcodebuild -project App/XcodeSentinel.xcodeproj -scheme XcodeSentinel \
-      #     -configuration Release -derivedDataPath build archive-like build
-      # - create a DMG containing XcodeSentinel.app (e.g. `hdiutil create`)
-      # - codesign --deep --options runtime the .app, then sign the DMG
-      # - xcrun notarytool submit <dmg> --wait  (App Store Connect API key)
-      # - xcrun stapler staple <dmg>
-      - name: Build / sign / notarize / DMG
-        run: echo "TODO(host): see comments above and docs/xcode-handoff.md section 3 step 9"
+      - name: Build, sign, notarize, DMG
+        run: echo "TODO(host) - see docs/xcode-handoff.md section 3 step 9"
 
       - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
@@ -57,5 +41,4 @@ jobs:
         with:
           draft: true
           generate_release_notes: true
-          files: |
-            dist/*.dmg
+          files: dist/*.dmg

@@ -10,10 +10,12 @@ on:
     branches: [main]
     paths:
       - "App/**"
+      - "Packages/SentinelCore/**"
       - ".github/workflows/app-build.yml"
   pull_request:
     paths:
       - "App/**"
+      - "Packages/SentinelCore/**"
       - ".github/workflows/app-build.yml"
 
 concurrency:

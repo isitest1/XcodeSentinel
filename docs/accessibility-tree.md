@@ -10,9 +10,25 @@
 - [ ] 入力欄の AX role（`AXTextArea` / `AXTextField` など）と、`AXValue` の書き込み可否
 - [ ] 制限到達メッセージが現れる要素の role と文言（`sessionLimited` / `weeklyLimited` の区別）
 - [ ] 送信ボタンが AX 要素として露出しているか、`AXPress` が効くか
+- [ ] `AXDocument` が何を返すか（`file://` URL / パス / 未露出）。`TargetResolver` の高信頼一致に必要
+- [ ] Claude パネル部分木を一意に指す `AXIdentifier` があるか（`Patterns.json` の `panelHints.identifiers` に入れる）
 - [ ] ウィンドウが最小化・非アクティブでも AX ツリーを読めるか
 - [ ] Xcode の Claude 連携に、Claude Code の `/config` 相当の自動継続設定が追加されていないか
       （追加されていれば本プロジェクトの前提が崩れる。着手前に必ず確認）
+
+## ウィンドウの列挙と対象の再解決
+
+- `App/Accessibility/XcodeWindowEnumerator`（macOS）が実行中の Xcode ウィンドウを
+  `WindowDescriptor`（PID / `AXDocument` パス / `AXTitle`）の配列にします。
+- `SentinelCore.TargetResolver`（純ロジック、Linux でテスト可）が、永続化した
+  `TargetIdentity`（`workspacePath` + `displayName`）を次の優先度で live ウィンドウに束ねます。
+  1. `AXDocument` パス一致 → `.high`
+  2. `AXTitle` にワークスペース名を含む → `.medium`
+  3. `AXTitle` に表示名を含む → `.low`
+- 同点が複数なら `.ambiguous`。UI でユーザーに選ばせます（`App/Targets/TargetBinder`）。
+
+`AXDocument` が実際に何を返すか（`file://` URL か、パスか、そもそも露出するか）は
+未検証です。下のチェックリストで確認してください。
 
 ## ダンプの取り方
 

@@ -26,6 +26,7 @@ struct SettingsView: View {
 
 private struct TargetsPane: View {
     let model: AppModel
+    @State private var lastTest: DetectionEngine.Result?
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -34,10 +35,55 @@ private struct TargetsPane: View {
             List(model.targets) { target in
                 Text(target.displayName)
             }
-            Button("Add Target…") {
-                // TODO(host): enumerate running Xcode windows, capture display
-                // name + resume prompt, run Test Detection before saving.
+            HStack {
+                Button("Add Target…") {
+                    // TODO(host): XcodeWindowEnumerator().currentWindows(),
+                    // capture display name + resume prompt, then run Test
+                    // Detection before saving.
+                }
+                Button("Test Detection") {
+                    // TODO(host): AXTreeReader -> snapshot for the selected
+                    // window, then:
+                    //   lastTest = DetectionEngine(patterns: model.patternSet,
+                    //                               clock: SystemClock())
+                    //       .classify(snapshot)
+                }
             }
+            if let lastTest {
+                TestDetectionResult(result: lastTest)
+            }
+        }
+    }
+}
+
+/// Shows what "Test Detection" found: the resolved state, whether the panel was
+/// located, and any rules that nearly matched (CLAUDE.md section 5.3 — this
+/// screen is mandatory).
+private struct TestDetectionResult: View {
+    let result: DetectionEngine.Result
+
+    var body: some View {
+        GroupBox("Result") {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("State: \(result.state.kind)")
+                Text("Panel located: \(result.panelLocated ? "yes" : "no (scanned whole window)")")
+                Text("Text fragments scanned: \(result.scannedTextCount)")
+                if let id = result.matchedPatternID {
+                    Text("Matched rule: \(id)")
+                }
+                if let reset = result.resetParse {
+                    Text("Reset time: \(reset.matchedText) → \(reset.date.formatted())")
+                }
+                if !result.nearMisses.isEmpty {
+                    Divider()
+                    Text("Nearly matched:").font(.caption).foregroundStyle(.secondary)
+                    ForEach(result.nearMisses, id: \.patternID) { miss in
+                        Text("• \(miss.patternID): \(String(describing: miss.reason))")
+                            .font(.caption)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

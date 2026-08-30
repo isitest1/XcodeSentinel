@@ -1,5 +1,11 @@
 {
   "version": 1,
+  "panelHints": {
+    "identifiers": [],
+    "anchorTexts": ["ask claude", "send a message"],
+    "containerRoles": ["AXGroup", "AXScrollArea"],
+    "_note": "Unverified against a real Xcode AX tree (CLAUDE.md 18). Fill identifiers[] from an AX Inspector dump. Unknown keys are ignored by the decoder."
+  },
   "patterns": [
     {
       "id": "weekly-limit",

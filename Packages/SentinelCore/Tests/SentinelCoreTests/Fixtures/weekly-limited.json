@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "targetName": "SampleApp",
+  "xcodeVersion": "16.0 (provisional sample, not a real dump)",
+  "root": {
+    "role": "AXGroup",
+    "identifier": "claude-panel",
+    "children": [
+      { "role": "AXStaticText", "value": "You've reached your weekly limit. Your weekly usage limit resets next week." },
+      { "role": "AXTextArea", "title": "Ask Claude", "value": "" }
+    ]
+  }
+}

@@ -16,6 +16,13 @@ public struct DetectionEngine: Sendable {
         self.clock = clock
     }
 
+    /// A pattern that almost fired — shown by the Settings "Test Detection"
+    /// screen so a user can see why a rule did not match.
+    public struct NearMiss: Sendable, Equatable {
+        public var patternID: String
+        public var reason: DetectionPattern.Evaluation
+    }
+
     /// A classification plus the diagnostic detail the UI and logs need.
     public struct Result: Sendable, Equatable {
         public var state: SessionState
@@ -25,34 +32,93 @@ public struct DetectionEngine: Sendable {
         public var resetParse: ResetTimeParseResult?
         /// Text fragments considered, for the AX Inspector highlight.
         public var scannedTextCount: Int
+        /// Whether panel location narrowed the tree (vs. scanning everything).
+        public var panelLocated: Bool
+        /// Rules that nearly matched.
+        public var nearMisses: [NearMiss]
     }
 
     public func classify(_ snapshot: AXSnapshot) -> Result {
-        let fragments: [TextFragment] = snapshot.root.flattened().flatMap { node -> [TextFragment] in
+        let panel = locatePanel(in: snapshot)
+        let fragments: [TextFragment] = panel.node.flattened().flatMap { node -> [TextFragment] in
             node.texts.map { TextFragment(text: $0, role: node.role) }
         }
 
         guard !fragments.isEmpty else {
-            return Result(state: .unknown, matchedPatternID: nil, resetParse: nil, scannedTextCount: 0)
+            return Result(
+                state: .unknown, matchedPatternID: nil, resetParse: nil,
+                scannedTextCount: 0, panelLocated: panel.located, nearMisses: []
+            )
         }
 
-        for pattern in patterns.patterns where pattern.matches(fragments: fragments) {
-            let state = resolve(outcome: pattern.outcome, pattern: pattern, fragments: fragments)
-            return Result(
-                state: state.0,
-                matchedPatternID: pattern.id,
-                resetParse: state.1,
-                scannedTextCount: fragments.count
-            )
+        var nearMisses: [NearMiss] = []
+        for pattern in patterns.patterns {
+            switch pattern.evaluate(fragments: fragments) {
+            case .matched:
+                let (state, parse) = resolve(outcome: pattern.outcome, pattern: pattern, fragments: fragments)
+                return Result(
+                    state: state,
+                    matchedPatternID: pattern.id,
+                    resetParse: parse,
+                    scannedTextCount: fragments.count,
+                    panelLocated: panel.located,
+                    nearMisses: nearMisses
+                )
+            case .noMatch:
+                continue
+            case let reason:
+                nearMisses.append(NearMiss(patternID: pattern.id, reason: reason))
+            }
         }
 
         return Result(
             state: .unknown,
             matchedPatternID: nil,
             resetParse: nil,
-            scannedTextCount: fragments.count
+            scannedTextCount: fragments.count,
+            panelLocated: panel.located,
+            nearMisses: nearMisses
         )
     }
+
+    // MARK: - Panel location
+
+    /// Narrow a whole-window snapshot to the Claude-panel subtree using
+    /// `patterns.panelHints`. Falls back to the whole root when hints are empty
+    /// or nothing matches — detection then just scans more text, it never fails
+    /// for lack of a panel.
+    public func locatePanel(in snapshot: AXSnapshot) -> (node: AXNode, located: Bool) {
+        let hints = patterns.panelHints
+        guard !hints.isEmpty else { return (snapshot.root, false) }
+
+        let all = snapshot.root.flattened()
+
+        // 1. Exact AXIdentifier match, most specific hint first.
+        for identifier in hints.identifiers {
+            if let hit = all.first(where: { $0.identifier == identifier }) {
+                return (hit, true)
+            }
+        }
+
+        // 2. Smallest subtree that contains an anchor text and has an allowed
+        //    container role (or any role if none configured).
+        if !hints.anchorTexts.isEmpty {
+            let anchors = hints.anchorTexts.map { $0.lowercased() }
+            let candidates = all.filter { node in
+                let roleOK = hints.containerRoles.isEmpty || hints.containerRoles.contains(node.role)
+                guard roleOK else { return false }
+                let text = node.flattened().flatMap(\.texts).joined(separator: "\n").lowercased()
+                return anchors.contains { text.contains($0) }
+            }
+            if let smallest = candidates.min(by: { $0.flattened().count < $1.flattened().count }) {
+                return (smallest, true)
+            }
+        }
+
+        return (snapshot.root, false)
+    }
+
+    // MARK: - Outcome resolution
 
     private func resolve(
         outcome: DetectionOutcome,

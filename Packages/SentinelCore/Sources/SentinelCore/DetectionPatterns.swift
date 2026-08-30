@@ -80,33 +80,70 @@ public struct DetectionPattern: Codable, Equatable, Sendable, Identifiable {
         note = try c.decodeIfPresent(String.self, forKey: .note)
     }
 
-    /// Whether this rule matches the given text fragments. `nil` roles in the
-    /// fragment list are treated as "role unknown" and always pass a role
-    /// constraint check only when the rule has no `role` set.
+    /// Why a rule did or did not fire. `blockedByNoneOf` and `disabled` are
+    /// surfaced as "near misses" by `DetectionEngine` so the Settings
+    /// "Test Detection" screen can explain what almost matched.
+    public enum Evaluation: Sendable, Equatable {
+        case matched
+        /// Positive text was present but a `noneOf` term also appeared.
+        case blockedByNoneOf(String)
+        /// Positive text exists in the tree, but not on a node with `role`.
+        case blockedByRole
+        /// The rule is disabled but its positive text is present.
+        case wouldMatchIfEnabled
+        /// No positive text matched, or the rule has no positive requirement.
+        case noMatch
+    }
+
+    /// Whether this rule matches the given text fragments.
     func matches(fragments: [TextFragment]) -> Bool {
-        guard enabled else { return false }
-        guard !(anyOf.isEmpty && allOf.isEmpty) else { return false }
+        evaluate(fragments: fragments) == .matched
+    }
 
-        let scoped: [String]
-        if let role {
-            scoped = fragments.filter { $0.role == role }.map(\.text)
-        } else {
-            scoped = fragments.map(\.text)
+    /// Full evaluation, including the reasons a near-match was rejected.
+    func evaluate(fragments: [TextFragment]) -> Evaluation {
+        guard !(anyOf.isEmpty && allOf.isEmpty) else { return .noMatch }
+
+        func present(_ needles: [String], in texts: [String]) -> Bool {
+            let hay = texts.map { caseSensitive ? $0 : $0.lowercased() }
+            return needles.contains { needle in
+                let n = caseSensitive ? needle : needle.lowercased()
+                return hay.contains { $0.contains(n) }
+            }
         }
-        guard !scoped.isEmpty else { return false }
-
-        let haystack = scoped
-            .map { caseSensitive ? $0 : $0.lowercased() }
-
-        func present(_ needle: String) -> Bool {
-            let n = caseSensitive ? needle : needle.lowercased()
-            return haystack.contains { $0.contains(n) }
+        func firstPresent(_ needles: [String], in texts: [String]) -> String? {
+            let hay = texts.map { caseSensitive ? $0 : $0.lowercased() }
+            return needles.first { needle in
+                let n = caseSensitive ? needle : needle.lowercased()
+                return hay.contains { $0.contains(n) }
+            }
         }
 
-        if !noneOf.isEmpty, noneOf.contains(where: present) { return false }
-        if !allOf.isEmpty, !allOf.allSatisfy(present) { return false }
-        if !anyOf.isEmpty, !anyOf.contains(where: present) { return false }
-        return true
+        let allTexts = fragments.map(\.text)
+        let scopedTexts: [String] = {
+            guard let role else { return allTexts }
+            return fragments.filter { $0.role == role }.map(\.text)
+        }()
+
+        // Does the positive requirement hold, ignoring role scoping?
+        let anyOfHoldsUnscoped = anyOf.isEmpty || present(anyOf, in: allTexts)
+        let allOfHoldsUnscoped = allOf.isEmpty || allOf.allSatisfy { present([$0], in: allTexts) }
+        let positiveUnscoped = anyOfHoldsUnscoped && allOfHoldsUnscoped
+
+        guard positiveUnscoped else { return .noMatch }
+
+        // Role scoping.
+        if role != nil {
+            let anyScoped = anyOf.isEmpty || present(anyOf, in: scopedTexts)
+            let allScoped = allOf.isEmpty || allOf.allSatisfy { present([$0], in: scopedTexts) }
+            guard anyScoped && allScoped else { return .blockedByRole }
+        }
+
+        if let blocker = firstPresent(noneOf, in: scopedTexts.isEmpty ? allTexts : scopedTexts) {
+            return .blockedByNoneOf(blocker)
+        }
+
+        return enabled ? .matched : .wouldMatchIfEnabled
     }
 }
 
@@ -124,10 +161,26 @@ struct TextFragment: Equatable, Sendable {
 public struct PatternSet: Codable, Equatable, Sendable {
     public var version: Int
     public var patterns: [DetectionPattern]
+    /// Hints for finding the Claude panel subtree inside a whole-window AX
+    /// snapshot, before running the patterns. Optional; when empty the engine
+    /// scans the entire tree.
+    public var panelHints: PanelHints
 
-    public init(version: Int, patterns: [DetectionPattern]) {
+    public init(version: Int, patterns: [DetectionPattern], panelHints: PanelHints = .init()) {
         self.version = version
         self.patterns = patterns
+        self.panelHints = panelHints
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case version, patterns, panelHints
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        version = try c.decode(Int.self, forKey: .version)
+        patterns = try c.decode([DetectionPattern].self, forKey: .patterns)
+        panelHints = try c.decodeIfPresent(PanelHints.self, forKey: .panelHints) ?? .init()
     }
 
     /// Decode a pattern set from JSON (the on-disk and bundled format).
@@ -162,4 +215,42 @@ public struct PatternSet: Codable, Equatable, Sendable {
 
 public enum PatternSetError: Error, Equatable {
     case bundledResourceMissing
+}
+
+/// Heuristics for locating the Claude panel within a full Xcode-window AX tree.
+/// All fields are optional and unverified against a real tree (CLAUDE.md
+/// section 18) — they are tuned once an AX dump exists.
+public struct PanelHints: Codable, Equatable, Sendable {
+    /// `AXIdentifier` values that mark the panel container, most specific first.
+    public var identifiers: [String]
+    /// Substrings that, if present in a subtree's text, strongly suggest it is
+    /// the panel (e.g. the composer placeholder).
+    public var anchorTexts: [String]
+    /// Roles a panel container is likely to have.
+    public var containerRoles: [String]
+
+    public init(
+        identifiers: [String] = [],
+        anchorTexts: [String] = [],
+        containerRoles: [String] = []
+    ) {
+        self.identifiers = identifiers
+        self.anchorTexts = anchorTexts
+        self.containerRoles = containerRoles
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case identifiers, anchorTexts, containerRoles
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        identifiers = try c.decodeIfPresent([String].self, forKey: .identifiers) ?? []
+        anchorTexts = try c.decodeIfPresent([String].self, forKey: .anchorTexts) ?? []
+        containerRoles = try c.decodeIfPresent([String].self, forKey: .containerRoles) ?? []
+    }
+
+    public var isEmpty: Bool {
+        identifiers.isEmpty && anchorTexts.isEmpty && containerRoles.isEmpty
+    }
 }

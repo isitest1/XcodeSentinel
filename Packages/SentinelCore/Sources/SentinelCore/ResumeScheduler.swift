@@ -52,12 +52,27 @@ public struct QueuedResume: Sendable, Equatable {
     public var stalledAt: Date
     /// When it entered the queue.
     public var enqueuedAt: Date
+    /// Earliest instant this entry may start. Used for limit states: a session
+    /// or weekly limit is queued immediately for ordering, but must not be
+    /// dispatched before its reset time.
+    public var notBefore: Date?
 
-    public init(targetID: UUID, priority: Int, stalledAt: Date, enqueuedAt: Date) {
+    public init(
+        targetID: UUID,
+        priority: Int,
+        stalledAt: Date,
+        enqueuedAt: Date,
+        notBefore: Date? = nil
+    ) {
         self.targetID = targetID
         self.priority = priority
         self.stalledAt = stalledAt
         self.enqueuedAt = enqueuedAt
+        self.notBefore = notBefore
+    }
+
+    func isReady(at now: Date) -> Bool {
+        (notBefore ?? .distantPast) <= now
     }
 }
 
@@ -73,6 +88,9 @@ public enum ResumeDispatch: Sendable, Equatable {
     case waitSpacing(until: Date)
     /// Inside quiet hours: only notify until this instant.
     case waitQuietHours(until: Date)
+    /// Every queued entry is still holding on its `notBefore` (e.g. limit reset
+    /// times). Nothing to do before this instant.
+    case waitUntilReady(until: Date)
 }
 
 /// The queue and pacing gate for automatic resumes. This is the ONLY component
@@ -132,7 +150,14 @@ public struct ResumeScheduler: Sendable {
     /// Ask what to do now. Does not mutate state; call `markStarted` if it
     /// returns `.start`.
     public func nextDispatch(now: Date, calendar: Calendar) -> ResumeDispatch {
-        guard let head = queue.first else { return .empty }
+        guard !queue.isEmpty else { return .empty }
+
+        // The queue is priority-sorted; the first entry past its `notBefore` is
+        // the one to run. If none are ready, report the soonest hold time.
+        guard let head = queue.first(where: { $0.isReady(at: now) }) else {
+            let soonest = queue.compactMap(\.notBefore).min() ?? now
+            return .waitUntilReady(until: soonest)
+        }
 
         if let quiet = configuration.quietHours, quiet.contains(now, calendar: calendar) {
             return .waitQuietHours(until: quiet.end(after: now, calendar: calendar))

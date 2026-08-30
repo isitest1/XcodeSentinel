@@ -6,6 +6,24 @@
 
 ## [Unreleased]
 
+### 追加（M3: 再開）
+
+- `ResumeOrchestrator`：検出結果・`SafetyPolicy`・`ResumeScheduler`・`ResetTimeParser`
+  を 1 本の判定パイプラインに結線。`ingest`（検出サイクル）→ `pump`（キュー処理）→
+  `recordSendOutcome`（送信結果の反映）の 3 メソッドで、副作用を持たない
+  `OrchestratorEffect`（notify / performResume / recheck / pauseMonitoring …）を返す。
+  - `awaitingApproval` / `awaitingUserAnswer` / `errored` は通知のみ、キューに入れない
+  - `unknown` 3 連続で監視を一時停止し通知（`resumeMonitoring` で再開）
+  - `sessionLimited` / `weeklyLimited` は即キュー投入するが、リセット時刻（+60s、または
+    セッション +5h5m / 週次 +6h フォールバック）まで `notBefore` で発火を保留
+  - 同一停止に対する 3 回目の再開は拒否して通知（`SafetyPolicy` のリトライ上限）
+  - Dry-run では `performResume(dryRun: true)` を返し、実送信しない
+- `ResumeScheduler`：`QueuedResume.notBefore` と `.waitUntilReady(until:)` を追加。
+  保留中の高優先度エントリがあっても、準備できた低優先度エントリは実行する。
+- `App/`：`ResumeCoordinator`（オーケストレータの effect ループを実行し、ホストの
+  `ResumeController` を呼ぶ骨組み）。
+- 単体テスト 合計 ~113 件。
+
 ### 追加（M2: 検出）
 
 - `TargetIdentity` / `WindowDescriptor` / `TargetResolver`：永続化した対象を

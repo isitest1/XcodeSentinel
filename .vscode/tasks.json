@@ -1,0 +1,51 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Core: build",
+      "type": "shell",
+      "command": "swift build --package-path Packages/SentinelCore",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$swiftc"],
+      "detail": "Builds the macOS-independent logic package. Runs in the dev container."
+    },
+    {
+      "label": "Core: test",
+      "type": "shell",
+      "command": "swift test --package-path Packages/SentinelCore",
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": ["$swiftc"],
+      "detail": "Runs the unit tests for state detection, reset-time parsing and the resume scheduler."
+    },
+    {
+      "label": "Core: test (watch)",
+      "type": "shell",
+      "command": "while inotifywait -r -e modify,create,delete Packages/SentinelCore/Sources Packages/SentinelCore/Tests; do swift test --package-path Packages/SentinelCore; done",
+      "isBackground": true,
+      "problemMatcher": [],
+      "detail": "Re-runs the core tests on every change. Requires inotify-tools."
+    },
+    {
+      "label": "Site: serve",
+      "type": "shell",
+      "command": "http-server docs/site -p 8080 -c-1",
+      "isBackground": true,
+      "problemMatcher": [],
+      "detail": "Serves docs/site on port 8080 for local preview of the GitHub Pages site."
+    },
+    {
+      "label": "Site: check bilingual parity",
+      "type": "shell",
+      "command": "diff <(cd docs/site/en && find . -name '*.html' | sort) <(cd docs/site/ja && find . -name '*.html' | sort) && echo 'EN and JA page sets match.'",
+      "problemMatcher": [],
+      "detail": "Fails if the English and Japanese page sets have drifted apart."
+    },
+    {
+      "label": "App: build (host macOS only)",
+      "type": "shell",
+      "command": "echo 'App/ cannot be built inside the dev container. Run this on the host Mac: xcodebuild -scheme XcodeSentinel -configuration Debug build'",
+      "problemMatcher": [],
+      "detail": "Reminder task. The macOS app requires Xcode on the host."
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "patterns": [
+    {
+      "id": "weekly-limit",
+      "outcome": "weeklyLimited",
+      "anyOf": [
+        "weekly limit",
+        "weekly usage limit",
+        "limit resets next week",
+        "out of weekly usage"
+      ],
+      "noneOf": ["5-hour", "5 hour"],
+      "enabled": true,
+      "note": "Must precede session-limit: a weekly message also contains the word 'limit'. Wording unverified against Xcode; edit in Settings after inspecting a real AX dump."
+    },
+    {
+      "id": "session-limit",
+      "outcome": "sessionLimited",
+      "anyOf": [
+        "usage limit reached",
+        "you've hit your usage limit",
+        "message limit reached",
+        "limit resets",
+        "resets at",
+        "try again after"
+      ],
+      "noneOf": ["weekly"],
+      "enabled": true,
+      "note": "The rolling 5-hour limit. ResetTimeParser runs over the matching text to extract the reset time."
+    },
+    {
+      "id": "awaiting-approval",
+      "outcome": "awaitingApproval",
+      "anyOf": [
+        "allow this action",
+        "approve",
+        "permission to run",
+        "wants to run",
+        "do you want to proceed",
+        "grant access"
+      ],
+      "enabled": true,
+      "note": "Notify-only. Never auto-answered (CLAUDE.md 7.2)."
+    },
+    {
+      "id": "awaiting-user-answer",
+      "outcome": "awaitingUserAnswer",
+      "anyOf": [
+        "waiting for your response",
+        "which option",
+        "please choose",
+        "how would you like to proceed",
+        "?"
+      ],
+      "role": "AXStaticText",
+      "enabled": false,
+      "note": "Disabled by default: a bare '?' is too broad. Enable and tighten once real panel text is known."
+    },
+    {
+      "id": "awaiting-continue",
+      "outcome": "awaitingContinue",
+      "anyOf": ["continue generating", "output truncated", "response was cut off", "click continue"],
+      "enabled": true
+    },
+    {
+      "id": "errored",
+      "outcome": "errored",
+      "anyOf": [
+        "an error occurred",
+        "something went wrong",
+        "request failed",
+        "connection error",
+        "failed to complete"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "working",
+      "outcome": "working",
+      "anyOf": ["generating", "running", "thinking", "working", "esc to interrupt", "stop generating"],
+      "enabled": true
+    },
+    {
+      "id": "completed",
+      "outcome": "completed",
+      "anyOf": ["done", "finished", "completed", "changes applied"],
+      "enabled": false,
+      "note": "Disabled by default: too easily confused with chat content. Enable once a reliable completion marker is identified."
+    },
+    {
+      "id": "idle",
+      "outcome": "idle",
+      "anyOf": ["ask claude", "send a message", "type a message", "how can i help"],
+      "enabled": true,
+      "note": "Empty composer placeholder text — the panel is open but no task is running."
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "name": "XcodeSentinel (SentinelCore + docs site)",
+
+  // Linux container. It can build and test Packages/SentinelCore and serve
+  // docs/site. It CANNOT build App/ (AppKit, SwiftUI, ApplicationServices and
+  // xcodebuild are macOS-only). Build App/ on the host Mac.
+  "image": "swift:6.0-noble",
+
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "username": "vscode",
+      "upgradePackages": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+
+  "workspaceFolder": "/workspaces/XcodeSentinel",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "swiftlang.swift-vscode",
+        "anthropic.claude-code",
+        "vknabel.vscode-swiftformat",
+        "esbenp.prettier-vscode",
+        "ritwickdey.liveserver",
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint",
+        "streetsidesoftware.code-spell-checker",
+        "eamodio.gitlens",
+        "redhat.vscode-yaml",
+        "editorconfig.editorconfig"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.insertFinalNewline": true,
+        "files.trimTrailingWhitespace": true,
+        "files.eol": "\n",
+
+        // App/ cannot compile on Linux. Keep SourceKit-LSP focused on the
+        // package that actually builds here, otherwise the editor is a sea of
+        // false errors.
+        "swift.disableAutoResolve": false,
+        "swift.searchSubfoldersForPackages": false,
+        "swift.buildArguments": [
+          "--package-path",
+          "Packages/SentinelCore"
+        ],
+
+        "files.watcherExclude": {
+          "**/.build/**": true,
+          "**/DerivedData/**": true
+        },
+        "search.exclude": {
+          "**/.build": true,
+          "**/DerivedData": true
+        },
+
+        "[swift]": {
+          "editor.defaultFormatter": "vknabel.vscode-swiftformat",
+          "editor.tabSize": 4
+        },
+        "[html]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.tabSize": 2
+        },
+        "[css]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.tabSize": 2
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.tabSize": 2
+        },
+        "[markdown]": {
+          "editor.wordWrap": "on",
+          "files.trimTrailingWhitespace": false
+        },
+
+        "cSpell.words": [
+          "AXUIElement",
+          "AXValue",
+          "devcontainer",
+          "notarization",
+          "Sentinel",
+          "swiftformat",
+          "xcodebuild"
+        ],
+
+        "liveServer.settings.port": 8080,
+        "liveServer.settings.root": "/docs/site",
+        "liveServer.settings.donotShowInfoMsg": true
+      }
+    }
+  },
+
+  // 8080: docs/site preview.
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "docs site preview",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // Persist the Swift build cache and the Claude Code config across rebuilds.
+  "mounts": [
+    "source=xcodesentinel-swift-build,target=${containerWorkspaceFolder}/Packages/SentinelCore/.build,type=volume",
+    "source=xcodesentinel-claude,target=/home/vscode/.claude,type=volume"
+  ],
+
+  "onCreateCommand": "sudo chown -R vscode:vscode ${containerWorkspaceFolder}/Packages/SentinelCore/.build /home/vscode/.claude || true",
+
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+
+  "postAttachCommand": {
+    "note": "echo 'Reminder: App/ builds on the host Mac only. Use `swift test --package-path Packages/SentinelCore` here.'"
+  },
+
+  "remoteEnv": {
+    "SENTINEL_ENV": "devcontainer"
+  }
+}

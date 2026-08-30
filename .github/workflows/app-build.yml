@@ -1,0 +1,49 @@
+name: App build
+
+# The macOS app (App/) can only be built on a macOS runner with Xcode
+# (CLAUDE.md sections 4.1 and 15). This workflow is a placeholder gate until the
+# Xcode project is added under App/; it fails loudly rather than silently
+# passing so the gap stays visible.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "App/**"
+      - ".github/workflows/app-build.yml"
+  pull_request:
+    paths:
+      - "App/**"
+      - ".github/workflows/app-build.yml"
+
+concurrency:
+  group: app-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: xcodebuild (macOS)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.app
+
+      - name: Build SentinelCore (SPM, sanity check on macOS too)
+        run: swift build --package-path Packages/SentinelCore
+
+      - name: Build the app
+        run: |
+          if [ ! -e App/XcodeSentinel.xcodeproj ] && [ ! -e App/XcodeSentinel.xcworkspace ]; then
+            echo "::error::App/XcodeSentinel.xcodeproj is not present yet."
+            echo "Add the Xcode project under App/ (see App/README.md), then this job will build it."
+            exit 1
+          fi
+          xcodebuild \
+            -project App/XcodeSentinel.xcodeproj \
+            -scheme XcodeSentinel \
+            -configuration Debug \
+            -destination 'platform=macOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            build

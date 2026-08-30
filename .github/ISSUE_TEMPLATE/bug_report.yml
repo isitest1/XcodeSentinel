@@ -1,0 +1,57 @@
+name: バグ報告
+description: 不具合を報告する
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        検出が正しく動かない場合は、アプリの **Debug → AX Inspector** で対象ウィンドウの
+        ツリーを JSON エクスポートし、添付してください。
+        **実在のプロジェクト名・ファイルパス・個人情報が含まれていないこと**を確認してください。
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 何が起きたか
+      description: 期待した挙動と実際の挙動
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 再現手順
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    attributes:
+      label: XcodeSentinel のバージョン
+    validations:
+      required: true
+  - type: input
+    id: macos-version
+    attributes:
+      label: macOS のバージョン
+    validations:
+      required: true
+  - type: input
+    id: xcode-version
+    attributes:
+      label: Xcode のバージョン
+    validations:
+      required: true
+  - type: textarea
+    id: ax-dump
+    attributes:
+      label: AX Inspector のエクスポート（該当する場合）
+      description: JSON を貼り付けるか、ファイルを添付してください
+      render: json
+  - type: textarea
+    id: logs
+    attributes:
+      label: 関連するログ
+      description: チャット本文が含まれないことを確認してください
+      render: text

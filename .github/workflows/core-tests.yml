@@ -1,0 +1,36 @@
+name: Core tests
+
+# SentinelCore is macOS-independent and must always build and test on Linux
+# (CLAUDE.md sections 4.1 and 15.2). This workflow is the gate for that.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Packages/SentinelCore/**"
+      - ".github/workflows/core-tests.yml"
+  pull_request:
+    paths:
+      - "Packages/SentinelCore/**"
+      - ".github/workflows/core-tests.yml"
+
+concurrency:
+  group: core-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: swift test (Linux)
+    runs-on: ubuntu-latest
+    container: swift:6.0-noble
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve dependencies
+        run: swift package --package-path Packages/SentinelCore resolve
+
+      - name: Build
+        run: swift build --package-path Packages/SentinelCore
+
+      - name: Test
+        run: swift test --package-path Packages/SentinelCore --parallel

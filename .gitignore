@@ -1,0 +1,26 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Xcode
+DerivedData/
+*.xcuserstate
+*.xcscmblueprint
+xcuserdata/
+build/
+
+# macOS
+.DS_Store
+
+# Editors
+*.swp
+.vscode/*.log
+
+# Distribution artifacts (signed DMGs are attached to GitHub Releases, not committed)
+dist/
+*.dmg
+*.zip
+
+# Node (only used transiently for the docs site preview server)
+node_modules/

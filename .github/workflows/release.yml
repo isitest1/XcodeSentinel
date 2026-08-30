@@ -1,0 +1,44 @@
+name: Release
+
+# Skeleton. Builds, signs, notarizes and publishes a DMG on a version tag.
+# The signing / notarization / DMG steps need an Xcode project under App/ and
+# repository secrets, and only run on macOS. See docs/xcode-handoff.md.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.app
+
+      - name: Core tests
+        run: swift test --package-path Packages/SentinelCore
+
+      - name: Guard - Xcode project present
+        run: |
+          if [ ! -e App/XcodeSentinel.xcodeproj ]; then
+            echo "::error::App/XcodeSentinel.xcodeproj is missing (see docs/xcode-handoff.md)."
+            exit 1
+          fi
+
+      - name: Build, sign, notarize, DMG
+        run: echo "TODO(host) - see docs/xcode-handoff.md section 3 step 9"
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: dist/*.dmg

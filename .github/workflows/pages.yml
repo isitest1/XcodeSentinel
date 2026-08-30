@@ -1,0 +1,62 @@
+name: Deploy site
+
+# Publishes docs/site/ to GitHub Pages. This is an upload-and-deploy only —
+# there is no static site generator and no build step for the site content
+# itself (CLAUDE.md 14.1).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/site/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: bilingual parity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: EN and JA page sets must match
+        run: |
+          diff \
+            <(cd docs/site/en && find . -name '*.html' | sort) \
+            <(cd docs/site/ja && find . -name '*.html' | sort)
+      - name: i18n key parity
+        run: |
+          node -e '
+            const fs=require("fs");
+            const load=p=>JSON.parse(fs.readFileSync(p,"utf8"));
+            const keys=(o,p="")=>Object.entries(o).flatMap(([k,v])=>
+              v&&typeof v==="object"&&!Array.isArray(v)?keys(v,p+k+"."):[p+k]);
+            const en=keys(load("docs/site/i18n/en.json")).sort();
+            const ja=keys(load("docs/site/i18n/ja.json")).sort();
+            const a=en.filter(k=>!ja.includes(k)), b=ja.filter(k=>!en.includes(k));
+            if(a.length||b.length){console.error("mismatch",{missingInJa:a,missingInEn:b});process.exit(1);}
+            console.log("i18n keys match:",en.length);
+          '
+
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/site
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XcodeSentinel</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://isitest1.github.io/XcodeSentinel/en/" />
+    <script>
+      (function () {
+        "use strict";
+        var lang = "en";
+        try {
+          var saved = localStorage.getItem("xcs-lang");
+          if (saved === "ja" || saved === "en") lang = saved;
+          else if ((navigator.language || "").toLowerCase().indexOf("ja") === 0) lang = "ja";
+        } catch (e) {
+          if ((navigator.language || "").toLowerCase().indexOf("ja") === 0) lang = "ja";
+        }
+        location.replace(lang + "/");
+      })();
+    </script>
+  </head>
+  <body>
+    <p>
+      Redirecting… If nothing happens, choose
+      <a href="en/">English</a> or <a href="ja/">日本語</a>.
+    </p>
+  </body>
+</html>

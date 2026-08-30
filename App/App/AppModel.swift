@@ -19,17 +19,11 @@ final class AppModel {
 
     private let clock: any SentinelClock = SystemClock()
 
-    /// Overall status for the menu-bar glyph.
-    var menuBarSymbolName: String {
-        let states = statesByTarget.values
-        if states.contains(where: { if case .errored = $0 { return true } else { return false } }) {
-            return "exclamationmark.triangle.fill"
-        }
-        if states.contains(where: { $0.resetAt != nil }) { return "hourglass" }
-        if states.contains(.working) { return "gearshape.2.fill" }
-        if states.contains(where: \.isStall) { return "pause.circle.fill" }
-        return "checkmark.circle"
+    /// Overall status for the menu-bar glyph, aggregated in SentinelCore.
+    var menuBarStatus: MenuBarStatus {
+        MenuBarStatus.aggregate(Array(statesByTarget.values))
     }
+    var menuBarSymbolName: String { menuBarStatus.symbolName }
 
     // TODO(host): implement
     //  - loadTargets()/saveTargets() via TargetStore

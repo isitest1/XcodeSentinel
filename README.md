@@ -98,9 +98,15 @@ docs/site/               公開サイト（GitHub Pages、英語 / 日本語）
 
 App Store で配布しない以上、公開サイトが唯一の入口です。配布・使い方・プライバシー説明はすべてサイトが担います。
 
-- サイト: （公開後にリンクを記載）
+- サイト: https://isitest1.github.io/XcodeSentinel/ （`docs/site/`、GitHub Pages）
 - 作者の他のプロジェクト: https://isitest1.github.io/portfolio-hub/ja
 
-## 11. ライセンス
+## 11. ホストの Mac への引き継ぎ
+
+Dev Container で作れる範囲（`SentinelCore` の全ロジックと公開サイト）は実装・テスト済みです。
+`App/`（SwiftUI/AppKit/AX）は骨組みで、ここから先はホストの macOS + Xcode で続けます。
+手順と Xcode の Claude への渡し方は [`docs/xcode-handoff.md`](docs/xcode-handoff.md) にあります。
+
+## 12. ライセンス
 
 MIT License（[`LICENSE`](LICENSE)）。

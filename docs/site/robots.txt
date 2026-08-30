@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://isitest1.github.io/XcodeSentinel/sitemap.xml

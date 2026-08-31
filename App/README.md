@@ -28,21 +28,61 @@
 
 ## Xcode プロジェクトの追加（初回のみ、ホストで作業）
 
-1. ホストの macOS で本リポジトリを開く。
-2. Xcode で新規 **macOS App** を作成し、保存先をこの `App/` にする。
-   - Product Name: `XcodeSentinel`
-   - Interface: SwiftUI / Language: Swift
-   - 生成物: `App/XcodeSentinel.xcodeproj`
-3. ターゲット設定:
-   - `Info.plist` に `LSUIElement = YES`（Dock アイコンなし、メニューバー常駐）。
-   - Deployment Target: macOS 15。
-   - Swift Language Version: Swift 6、Strict Concurrency Checking: Complete。
-   - App Sandbox: **無効**（Accessibility API で他アプリを操作するため。CLAUDE.md 第 1.6 章）。
-   - "Hardened Runtime" は有効（Developer ID 配布・notarization のため）。
-4. ローカル Swift Package として `Packages/SentinelCore` を追加し、アプリターゲットにリンクする。
-5. この `App/` 配下の既存 `.swift` スケルトンをプロジェクトに取り込む。
-6. `xcodebuild -project App/XcodeSentinel.xcodeproj -scheme XcodeSentinel -configuration Debug build`
-   が通ることを確認する。以降、`app-build` ワークフローが CI で同じビルドを行う。
+### 1. テンプレートを選ぶ
+
+File → New → Project → **macOS** タブ → **App**。
+
+| 項目 | 値 |
+|---|---|
+| Product Name | `XcodeSentinel` |
+| Team | Developer ID チーム |
+| Organization Identifier | 例 `io.github.isitest1`（bundle id は `io.github.isitest1.XcodeSentinel`） |
+| Interface | **SwiftUI** |
+| Language | **Swift** |
+| Storage | **None**（SwiftData / Core Data は使わない。永続化は `TargetStore` の JSON） |
+| Testing System | **None**（単体テストは `Packages/SentinelCore` 側に集約） |
+| Host in CloudKit | オフ |
+
+### 2. `App/` 直下へ配置する
+
+Xcode は `XcodeSentinel/XcodeSentinel.xcodeproj` という**ラッパーフォルダ付き**で
+生成します。CI（`-project App/XcodeSentinel.xcodeproj`）とリポジトリ規約は
+`App/XcodeSentinel.xcodeproj` を前提にしているので:
+
+1. いったん作業用の場所（デスクトップなど）に作成する。
+2. `XcodeSentinel.xcodeproj` と、生成された `XcodeSentinel/` フォルダ
+   （`Assets.xcassets` と `XcodeSentinel.entitlements` が入っている）を、
+   本リポジトリの `App/` 直下へ移動する。
+3. テンプレートの `ContentView.swift` と `XcodeSentinel/XcodeSentinelApp.swift` は
+   **削除**する（`App/App/XcodeSentinelApp.swift` が置き換え。同名なので削除必須）。
+4. Xcode で赤くなったファイル参照を外し、Add Files で既存フォルダを
+   ターゲット `XcodeSentinel` に追加する:
+   `App/App`, `App/Accessibility`, `App/Automation`, `App/Notifications`,
+   `App/Settings`, `App/Targets`, `App/Logging`, `App/Debug`。
+
+### 3. ローカルパッケージをリンク
+
+File → Add Package Dependencies → **Add Local** → `Packages/SentinelCore` を選び、
+`SentinelCore` ライブラリをアプリターゲットに追加する。
+
+### 4. ビルド設定
+
+- Deployment Target: **macOS 15**。
+- Swift Language Version: **6**、Strict Concurrency Checking: **Complete**。
+- App Sandbox: **無効**（Accessibility API で他アプリを操作するため。CLAUDE.md 第 1.6 章）。
+- Hardened Runtime: **有効**（Developer ID 配布・notarization のため）。
+- `INFOPLIST_KEY_LSUIElement = YES`（Dock アイコンなし、メニューバー常駐。
+  Xcode 16 は Info.plist を生成しないためビルド設定で指定する。UI では
+  "Application is agent (UIElement)" = YES）。
+- Accessibility の使用目的: `NSAccessibilityUsageDescription` を設定（`INFOPLIST_KEY_` でも可）。
+
+### 5. 確認
+
+```sh
+xcodebuild -project App/XcodeSentinel.xcodeproj -scheme XcodeSentinel -configuration Debug build
+```
+
+が通れば、CI の `app-build` ワークフローも同じビルドで緑になる。
 
 ## 実装前に必ず確認すること（CLAUDE.md 第 18 章）
 

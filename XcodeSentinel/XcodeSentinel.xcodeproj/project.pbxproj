@@ -1,0 +1,629 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		99D7CBE03046400E002BF7A8 /* SentinelCore in Frameworks */ = {isa = PBXBuildFile; productRef = 99D7CBDF3046400E002BF7A8 /* SentinelCore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		99D7CB993045873E002BF7A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99D7CB833045873D002BF7A8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99D7CB8A3045873D002BF7A8;
+			remoteInfo = XcodeSentinel;
+		};
+		99D7CBA33045873E002BF7A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99D7CB833045873D002BF7A8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99D7CB8A3045873D002BF7A8;
+			remoteInfo = XcodeSentinel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		99D7CB8B3045873D002BF7A8 /* XcodeSentinel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XcodeSentinel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		99D7CB983045873E002BF7A8 /* XcodeSentinelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodeSentinelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99D7CBA23045873E002BF7A8 /* XcodeSentinelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodeSentinelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		99D7CBDC3045A78E002BF7A8 /* Exceptions for "XcodeSentinel" folder in "XcodeSentinel" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 99D7CB8A3045873D002BF7A8 /* XcodeSentinel */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		99D7CB8D3045873D002BF7A8 /* XcodeSentinel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				99D7CBDC3045A78E002BF7A8 /* Exceptions for "XcodeSentinel" folder in "XcodeSentinel" target */,
+			);
+			path = XcodeSentinel;
+			sourceTree = "<group>";
+		};
+		99D7CB9B3045873E002BF7A8 /* XcodeSentinelTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = XcodeSentinelTests;
+			sourceTree = "<group>";
+		};
+		99D7CBA53045873E002BF7A8 /* XcodeSentinelUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = XcodeSentinelUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		99D7CB883045873D002BF7A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99D7CBE03046400E002BF7A8 /* SentinelCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D7CB953045873E002BF7A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D7CB9F3045873E002BF7A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		99D7CB823045873D002BF7A8 = {
+			isa = PBXGroup;
+			children = (
+				99D7CB8D3045873D002BF7A8 /* XcodeSentinel */,
+				99D7CB9B3045873E002BF7A8 /* XcodeSentinelTests */,
+				99D7CBA53045873E002BF7A8 /* XcodeSentinelUITests */,
+				99D7CBDE3046400E002BF7A8 /* Frameworks */,
+				99D7CB8C3045873D002BF7A8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		99D7CB8C3045873D002BF7A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99D7CB8B3045873D002BF7A8 /* XcodeSentinel.app */,
+				99D7CB983045873E002BF7A8 /* XcodeSentinelTests.xctest */,
+				99D7CBA23045873E002BF7A8 /* XcodeSentinelUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99D7CBDE3046400E002BF7A8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		99D7CB8A3045873D002BF7A8 /* XcodeSentinel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99D7CBAC3045873E002BF7A8 /* Build configuration list for PBXNativeTarget "XcodeSentinel" */;
+			buildPhases = (
+				99D7CB873045873D002BF7A8 /* Sources */,
+				99D7CB883045873D002BF7A8 /* Frameworks */,
+				99D7CB893045873D002BF7A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				99D7CB8D3045873D002BF7A8 /* XcodeSentinel */,
+			);
+			name = XcodeSentinel;
+			packageProductDependencies = (
+				99D7CBDF3046400E002BF7A8 /* SentinelCore */,
+			);
+			productName = XcodeSentinel;
+			productReference = 99D7CB8B3045873D002BF7A8 /* XcodeSentinel.app */;
+			productType = "com.apple.product-type.application";
+		};
+		99D7CB973045873E002BF7A8 /* XcodeSentinelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99D7CBAF3045873E002BF7A8 /* Build configuration list for PBXNativeTarget "XcodeSentinelTests" */;
+			buildPhases = (
+				99D7CB943045873E002BF7A8 /* Sources */,
+				99D7CB953045873E002BF7A8 /* Frameworks */,
+				99D7CB963045873E002BF7A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				99D7CB9A3045873E002BF7A8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				99D7CB9B3045873E002BF7A8 /* XcodeSentinelTests */,
+			);
+			name = XcodeSentinelTests;
+			packageProductDependencies = (
+			);
+			productName = XcodeSentinelTests;
+			productReference = 99D7CB983045873E002BF7A8 /* XcodeSentinelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		99D7CBA13045873E002BF7A8 /* XcodeSentinelUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99D7CBB23045873E002BF7A8 /* Build configuration list for PBXNativeTarget "XcodeSentinelUITests" */;
+			buildPhases = (
+				99D7CB9E3045873E002BF7A8 /* Sources */,
+				99D7CB9F3045873E002BF7A8 /* Frameworks */,
+				99D7CBA03045873E002BF7A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				99D7CBA43045873E002BF7A8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				99D7CBA53045873E002BF7A8 /* XcodeSentinelUITests */,
+			);
+			name = XcodeSentinelUITests;
+			packageProductDependencies = (
+			);
+			productName = XcodeSentinelUITests;
+			productReference = 99D7CBA23045873E002BF7A8 /* XcodeSentinelUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		99D7CB833045873D002BF7A8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					99D7CB8A3045873D002BF7A8 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					99D7CB973045873E002BF7A8 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 99D7CB8A3045873D002BF7A8;
+					};
+					99D7CBA13045873E002BF7A8 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 99D7CB8A3045873D002BF7A8;
+					};
+				};
+			};
+			buildConfigurationList = 99D7CB863045873D002BF7A8 /* Build configuration list for PBXProject "XcodeSentinel" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 99D7CB823045873D002BF7A8;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				99D7CBDD3045A855002BF7A8 /* XCLocalSwiftPackageReference "../Packages/SentinelCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 99D7CB8C3045873D002BF7A8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				99D7CB8A3045873D002BF7A8 /* XcodeSentinel */,
+				99D7CB973045873E002BF7A8 /* XcodeSentinelTests */,
+				99D7CBA13045873E002BF7A8 /* XcodeSentinelUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		99D7CB893045873D002BF7A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D7CB963045873E002BF7A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D7CBA03045873E002BF7A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		99D7CB873045873D002BF7A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D7CB943045873E002BF7A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D7CB9E3045873E002BF7A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		99D7CB9A3045873E002BF7A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99D7CB8A3045873D002BF7A8 /* XcodeSentinel */;
+			targetProxy = 99D7CB993045873E002BF7A8 /* PBXContainerItemProxy */;
+		};
+		99D7CBA43045873E002BF7A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99D7CB8A3045873D002BF7A8 /* XcodeSentinel */;
+			targetProxy = 99D7CBA33045873E002BF7A8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		99D7CBAA3045873E002BF7A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 96SLZH78FC;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		99D7CBAB3045873E002BF7A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 96SLZH78FC;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		99D7CBAD3045873E002BF7A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 96SLZH78FC;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = XcodeSentinel/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kohei.XcodeSentinel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		99D7CBAE3045873E002BF7A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 96SLZH78FC;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = XcodeSentinel/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kohei.XcodeSentinel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		99D7CBB03045873E002BF7A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 96SLZH78FC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kohei.XcodeSentinelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XcodeSentinel.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/XcodeSentinel";
+			};
+			name = Debug;
+		};
+		99D7CBB13045873E002BF7A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 96SLZH78FC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kohei.XcodeSentinelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XcodeSentinel.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/XcodeSentinel";
+			};
+			name = Release;
+		};
+		99D7CBB33045873E002BF7A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 96SLZH78FC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kohei.XcodeSentinelUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = XcodeSentinel;
+			};
+			name = Debug;
+		};
+		99D7CBB43045873E002BF7A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 96SLZH78FC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kohei.XcodeSentinelUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = XcodeSentinel;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		99D7CB863045873D002BF7A8 /* Build configuration list for PBXProject "XcodeSentinel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99D7CBAA3045873E002BF7A8 /* Debug */,
+				99D7CBAB3045873E002BF7A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99D7CBAC3045873E002BF7A8 /* Build configuration list for PBXNativeTarget "XcodeSentinel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99D7CBAD3045873E002BF7A8 /* Debug */,
+				99D7CBAE3045873E002BF7A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99D7CBAF3045873E002BF7A8 /* Build configuration list for PBXNativeTarget "XcodeSentinelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99D7CBB03045873E002BF7A8 /* Debug */,
+				99D7CBB13045873E002BF7A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99D7CBB23045873E002BF7A8 /* Build configuration list for PBXNativeTarget "XcodeSentinelUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99D7CBB33045873E002BF7A8 /* Debug */,
+				99D7CBB43045873E002BF7A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		99D7CBDD3045A855002BF7A8 /* XCLocalSwiftPackageReference "../Packages/SentinelCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../Packages/SentinelCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		99D7CBDF3046400E002BF7A8 /* SentinelCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99D7CBDD3045A855002BF7A8 /* XCLocalSwiftPackageReference "../Packages/SentinelCore" */;
+			productName = SentinelCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 99D7CB833045873D002BF7A8 /* Project object */;
+}

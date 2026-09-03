@@ -1,10 +1,14 @@
 {
-  "version": 1,
+  "version": 2,
   "panelHints": {
+    "containerRoles": ["AXOpaqueProviderGroup"],
     "identifiers": [],
-    "anchorTexts": ["ask claude", "send a message"],
-    "containerRoles": ["AXGroup", "AXScrollArea"],
-    "_note": "Unverified against a real Xcode AX tree (CLAUDE.md 18). Fill identifiers[] from an AX Inspector dump. Unknown keys are ignored by the decoder."
+    "anchorTexts": [],
+    "completedTurnMarker": {
+      "role": "AXButton",
+      "descriptionText": "Report Concern"
+    },
+    "_note": "Verified against real Xcode AX dump 2026-08-31. AXOpaqueProviderGroup is the Claude chat message container. Report Concern AXButton marks the end of each completed response."
   },
   "patterns": [
     {
@@ -18,7 +22,7 @@
       ],
       "noneOf": ["5-hour", "5 hour"],
       "enabled": true,
-      "note": "Must precede session-limit: a weekly message also contains the word 'limit'. Wording unverified against Xcode; edit in Settings after inspecting a real AX dump."
+      "note": "Must precede session-limit. Wording unverified against Xcode; update after observing a real weekly-limit event."
     },
     {
       "id": "session-limit",
@@ -33,7 +37,7 @@
       ],
       "noneOf": ["weekly"],
       "enabled": true,
-      "note": "The rolling 5-hour limit. ResetTimeParser runs over the matching text to extract the reset time."
+      "note": "The rolling 5-hour limit. ResetTimeParser extracts the reset time from the matching text."
     },
     {
       "id": "awaiting-approval",
@@ -56,18 +60,18 @@
         "waiting for your response",
         "which option",
         "please choose",
-        "how would you like to proceed",
-        "?"
+        "how would you like to proceed"
       ],
       "role": "AXStaticText",
       "enabled": false,
-      "note": "Disabled by default: a bare '?' is too broad. Enable and tighten once real panel text is known."
+      "note": "Disabled: hard to distinguish from normal chat text. Enable once a reliable marker is identified."
     },
     {
       "id": "awaiting-continue",
       "outcome": "awaitingContinue",
       "anyOf": ["continue generating", "output truncated", "response was cut off", "click continue"],
-      "enabled": true
+      "enabled": true,
+      "note": "Wording unverified against Xcode. Update after observing a real truncated response."
     },
     {
       "id": "errored",
@@ -84,22 +88,23 @@
     {
       "id": "working",
       "outcome": "working",
-      "anyOf": ["generating", "running", "thinking", "working", "esc to interrupt", "stop generating"],
-      "enabled": true
-    },
-    {
-      "id": "completed",
-      "outcome": "completed",
-      "anyOf": ["done", "finished", "completed", "changes applied"],
-      "enabled": false,
-      "note": "Disabled by default: too easily confused with chat content. Enable once a reliable completion marker is identified."
+      "anyOf": ["thinking", "generating", "running", "working", "esc to interrupt", "stop generating"],
+      "enabled": true,
+      "note": "Text-based fallback. Primary working detection uses the active-spinner check in DetectionEngine (role:AXProgressIndicator with no identifier). Scanning is limited to the current turn tail so historical Thinking text does not match."
     },
     {
       "id": "idle",
       "outcome": "idle",
       "anyOf": ["ask claude", "send a message", "type a message", "how can i help"],
       "enabled": true,
-      "note": "Empty composer placeholder text — the panel is open but no task is running."
+      "note": "Placeholder text in the chat input — panel is open but no task is running. Primary idle detection uses the completed-boundary check."
+    },
+    {
+      "id": "completed",
+      "outcome": "completed",
+      "anyOf": ["done", "finished", "completed", "changes applied"],
+      "enabled": false,
+      "note": "Disabled: primary completion detection uses the completed-boundary (Report Concern button) check in DetectionEngine."
     }
   ]
 }

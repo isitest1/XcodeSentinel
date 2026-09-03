@@ -44,7 +44,9 @@ final class DetectionEngineTests: XCTestCase {
         ])
         let result = engine.classify(AXSnapshot(root: AXNode(role: "AXGroup")))
         XCTAssertEqual(result.state, .unknown)
-        XCTAssertEqual(result.scannedTextCount, 0)
+        // Only synthetic role-fragment(s) are emitted for an empty tree; no real
+        // text was scanned, so no pattern should fire.
+        XCTAssertNil(result.matchedPatternID)
     }
 
     func testRoleConstraintIsEnforced() {

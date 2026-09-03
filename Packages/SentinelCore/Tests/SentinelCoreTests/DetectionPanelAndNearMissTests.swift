@@ -15,29 +15,47 @@ final class DetectionPanelAndNearMissTests: XCTestCase {
 
     // MARK: - Panel location
 
-    func testLocatesPanelInsideAWholeWindowSnapshot() throws {
-        let snapshot = try Fixture.snapshot("whole-window")
+    /// Synthetic whole-window snapshot: an outer AXWindow containing an editor
+    /// group with unrelated text AND a Claude chat group identified by
+    /// AXOpaqueProviderGroup, where the limit message lives.
+    private func syntheticWholeWindowWithLimit() -> AXSnapshot {
+        let chatPanel = AXNode(
+            role: "AXOpaqueProviderGroup",
+            children: [
+                AXNode(role: "AXStaticText", value: "You've hit your usage limit. Resets at 2:15 PM."),
+            ]
+        )
+        let chatScrollArea = AXNode(role: "AXScrollArea", children: [chatPanel])
+        let chatGroup = AXNode(role: "AXGroup", children: [chatScrollArea])
+        let editorGroup = AXNode(role: "AXGroup", children: [
+            AXNode(role: "AXStaticText", value: "func myFunc() -> Int { 42 }"),
+            AXNode(role: "AXStaticText", value: "// some editor content"),
+        ])
+        let root = AXNode(role: "AXWindow", children: [editorGroup, chatGroup])
+        return AXSnapshot(root: root)
+    }
+
+    func testLocatesPanelInsideAWholeWindowSnapshot() {
+        let snapshot = syntheticWholeWindowWithLimit()
         let e = engine(
             patterns: [DetectionPattern(id: "session-limit", outcome: .sessionLimited, anyOf: ["usage limit"])],
-            hints: PanelHints(
-                anchorTexts: ["ask claude", "send a message"],
-                containerRoles: ["AXGroup", "AXScrollArea"]
-            )
+            hints: PanelHints(containerRoles: ["AXOpaqueProviderGroup"])
         )
         let result = e.classify(snapshot)
         XCTAssertTrue(result.panelLocated)
         XCTAssertEqual(result.state, .sessionLimited(resetAt: makeDate(2026, 8, 30, 14, 15)))
-        // The editor and inspector text must have been excluded.
+        // Editor text must have been excluded — only the chat panel was scanned.
         XCTAssertLessThan(result.scannedTextCount, snapshot.allTexts.count)
     }
 
-    func testFallsBackToWholeTreeWhenHintsAreEmpty() throws {
-        let snapshot = try Fixture.snapshot("whole-window")
+    func testFallsBackToWholeTreeWhenHintsAreEmpty() {
+        let snapshot = syntheticWholeWindowWithLimit()
         let e = engine(
             patterns: [DetectionPattern(id: "session-limit", outcome: .sessionLimited, anyOf: ["usage limit"])]
         )
         let result = e.classify(snapshot)
         XCTAssertFalse(result.panelLocated)
+        // Whole tree is scanned → limit text is found even without hints.
         XCTAssertEqual(result.state, .sessionLimited(resetAt: makeDate(2026, 8, 30, 14, 15)))
     }
 

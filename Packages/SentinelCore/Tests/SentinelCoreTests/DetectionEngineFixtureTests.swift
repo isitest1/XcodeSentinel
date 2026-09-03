@@ -48,10 +48,14 @@ final class DetectionEngineFixtureTests: XCTestCase {
     }
 
     func testWholeWindowFixtureIsNarrowedToThePanel() throws {
+        // The real exported snapshot (CopyAll project, 2026-08-31) captured an
+        // idle state: Claude just finished and the "Report Concern" boundary
+        // button is the last child of the panel. State should be .idle and the
+        // engine must confirm it located the AXOpaqueProviderGroup panel node.
         let snapshot = try Fixture.snapshot("whole-window")
         let result = try engine().classify(snapshot)
         XCTAssertTrue(result.panelLocated)
-        XCTAssertEqual(result.state, .sessionLimited(resetAt: makeDate(2026, 8, 30, 14, 15)))
+        XCTAssertEqual(result.state, .idle)
     }
 
     func testAwaitingApprovalFixtureIsNeverAutoResumed() throws {

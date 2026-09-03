@@ -5,7 +5,7 @@ final class PatternSetTests: XCTestCase {
     func testBundledPatternsLoad() throws {
         let set = try PatternSet.bundled()
         XCTAssertGreaterThan(set.patterns.count, 0)
-        XCTAssertEqual(set.version, 1)
+        XCTAssertGreaterThanOrEqual(set.version, 1)
     }
 
     func testBundledPatternsHaveUniqueIDs() throws {

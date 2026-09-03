@@ -1,4 +1,4 @@
-# XcodeSentinel（作業仮称）
+# XcodeSentinel
 
 macOS のメニューバーに常駐し、**Xcode に組み込まれた Claude のコーディングセッションを監視して、停止したときに自動的に再開させる**ユーティリティです。
 
@@ -55,7 +55,7 @@ Claude Code には既に公式の自動継続機能があります（`/config` �
 
 Developer ID 署名 + notarization 済みの DMG を [GitHub Releases](../../releases/latest) で配布します（App Store では配布しません。理由は次項）。
 
-初回起動時の Gatekeeper の扱いと詳細な手順は公開サイトの getting-started を参照してください。
+初回起動時の Gatekeeper の扱いと詳細な手順は[公開サイトの getting-started](https://isitest1.github.io/XcodeSentinel/en/getting-started.html) を参照してください。
 
 ## 6. なぜ Mac App Store で配布しないのか
 
@@ -67,21 +67,21 @@ Xcode 内 Claude パネルのアクセシビリティ構造は非公開仕様で
 
 1. アプリ内の **AX Inspector** で対象ウィンドウのツリーを JSON エクスポートする
 2. その JSON を添えて Issue を作成する（実在のプロジェクト名やパスが含まれないことを確認してください）
-3. 検出パターンは `Patterns.json`（設定画面から編集可）に外出しされているため、多くの場合は再ビルドなしで対応できます
+3. 検出パターンは `Patterns.json`（設定画面の Detection タブから確認可）に外出しされているため、多くの場合は再ビルドなしで対応できます
 
 ## 8. 開発環境
 
 | 作業 | 場所 |
 |---|---|
 | コード編集、`SentinelCore` のビルド・テスト、公開サイトのプレビュー、ドキュメント執筆 | VS Code Dev Container（Linux） |
-| `App/`（SwiftUI / AppKit / アクセシビリティ）のビルド・実行・実機確認、署名・notarization・DMG 作成 | ホストの macOS（Xcode / `xcodebuild`） |
+| `XcodeSentinel/`（SwiftUI / AppKit / アクセシビリティ）のビルド・実行・実機確認、署名・notarization・DMG 作成 | ホストの macOS（Xcode） |
 
 **Dev Container は Linux コンテナのため、macOS アプリはビルドできません。** これは原理的な制約です。詳細は [`docs/development.md`](docs/development.md)。
 
 ```sh
 # Dev Container 内
 swift build --package-path Packages/SentinelCore
-swift test  --package-path Packages/SentinelCore
+swift test  --package-path Packages/SentinelCore --parallel
 http-server docs/site -p 8080     # 公開サイトのプレビュー
 ```
 
@@ -89,24 +89,19 @@ http-server docs/site -p 8080     # 公開サイトのプレビュー
 
 ```
 Packages/SentinelCore/   macOS 非依存のロジック（Linux でビルド・テスト可）
-App/                     macOS 専用アプリ（ホストの Xcode でのみビルド）
+XcodeSentinel/           macOS 専用アプリ（ホストの Xcode でのみビルド）
 docs/                    設計・運用ドキュメント（日本語）
 docs/site/               公開サイト（GitHub Pages、英語 / 日本語）
+.github/workflows/       CI（Linux: SentinelCore テスト、macOS: アプリビルド）
 ```
 
 ## 10. 公開サイト
 
 App Store で配布しない以上、公開サイトが唯一の入口です。配布・使い方・プライバシー説明はすべてサイトが担います。
 
-- サイト: https://isitest1.github.io/XcodeSentinel/ （`docs/site/`、GitHub Pages）
+- サイト: https://isitest1.github.io/XcodeSentinel/
 - 作者の他のプロジェクト: https://isitest1.github.io/portfolio-hub/ja
 
-## 11. ホストの Mac への引き継ぎ
-
-Dev Container で作れる範囲（`SentinelCore` の全ロジックと公開サイト）は実装・テスト済みです。
-`App/`（SwiftUI/AppKit/AX）は骨組みで、ここから先はホストの macOS + Xcode で続けます。
-手順と Xcode の Claude への渡し方は [`docs/xcode-handoff.md`](docs/xcode-handoff.md) にあります。
-
-## 12. ライセンス
+## 11. ライセンス
 
 MIT License（[`LICENSE`](LICENSE)）。

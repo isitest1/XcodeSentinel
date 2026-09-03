@@ -1,45 +1,1507 @@
 {
-  "schemaVersion": 1,
-  "targetName": "SampleApp",
-  "xcodeVersion": "16.0 (provisional sample, not a real dump)",
+  "capturedAt": "2026-08-31T23:38:34Z",
   "root": {
-    "role": "AXWindow",
-    "title": "SampleApp — ContentView.swift",
     "children": [
       {
-        "role": "AXGroup",
-        "identifier": "editor-area",
-        "children": [
-          { "role": "AXStaticText", "value": "import SwiftUI" },
-          { "role": "AXStaticText", "value": "struct ContentView: View {" }
-        ]
-      },
-      {
-        "role": "AXSplitGroup",
         "children": [
           {
-            "role": "AXGroup",
-            "identifier": "inspector-area",
-            "children": [
-              { "role": "AXStaticText", "value": "Attributes inspector" }
-            ]
-          },
-          {
-            "role": "AXScrollArea",
             "children": [
               {
-                "role": "AXGroup",
                 "children": [
-                  { "role": "AXStaticText", "value": "You've hit your usage limit. Resets at 2:15 PM." },
-                  { "role": "AXStaticText", "value": "Send a message to Claude" },
-                  { "role": "AXTextArea", "title": "Ask Claude", "value": "" },
-                  { "role": "AXButton", "title": "Send", "isEnabled": false }
-                ]
+                  {
+                    "children": [
+                      {
+                        "children": [],
+                        "descriptionText": "compose",
+                        "isEnabled": true,
+                        "isFocused": false,
+                        "role": "AXButton"
+                      }
+                    ],
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXPopUpButton"
+                  },
+                  {
+                    "children": [],
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXMenuButton",
+                    "title": "Complete development per claude.md file"
+                  },
+                  {
+                    "children": [],
+                    "descriptionText": "Modification History",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXButton"
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [],
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXLink",
+                                "title": "user@example.com"
+                              }
+                            ],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "以上で完了です。対応した内容：\n\n• スクリーンショットのギャップ修正 — フォントを 7.4%→10.5% に拡大、max(frame_top, 32%) クランプを削除して文字直下にフレームを配置\n• 日本語テキスト折り返し — _wrap() に文字単位の折り返し（CJK対応）を追加、長い行が右端で切れる問題を修正\n• iPad 1枚目の白画面 — シミュレータの代わりに iPhone スクリーンショットを使用（両デバイス共通）\n• 全32枚を ASC へ再アップロード — ja/en-US × iPhone(APP_IPHONE_67)/iPad(APP_IPAD_PRO_3GEN_129)\n• サポートページに画像を追加 — img/ja-1〜4.png, img/en-1〜4.png を生成して GitHub Pages へプッシュ\n• メールアドレス — 全ファイルで既に user@example.com になっていることを確認\n\n残り手動対応が必要な作業：App Store Connect の App Privacy で「データを収集していません」を UI から設定・公開（API では設定不可）。"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "5m 46s"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "1 file edited"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "Report Concern",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Today 6:40"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "BuildがFailedになる"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Thinking"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "The user says the build is failing. Let me check the build log to see what's going on."
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "ビルドログを確認します。"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Tool Search"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "Succeeded",
+                            "identifier": "checkmark",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Read Build Report"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "1 error"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Thinking"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "The error is in ViewController.swift at line 26:\n• 'language' is only available in iOS 16 or newer\n• 'languageCode' is only available in iOS 16 or newer\n\nThe current code uses:\n\nlet lang = Locale.current.language.languageCode?.identifier ?? \"en\"\n\n\nLocale.current.language is a new API introduced in iOS 16. However, the minimum deployment target might be set lower than iOS 16. Actually wait, looking at the CLAUDE.md, the minimum OS is iOS 16.0. So this shouldn't be a problem...\nUnless the actual Xcode project deployment target doesn't match what CLAUDE.md states—that mismatch would explain the error. The safest fix is to swap in an older locale API that's compatible regardless of deployment target settings, rather than trying to bump the target itself."
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Locale.current.language は iOS 16 API ですが、Deployment Target が 16 未満に設定されています。古い API で修正します:"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "CopyAll",
+                            "isEnabled": false,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "ViewController.swift"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "53 lines read"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "ViewController.swift"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "Add",
+                            "identifier": "plus",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXImage"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "1"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "Remove",
+                            "identifier": "minus",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXImage"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "1"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "m.square",
+                            "identifier": "m.square",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "let lang = Locale.current.languageCode ?? \"en\""
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "ViewController.swift"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "Failed",
+                            "identifier": "exclamationmark.circle",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "CopyAll",
+                            "isEnabled": false,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "Any iOS Device",
+                            "isEnabled": false,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Build Project"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "Succeeded",
+                            "identifier": "checkmark",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "ビルド成功。コミットします:"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Terminal Command"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXProgressIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "cd \"/private/tmp/demo\" && git add CopyAll/ViewController.swift && git commit -m \"fix: replace iOS 16-only Locale.language API with languageCode\" && git push 2>&1"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "Locale.current.language.languageCode (iOS 16+) を Locale.current.languageCode (iOS 2.0+) に変更しました。ビルド成功・プッシュ済みです。"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "42s"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXStaticText",
+                            "value": "1 file edited"
+                          },
+                          {
+                            "children": [],
+                            "descriptionText": "Report Concern",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          }
+                        ],
+                        "isEnabled": true,
+                        "isFocused": false,
+                        "role": "AXOpaqueProviderGroup"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXValueIndicator"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          },
+                          {
+                            "children": [],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXButton"
+                          }
+                        ],
+                        "isEnabled": true,
+                        "isFocused": false,
+                        "role": "AXScrollBar"
+                      }
+                    ],
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXScrollArea"
+                  },
+                  {
+                    "children": [],
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXUnknown"
+                  },
+                  {
+                    "children": [],
+                    "descriptionText": "Undo",
+                    "identifier": "arrow.uturn.left",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXButton"
+                  },
+                  {
+                    "children": [],
+                    "descriptionText": "rectangle.grid.1x2",
+                    "identifier": "rectangle.grid.1x2",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXButton"
+                  },
+                  {
+                    "children": [],
+                    "identifier": "paperclip",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXMenuButton",
+                    "title": "Attachements"
+                  }
+                ],
+                "isEnabled": true,
+                "isFocused": false,
+                "role": "AXGroup"
               }
-            ]
+            ],
+            "descriptionText": "navigator",
+            "isEnabled": true,
+            "isFocused": false,
+            "role": "AXGroup"
+          },
+          {
+            "children": [],
+            "isEnabled": false,
+            "isFocused": false,
+            "role": "AXSplitter"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXStaticText",
+                                                "value": "PROJECT"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXRow"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "CopyAll"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXRow"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXStaticText",
+                                                "value": "TARGETS"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXRow"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "descriptionText": "CopyAll Target",
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "CopyAll"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXRow"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "descriptionText": "CopyAllTests Target",
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "CopyAllTests"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXRow"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "descriptionText": "CopyAllUITests Target",
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "CopyAllUITests"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXRow"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "descriptionText": "CopyAll Extension Target",
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "CopyAll Extension"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXRow"
+                                          },
+                                          {
+                                            "children": [],
+                                            "identifier": "Xcode3ProjectItems",
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXColumn"
+                                          }
+                                        ],
+                                        "descriptionText": "Project and Target list outline view",
+                                        "identifier": "_NS:89",
+                                        "isEnabled": true,
+                                        "isFocused": true,
+                                        "role": "AXOutline"
+                                      }
+                                    ],
+                                    "descriptionText": "Project and Target list scroll area",
+                                    "identifier": "_NS:83",
+                                    "isEnabled": true,
+                                    "isFocused": false,
+                                    "role": "AXScrollArea"
+                                  },
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [],
+                                        "descriptionText": "Add target",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXButton"
+                                      },
+                                      {
+                                        "children": [],
+                                        "descriptionText": "Delete the selected targets",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXButton"
+                                      },
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [],
+                                            "descriptionText": "filter",
+                                            "identifier": "search field menu",
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXButton",
+                                            "title": "toggle filter"
+                                          }
+                                        ],
+                                        "descriptionText": "Projects and targets source list filter field",
+                                        "identifier": "filter",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXTextField"
+                                      }
+                                    ],
+                                    "identifier": "_NS:79",
+                                    "isEnabled": true,
+                                    "isFocused": false,
+                                    "role": "AXGroup"
+                                  },
+                                  {
+                                    "children": [],
+                                    "isEnabled": false,
+                                    "isFocused": false,
+                                    "role": "AXSplitter"
+                                  },
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXDisclosureTriangle"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXStaticText"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "Destination"
+                                                              },
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "SDK"
+                                                              }
+                                                            ],
+                                                            "isEnabled": true,
+                                                            "isFocused": true,
+                                                            "role": "AXCell"
+                                                          }
+                                                        ],
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXRow"
+                                                      },
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "iPhone"
+                                                              },
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "iOS"
+                                                              }
+                                                            ],
+                                                            "isEnabled": true,
+                                                            "isFocused": true,
+                                                            "role": "AXCell"
+                                                          }
+                                                        ],
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXRow"
+                                                      },
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "iPad"
+                                                              },
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "iOS"
+                                                              }
+                                                            ],
+                                                            "isEnabled": true,
+                                                            "isFocused": true,
+                                                            "role": "AXCell"
+                                                          }
+                                                        ],
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXRow"
+                                                      },
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "Mac (Designed for iPad)"
+                                                              },
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "iOS"
+                                                              }
+                                                            ],
+                                                            "isEnabled": true,
+                                                            "isFocused": true,
+                                                            "role": "AXCell"
+                                                          }
+                                                        ],
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXRow"
+                                                      },
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "Apple Vision (Designed for iPad)"
+                                                              },
+                                                              {
+                                                                "children": [],
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXStaticText",
+                                                                "value": "iOS"
+                                                              }
+                                                            ],
+                                                            "isEnabled": true,
+                                                            "isFocused": true,
+                                                            "role": "AXCell"
+                                                          }
+                                                        ],
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXRow"
+                                                      },
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [],
+                                                                "identifier": "plus",
+                                                                "isEnabled": true,
+                                                                "isFocused": false,
+                                                                "role": "AXMenuButton",
+                                                                "title": "Add Destination"
+                                                              },
+                                                              {
+                                                                "children": [],
+                                                                "descriptionText": "Remove Destination",
+                                                                "isEnabled": false,
+                                                                "isFocused": false,
+                                                                "role": "AXButton"
+                                                              }
+                                                            ],
+                                                            "isEnabled": true,
+                                                            "isFocused": true,
+                                                            "role": "AXCell"
+                                                          }
+                                                        ],
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXRow"
+                                                      },
+                                                      {
+                                                        "children": [],
+                                                        "identifier": "ListColumn",
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXColumn"
+                                                      }
+                                                    ],
+                                                    "isEnabled": true,
+                                                    "isFocused": false,
+                                                    "role": "AXOutline"
+                                                  }
+                                                ],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXScrollArea"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXGroup"
+                                          }
+                                        ],
+                                        "descriptionText": "Supported Destinations",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXGroup",
+                                        "title": "Supported Destinations"
+                                      },
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXDisclosureTriangle"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXStaticText"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXStaticText",
+                                                "value": "iOS"
+                                              },
+                                              {
+                                                "children": [],
+                                                "descriptionText": "Go Down",
+                                                "identifier": "chevron.down",
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXCheckBox"
+                                              },
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "15.0"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXGroup"
+                                          }
+                                        ],
+                                        "descriptionText": "Minimum Deployments",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXGroup",
+                                        "title": "Minimum Deployments"
+                                      },
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXDisclosureTriangle"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXStaticText"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXStaticText",
+                                                "value": "Display Name"
+                                              },
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "CopyAll Extension"
+                                              },
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXStaticText",
+                                                "value": "Bundle Identifier"
+                                              },
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXStaticText",
+                                                "value": "com.kohei.CopyAll.Extension"
+                                              },
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXStaticText",
+                                                "value": "Version"
+                                              },
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "1.0"
+                                              },
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXStaticText",
+                                                "value": "Build"
+                                              },
+                                              {
+                                                "children": [],
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTextField",
+                                                "value": "3"
+                                              }
+                                            ],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXGroup"
+                                          }
+                                        ],
+                                        "descriptionText": "Identity",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXGroup",
+                                        "title": "Identity"
+                                      },
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXDisclosureTriangle"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXStaticText"
+                                          },
+                                          {
+                                            "children": [],
+                                            "descriptionText": "add",
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXButton"
+                                          },
+                                          {
+                                            "children": [],
+                                            "descriptionText": "remove",
+                                            "isEnabled": false,
+                                            "isFocused": false,
+                                            "role": "AXButton"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "identifier": "name",
+                                                    "isEnabled": true,
+                                                    "isFocused": false,
+                                                    "role": "AXColumn"
+                                                  },
+                                                  {
+                                                    "children": [],
+                                                    "identifier": "embed",
+                                                    "isEnabled": true,
+                                                    "isFocused": false,
+                                                    "role": "AXColumn"
+                                                  },
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [],
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXButton",
+                                                        "title": "Name"
+                                                      },
+                                                      {
+                                                        "children": [],
+                                                        "isEnabled": true,
+                                                        "isFocused": false,
+                                                        "role": "AXButton",
+                                                        "title": "Embed"
+                                                      }
+                                                    ],
+                                                    "isEnabled": true,
+                                                    "isFocused": false,
+                                                    "role": "AXGroup"
+                                                  }
+                                                ],
+                                                "descriptionText": "Linked Binaries table",
+                                                "identifier": "_NS:16",
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTable"
+                                              }
+                                            ],
+                                            "identifier": "_NS:10",
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXScrollArea"
+                                          }
+                                        ],
+                                        "descriptionText": "Frameworks and Libraries",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXGroup",
+                                        "title": "Frameworks and Libraries"
+                                      },
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXDisclosureTriangle"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXStaticText"
+                                          },
+                                          {
+                                            "children": [],
+                                            "descriptionText": "add",
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXButton"
+                                          },
+                                          {
+                                            "children": [],
+                                            "descriptionText": "remove",
+                                            "isEnabled": false,
+                                            "isFocused": false,
+                                            "role": "AXButton"
+                                          },
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "identifier": "name",
+                                                    "isEnabled": true,
+                                                    "isFocused": false,
+                                                    "role": "AXColumn"
+                                                  }
+                                                ],
+                                                "descriptionText": "Development Assets Paths table",
+                                                "identifier": "_NS:16",
+                                                "isEnabled": true,
+                                                "isFocused": false,
+                                                "role": "AXTable"
+                                              }
+                                            ],
+                                            "identifier": "_NS:10",
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXScrollArea"
+                                          }
+                                        ],
+                                        "descriptionText": "Development Assets",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXGroup",
+                                        "title": "Development Assets"
+                                      },
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXValueIndicator"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXButton"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXButton"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXButton"
+                                          },
+                                          {
+                                            "children": [],
+                                            "isEnabled": true,
+                                            "isFocused": false,
+                                            "role": "AXButton"
+                                          }
+                                        ],
+                                        "identifier": "_NS:29",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXScrollBar"
+                                      }
+                                    ],
+                                    "identifier": "Target Editor Scrollview",
+                                    "isEnabled": true,
+                                    "isFocused": false,
+                                    "role": "AXScrollArea"
+                                  }
+                                ],
+                                "identifier": "project editor split view",
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXSplitGroup"
+                              },
+                              {
+                                "children": [],
+                                "descriptionText": "project editor navigation bar",
+                                "identifier": "_NS:64",
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXButton"
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [],
+                                        "identifier": "General",
+                                        "isEnabled": true,
+                                        "isFocused": false,
+                                        "role": "AXPopUpButton",
+                                        "value": "General"
+                                      }
+                                    ],
+                                    "isEnabled": true,
+                                    "isFocused": false,
+                                    "role": "AXGroup"
+                                  }
+                                ],
+                                "descriptionText": "Project editor tab chooser",
+                                "identifier": "_NS:23",
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXGroup"
+                              },
+                              {
+                                "children": [],
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXGroup"
+                              }
+                            ],
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXSplitGroup"
+                          },
+                          {
+                            "children": [
+                              {
+                                "children": [],
+                                "descriptionText": "Related Items",
+                                "identifier": "related items",
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXMenuButton"
+                              },
+                              {
+                                "children": [],
+                                "descriptionText": "Show Previous Location in History",
+                                "identifier": "Go Back",
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXMenuButton"
+                              },
+                              {
+                                "children": [],
+                                "descriptionText": "Show Next Location in History",
+                                "identifier": "Go Forward",
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXMenuButton"
+                              },
+                              {
+                                "children": [],
+                                "descriptionText": "Code Review",
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXButton"
+                              },
+                              {
+                                "children": [],
+                                "identifier": "add editor",
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXMenuButton"
+                              },
+                              {
+                                "children": [],
+                                "isEnabled": true,
+                                "isFocused": false,
+                                "role": "AXPopUpButton",
+                                "value": "CopyAll"
+                              }
+                            ],
+                            "descriptionText": "Jump Bar",
+                            "identifier": "jump bar",
+                            "isEnabled": true,
+                            "isFocused": false,
+                            "role": "AXGroup"
+                          }
+                        ],
+                        "descriptionText": "CopyAll.xcodeproj",
+                        "identifier": "editor context",
+                        "isEnabled": true,
+                        "isFocused": false,
+                        "role": "AXGroup"
+                      }
+                    ],
+                    "descriptionText": "CopyAll.xcodeproj",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXGroup"
+                  }
+                ],
+                "isEnabled": true,
+                "isFocused": false,
+                "role": "AXSplitGroup"
+              },
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "descriptionText": "Breakpoints",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXButton"
+                  },
+                  {
+                    "children": [],
+                    "descriptionText": "show debug area",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXButton"
+                  }
+                ],
+                "descriptionText": "debug bar",
+                "isEnabled": true,
+                "isFocused": false,
+                "role": "AXGroup"
+              }
+            ],
+            "descriptionText": "editor area",
+            "isEnabled": true,
+            "isFocused": false,
+            "role": "AXGroup"
           }
-        ]
+        ],
+        "descriptionText": "/private/tmp/demo",
+        "identifier": "Workspace window tab content",
+        "isEnabled": true,
+        "isFocused": false,
+        "role": "AXSplitGroup",
+        "title": "CopyAll.xcodeproj"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "descriptionText": "Navigators",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXRadioButton"
+                  },
+                  {
+                    "children": [],
+                    "descriptionText": "Coding Assistant",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXRadioButton"
+                  }
+                ],
+                "isEnabled": true,
+                "isFocused": false,
+                "role": "AXRadioGroup"
+              }
+            ],
+            "isEnabled": true,
+            "isFocused": false,
+            "role": "AXGroup"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "descriptionText": "Stop",
+                    "isEnabled": false,
+                    "isFocused": false,
+                    "role": "AXButton"
+                  },
+                  {
+                    "children": [],
+                    "descriptionText": "Run",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXButton"
+                  }
+                ],
+                "isEnabled": true,
+                "isFocused": false,
+                "role": "AXGroup",
+                "title": "Run/Stop"
+              }
+            ],
+            "isEnabled": true,
+            "isFocused": false,
+            "role": "AXGroup"
+          },
+          {
+            "children": [],
+            "descriptionText": "Branch Chooser",
+            "isEnabled": true,
+            "isFocused": false,
+            "role": "AXButton",
+            "value": "CopyAll, main"
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [],
+                        "descriptionText": "Active Scheme",
+                        "isEnabled": true,
+                        "isFocused": false,
+                        "role": "AXPopUpButton",
+                        "value": "CopyAll"
+                      },
+                      {
+                        "children": [],
+                        "descriptionText": "Active Run Destination",
+                        "isEnabled": true,
+                        "isFocused": false,
+                        "role": "AXPopUpButton",
+                        "value": "Any iOS Device (arm64)"
+                      }
+                    ],
+                    "descriptionText": "path",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXList"
+                  },
+                  {
+                    "children": [],
+                    "identifier": "Activity Text",
+                    "isEnabled": true,
+                    "isFocused": false,
+                    "role": "AXStaticText",
+                    "value": "Build Succeeded │ Today at 6:41"
+                  }
+                ],
+                "descriptionText": "Activity View",
+                "isEnabled": true,
+                "isFocused": false,
+                "role": "AXGroup"
+              }
+            ],
+            "isEnabled": true,
+            "isFocused": false,
+            "role": "AXGroup"
+          },
+          {
+            "children": [],
+            "descriptionText": "Show Inspector",
+            "isEnabled": true,
+            "isFocused": false,
+            "role": "AXButton"
+          }
+        ],
+        "isEnabled": true,
+        "isFocused": false,
+        "role": "AXToolbar"
+      },
+      {
+        "children": [],
+        "isEnabled": true,
+        "isFocused": false,
+        "role": "AXButton"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "isEnabled": true,
+                "isFocused": false,
+                "role": "AXGroup"
+              }
+            ],
+            "isEnabled": true,
+            "isFocused": false,
+            "role": "AXGroup"
+          }
+        ],
+        "isEnabled": true,
+        "isFocused": false,
+        "role": "AXButton"
+      },
+      {
+        "children": [],
+        "isEnabled": true,
+        "isFocused": false,
+        "role": "AXButton"
       }
-    ]
-  }
+    ],
+    "identifier": "Xcode.WorkspaceWindow",
+    "isEnabled": true,
+    "isFocused": false,
+    "role": "AXWindow",
+    "title": "CopyAll — CopyAll.xcodeproj"
+  },
+  "schemaVersion": 1,
+  "targetName": "CopyAll — CopyAll.xcodeproj"
 }

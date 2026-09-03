@@ -40,9 +40,43 @@ public struct DetectionEngine: Sendable {
 
     public func classify(_ snapshot: AXSnapshot) -> Result {
         let panel = locatePanel(in: snapshot)
-        let fragments: [TextFragment] = panel.node.flattened().flatMap { node -> [TextFragment] in
-            node.texts.map { TextFragment(text: $0, role: node.role) }
+        let marker = patterns.panelHints.completedTurnMarker
+
+        // Step 1: Active-spinner check — most reliable "working" signal.
+        // An AXProgressIndicator with no identifier/description/title/value is
+        // an in-progress spinner; one with identifier "checkmark" is completed.
+        // Scan from the end of the panel's children and stop at the last
+        // completed-turn boundary so stale spinners from history don't fire.
+        if hasActiveSpinnerInTail(panel.node, marker: marker) {
+            return Result(
+                state: .working,
+                matchedPatternID: "active-spinner",
+                resetParse: nil,
+                scannedTextCount: 0,
+                panelLocated: panel.located,
+                nearMisses: []
+            )
         }
+
+        // Step 2: Idle check — if the last child is the completed-turn marker,
+        // the most recent response is finished and Claude is waiting for input.
+        if marker != nil && lastChildIsMarker(panel.node, marker: marker!) {
+            return Result(
+                state: .idle,
+                matchedPatternID: "completed-boundary",
+                resetParse: nil,
+                scannedTextCount: 0,
+                panelLocated: panel.located,
+                nearMisses: []
+            )
+        }
+
+        // Step 3: Text-pattern scan on the current turn only.
+        // currentTurnNode() returns the children after the last completed-turn
+        // marker, preventing stale limit messages or "Thinking" text from a
+        // previous session from falsely triggering patterns.
+        let scanNode = currentTurnNode(from: panel.node, marker: marker)
+        let fragments = collectFragments(from: scanNode)
 
         guard !fragments.isEmpty else {
             return Result(
@@ -115,7 +149,78 @@ public struct DetectionEngine: Sendable {
             }
         }
 
+        // 3. Role-only match: when anchorTexts is empty but containerRoles is set,
+        //    find the first node whose role is in the list. This is used when the
+        //    panel container has a unique role (e.g. AXOpaqueProviderGroup).
+        if !hints.containerRoles.isEmpty {
+            if let hit = all.first(where: { hints.containerRoles.contains($0.role) }) {
+                return (hit, true)
+            }
+        }
+
         return (snapshot.root, false)
+    }
+
+    // MARK: - Tail helpers
+
+    /// Returns true when an "active" AXProgressIndicator (no identifier, no
+    /// descriptionText, no title, no value) appears after the last completed-turn
+    /// marker in the panel's direct children. Scans backwards so it stops at the
+    /// marker without inspecting stale history.
+    private func hasActiveSpinnerInTail(_ panel: AXNode, marker: CompletedTurnMarker?) -> Bool {
+        for child in panel.children.reversed() {
+            if let m = marker,
+               child.role == m.role &&
+               child.descriptionText == m.descriptionText {
+                return false  // Boundary reached without finding an active spinner.
+            }
+            if child.role == "AXProgressIndicator" &&
+               (child.identifier == nil || child.identifier!.isEmpty) &&
+               (child.descriptionText == nil || child.descriptionText!.isEmpty) &&
+               (child.title == nil || child.title!.isEmpty) &&
+               (child.value == nil || child.value!.isEmpty) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /// Returns true when the last direct child of the panel is the completed-turn
+    /// marker, meaning the most recent response just finished.
+    private func lastChildIsMarker(_ panel: AXNode, marker: CompletedTurnMarker) -> Bool {
+        guard let last = panel.children.last else { return false }
+        return last.role == marker.role && last.descriptionText == marker.descriptionText
+    }
+
+    /// Returns an AXNode whose children are only the elements AFTER the last
+    /// completed-turn marker. Falls back to the whole panel when no marker is
+    /// configured or none is found (first-ever task).
+    private func currentTurnNode(from panel: AXNode, marker: CompletedTurnMarker?) -> AXNode {
+        guard let marker else { return panel }
+        var lastBoundary: Int? = nil
+        for (i, child) in panel.children.enumerated() {
+            if child.role == marker.role && child.descriptionText == marker.descriptionText {
+                lastBoundary = i
+            }
+        }
+        guard let idx = lastBoundary else { return panel }
+        let tail = idx + 1 < panel.children.count
+            ? Array(panel.children[(idx + 1)...])
+            : []
+        return AXNode(role: panel.role, children: tail)
+    }
+
+    /// Collects TextFragments from a node. For nodes that carry no text (e.g. a
+    /// plain AXProgressIndicator), emits a synthetic "role:<role>" fragment so
+    /// that role-based patterns in Patterns.json can still match.
+    private func collectFragments(from node: AXNode) -> [TextFragment] {
+        node.flattened().flatMap { n -> [TextFragment] in
+            let texts = n.texts
+            guard !texts.isEmpty else {
+                return [TextFragment(text: "role:\(n.role)", role: n.role)]
+            }
+            return texts.map { TextFragment(text: $0, role: n.role) }
+        }
     }
 
     // MARK: - Outcome resolution

@@ -1,8 +1,10 @@
 name: Release
 
-# Skeleton. Builds, signs, notarizes and publishes a DMG on a version tag.
-# The signing / notarization / DMG steps need an Xcode project under App/ and
-# repository secrets, and only run on macOS. See docs/xcode-handoff.md.
+# Builds, signs, notarizes and publishes a DMG on a version tag.
+# Signing and notarization require repository secrets:
+#   APPLE_DEVELOPER_ID_CERT_BASE64, APPLE_DEVELOPER_ID_CERT_PASSWORD,
+#   APPLE_TEAM_ID, APPLE_ID, APPLE_APP_PASSWORD
+# See docs/xcode-handoff.md for setup instructions.
 
 on:
   push:
@@ -22,18 +24,56 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.app
 
-      - name: Core tests
-        run: swift test --package-path Packages/SentinelCore
+      - name: SentinelCore tests
+        run: swift test --package-path Packages/SentinelCore --parallel
 
-      - name: Guard - Xcode project present
+      - name: Build (Release, no signing)
         run: |
-          if [ ! -e App/XcodeSentinel.xcodeproj ]; then
-            echo "::error::App/XcodeSentinel.xcodeproj is missing (see docs/xcode-handoff.md)."
-            exit 1
-          fi
+          xcodebuild \
+            -project XcodeSentinel/XcodeSentinel.xcodeproj \
+            -scheme XcodeSentinel \
+            -configuration Release \
+            -destination 'platform=macOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            DSTROOT=/tmp/xcs-install \
+            install
 
-      - name: Build, sign, notarize, DMG
-        run: echo "TODO(host) - see docs/xcode-handoff.md section 3 step 9"
+      - name: Sign, notarize and create DMG
+        env:
+          CERT_BASE64: ${{ secrets.APPLE_DEVELOPER_ID_CERT_BASE64 }}
+          CERT_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSWORD }}
+          TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: |
+          # Import certificate
+          echo "$CERT_BASE64" | base64 --decode > cert.p12
+          security create-keychain -p "" build.keychain
+          security import cert.p12 -k build.keychain -P "$CERT_PASSWORD" -T /usr/bin/codesign
+          security set-keychain-settings -lut 21600 build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "" build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
+
+          APP=/tmp/xcs-install/Applications/XcodeSentinel.app
+
+          # Sign
+          codesign --force --deep --options runtime \
+            --sign "Developer ID Application: $TEAM_ID" "$APP"
+
+          # Notarize
+          ditto -c -k --keepParent "$APP" XcodeSentinel.zip
+          xcrun notarytool submit XcodeSentinel.zip \
+            --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" \
+            --wait
+
+          # Staple
+          xcrun stapler staple "$APP"
+
+          # Create DMG
+          mkdir -p dist
+          hdiutil create -volname XcodeSentinel \
+            -srcfolder "$APP" -ov -format UDZO dist/XcodeSentinel.dmg
 
       - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
@@ -41,4 +81,4 @@ jobs:
         with:
           draft: true
           generate_release_notes: true
-          files: dist/*.dmg
+          files: dist/XcodeSentinel.dmg

@@ -218,8 +218,8 @@ public enum PatternSetError: Error, Equatable {
 }
 
 /// Heuristics for locating the Claude panel within a full Xcode-window AX tree.
-/// All fields are optional and unverified against a real tree (CLAUDE.md
-/// section 18) — they are tuned once an AX dump exists.
+/// Verified against a real Xcode AX dump (2026-08-31) — values now reflect
+/// actual Xcode structure.
 public struct PanelHints: Codable, Equatable, Sendable {
     /// `AXIdentifier` values that mark the panel container, most specific first.
     public var identifiers: [String]
@@ -228,19 +228,24 @@ public struct PanelHints: Codable, Equatable, Sendable {
     public var anchorTexts: [String]
     /// Roles a panel container is likely to have.
     public var containerRoles: [String]
+    /// AX node that appears at the end of every completed Claude response.
+    /// Used to locate the "current turn" tail within the panel's chat history.
+    public var completedTurnMarker: CompletedTurnMarker?
 
     public init(
         identifiers: [String] = [],
         anchorTexts: [String] = [],
-        containerRoles: [String] = []
+        containerRoles: [String] = [],
+        completedTurnMarker: CompletedTurnMarker? = nil
     ) {
         self.identifiers = identifiers
         self.anchorTexts = anchorTexts
         self.containerRoles = containerRoles
+        self.completedTurnMarker = completedTurnMarker
     }
 
     private enum CodingKeys: String, CodingKey {
-        case identifiers, anchorTexts, containerRoles
+        case identifiers, anchorTexts, containerRoles, completedTurnMarker
     }
 
     public init(from decoder: any Decoder) throws {
@@ -248,9 +253,23 @@ public struct PanelHints: Codable, Equatable, Sendable {
         identifiers = try c.decodeIfPresent([String].self, forKey: .identifiers) ?? []
         anchorTexts = try c.decodeIfPresent([String].self, forKey: .anchorTexts) ?? []
         containerRoles = try c.decodeIfPresent([String].self, forKey: .containerRoles) ?? []
+        completedTurnMarker = try c.decodeIfPresent(CompletedTurnMarker.self, forKey: .completedTurnMarker)
     }
 
     public var isEmpty: Bool {
         identifiers.isEmpty && anchorTexts.isEmpty && containerRoles.isEmpty
+    }
+}
+
+/// Identifies the AX node that ends a completed Claude response turn.
+/// Verified: Xcode appends an AXButton with descriptionText "Report Concern"
+/// after every finished response (2026-08-31 AX dump).
+public struct CompletedTurnMarker: Codable, Equatable, Sendable {
+    public var role: String
+    public var descriptionText: String
+
+    public init(role: String, descriptionText: String) {
+        self.role = role
+        self.descriptionText = descriptionText
     }
 }

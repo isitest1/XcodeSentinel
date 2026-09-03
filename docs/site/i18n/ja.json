@@ -12,122 +12,170 @@
   "footer": {
     "disclaimer": "XcodeSentinel は Anthropic および Apple の公式製品ではありません。利用量制限を回避・延長するものではありません。",
     "portfolio": "作者の他のプロジェクト",
-    "portfolioUrl": "https://isitest1.github.io/portfolio-hub/ja"
+    "portfolioUrl": "https://isitest1.github.io/portfolio-hub",
+    "contact": "お問い合わせ"
   },
   "common": {
     "notOfficial": "Anthropic・Apple とは無関係です。「Xcode」「Claude」は各社の商標です。",
-    "noBypass": "XcodeSentinel は利用量制限を回避・延長・迂回しません。制限が解除されたあとに、ユーザー自身のセッションを再開するだけです。制限中に送信を続けることはしません。",
+    "noBypass": "⚠️ XcodeSentinel は利用量制限を回避・延長・迂回しません。制限が解除されたあとに、ユーザー自身のセッションを再開するだけです。",
     "xcodeOnly": "対象は Xcode 内蔵の Claude 連携のみです。VS Code 拡張とターミナルの Claude Code には公式の自動継続があるため対象外です。",
-    "noAppStore": "Mac App Store では配布しません。アクセシビリティ API で他アプリを操作するアプリは、App Store が要求する App Sandbox では動作できないためです。配布は GitHub Releases のみです。",
-    "signed": "ビルドは Developer ID で署名し、Apple の notarization 済みです。"
+    "noAppStore": "Mac App Store では配布しません。アクセシビリティ API で他アプリを操作するアプリは App Sandbox では動作できないためです。配布は GitHub Releases のみです。",
+    "signed": "✅ ビルドは Developer ID で署名し、Apple の notarization 済みです。"
   },
   "index": {
-    "pageTitle": "Xcode の Claude セッションを止めない",
-    "pageDescription": "Xcode 内の Claude コーディングセッションを監視し、停止したら自動で再開する macOS メニューバーアプリ。",
-    "heroTitle": "Xcode の Claude セッションを止めない",
-    "heroLead": "Xcode 内の Claude コーディングセッションを監視し、停止したら自動で再開する macOS メニューバーユーティリティ。席を外している間に何時間も止まったまま放置されるのを防ぎます。",
-    "download": "ダウンロード（GitHub Releases）",
-    "viewSource": "ソースを見る",
+    "pageTitle": "XcodeSentinel — Xcode の Claude セッションを止めない",
+    "pageDescription": "Xcode 内の Claude コーディングセッションを監視し、停止したら自動で再開する macOS メニューバーアプリ。無料・オープンソース。",
+    "heroTitle": "<em>Xcode の Claude</em> セッションを止めない",
+    "heroLead": "席を外して戻ってきたら、Claude が止まっていた——そんな経験はありませんか。XcodeSentinel が Xcode ウィンドウを監視し、自動で再開します。",
+    "heroBadge": "無料 & オープンソース · macOS 15+",
+    "download": "⬇ macOS 版をダウンロード",
+    "viewSource": "ソースを見る →",
+    "heroMeta": "macOS 15 以降 · Developer ID 署名・notarization 済 · 無料",
+    "downloadTitle": "XcodeSentinel をダウンロード",
+    "downloadSubtitle": "無料・オープンソース・Developer ID 署名済みです。",
+    "downloadMeta": "macOS 15 以降 · Developer ID 署名・notarization 済 · 無料",
+    "downloadBtn": "最新リリースをダウンロード",
+    "downloadGithub": "GitHub で見る",
     "problemTitle": "解決する課題",
-    "problemBody": "<p>Xcode で Claude にコードを書かせて席を外すと、次の理由で何時間も止まったままになります。</p><ul><li>5 時間のローリング利用量制限に達した</li><li>週次の利用量上限に達した</li><li>出力が長く「続ける」待ちになっている</li></ul><p>外出中は気づけず、制限が解除されても止まったままです。</p>",
+    "problemBody": "<p>Xcode で Claude にコードを書かせて席を外すと、次の理由でセッションが何時間も止まったままになります：</p><ul><li><strong>5 時間のローリング利用量制限</strong>に達した</li><li><strong>週次の利用量上限</strong>に達し、5 時間待っても解除されない</li><li>出力が長く Claude が<strong>「続ける」待ち</strong>になっている</li></ul><p>外出中は気づけず、制限が自然解除されても止まったままです。</p>",
     "solutionTitle": "できること",
-    "solutionBody": "<ul><li>登録した Xcode ウィンドウの Claude パネルをアクセシビリティ API で監視（スクリーンショットや OCR は使いません）。</li><li>制限が解除されたら<em>ユーザー自身</em>のセッションを再開。優先度順に、間隔を空けて 1 つずつ。</li><li>ローカルと任意の Webhook で通知するので、外出先からでも状況がわかります。</li></ul>",
+    "solutionBody": "<p>XcodeSentinel はメニューバーで静かに動き、登録した各 Xcode ウィンドウの Claude パネルをアクセシビリティ API で監視します。スクリーンショットも OCR も使いません。</p><ul><li>制限が解除されたら<em>ユーザー自身</em>のセッションを再開。優先度順に、間隔を空けて 1 つずつ。</li><li>macOS 通知と任意の Webhook（ntfy / Pushover / Discord / Slack）で通知するので、外出先のスマートフォンでも状況がわかります。</li><li>状態が判定できないときは通知のみで何もしません。unknown のまま送信しません。</li></ul>",
     "featuresTitle": "主な機能",
-    "featuresBody": "<div class=\"grid\"><div class=\"card\"><b>状態検出</b><br>idle / working / 続行待ち / セッション制限 / 週次制限 / 承認待ち / 質問待ち / エラー。パターンは編集可能。</div><div class=\"card\"><b>安全な自動再開</b><br>1 停止につき 1 回（同理由の再発でもう 1 回）、1 日あたりの上限、クールダウン、Dry-run モード。</div><div class=\"card\"><b>再開スケジューラ</b><br>優先度付きキュー、既定は 1 つずつ、投入間隔、Quiet Hours。</div><div class=\"card\"><b>外出先への通知</b><br>汎用 Webhook（ntfy / Pushover / Discord / Slack プリセット）。対象名・状態・時刻のみ。</div><div class=\"card\"><b>AX Inspector</b><br>ウィンドウのアクセシビリティツリーを JSON にエクスポート。Issue 報告や回帰テストに。</div><div class=\"card\"><b>推測しない</b><br>状態が判別できないときは通知のみで何もしません。unknown のまま送信しません。</div></div>",
+    "featuresBody": "<div class=\"grid\"><div class=\"card\"><span class=\"card-icon\">🔍</span><b>スマートな状態検出</b><p>8 種の状態を識別：idle / working / 続行待ち / セッション制限 / 週次制限 / 承認待ち / 質問待ち / エラー。Patterns.json で編集可能・再ビルド不要。</p></div><div class=\"card\"><span class=\"card-icon\">🛡️</span><b>安全な自動再開</b><p>1 停止につき 1 回（同理由再発で 2 回目）、1 日上限（既定 12）、クールダウン、何も送信しない <strong>Dry-run モード</strong>。unknown・承認待ちでは一切動作しません。</p></div><div class=\"card\"><span class=\"card-icon\">📋</span><b>再開スケジューラ</b><p>優先度付きキュー。既定 1 つずつ（最大 3）、90 秒間隔で投入。Quiet Hours 設定付き。</p></div><div class=\"card\"><span class=\"card-icon\">📲</span><b>外出先への通知</b><p>汎用 Webhook（ntfy / Pushover / Discord / Slack プリセット）。対象名・状態・タイムスタンプのみ。チャット本文やソースコードは送信しません。</p></div><div class=\"card\"><span class=\"card-icon\">🔬</span><b>AX Inspector</b><p>ウィンドウのアクセシビリティツリーを JSON でエクスポート。Xcode 更新後に検出が壊れたときの Issue 報告や、回帰テストのフィクスチャとして使えます。</p></div><div class=\"card\"><span class=\"card-icon\">⚡</span><b>軽量</b><p>メニューバー常駐のみ、Dock アイコンなし。Swift 6 製・外部依存なし。アクセシビリティ API のみ使用——画面収録権限は不要です。</p></div></div>",
+    "screenshotsTitle": "スクリーンショット",
+    "screenshotsNote": "スクリーンショットは最初のタグ付きリリース時に追加します。",
+    "screenshotsItems": [
+      "メニューバーアイコンとステータスドロップダウン",
+      "対象の追加 — 起動中の Xcode ウィンドウ一覧",
+      "Test Detection の結果",
+      "AX Inspector ツリー表示",
+      "スケジューラ & Quiet Hours 設定",
+      "Webhook 通知の設定"
+    ],
+    "howToInstallTitle": "3 ステップでインストール",
+    "howToInstallSteps": [
+      { "title": "DMG をダウンロード", "body": "GitHub Releases から最新の <code>.dmg</code> を取得し、ダブルクリックしてマウントします。" },
+      { "title": "Applications にドラッグ", "body": "<strong>XcodeSentinel</strong> を Applications フォルダにドラッグ。起動するとメニューバーに常駐します（Dock アイコンなし）。" },
+      { "title": "アクセシビリティ権限を許可", "body": "初回起動時にシステム設定 → プライバシー → アクセシビリティが開きます。XcodeSentinel を有効にします。画面収録権限は不要です。" }
+    ],
     "requirementsTitle": "動作要件",
-    "requirementsBody": "<ul><li>macOS 15 以降</li><li>Claude 連携付きの Xcode</li><li>アクセシビリティ権限（プライバシーのページで説明）</li></ul>",
+    "requirementsBody": "<ul><li><strong>macOS 15</strong>（Sequoia）以降</li><li>Claude 連携が有効な Xcode</li><li>アクセシビリティ権限（詳細は<a href=\"privacy.html\">プライバシー</a>のページ）</li></ul>",
     "limitsTitle": "これは何ではないか",
-    "otherProjectsTitle": "作者の他のプロジェクト",
-    "otherProjectsBody": "<p>他のアプリやツールは<a href=\"https://isitest1.github.io/portfolio-hub/ja\">ポートフォリオハブ</a>を参照してください。</p>"
+    "contactTitle": "お問い合わせ",
+    "contactBody": "不具合報告・Xcode 更新後の AX 構造変更の報告は <a href=\"https://github.com/isitest1/XcodeSentinel/issues\">GitHub Issue</a> またはメールでお知らせください。",
+    "otherProjectsTitle": "作者について",
+    "otherProjectsBody": "<p>個人開発者によるツールです。他のアプリやツールは<a href=\"https://isitest1.github.io/portfolio-hub\">ポートフォリオハブ</a>をご覧ください。</p>"
   },
   "gettingStarted": {
-    "pageTitle": "はじめに",
-    "pageDescription": "XcodeSentinel をインストールし、最初の Xcode 対象を登録します。",
+    "pageTitle": "はじめに — XcodeSentinel",
+    "pageDescription": "XcodeSentinel をインストールし、5 分で最初の Xcode 対象を登録します。",
     "heading": "はじめに",
-    "installTitle": "1. インストール",
-    "installBody": "<ol><li><a href=\"https://github.com/isitest1/XcodeSentinel/releases/latest\">GitHub Releases</a> から最新の <code>.dmg</code> をダウンロードします。</li><li>DMG を開き、<b>XcodeSentinel</b> を Applications にドラッグします。</li><li>起動します。Dock アイコンはなく、メニューバーに常駐します。</li></ol>",
+    "headingLead": "ダウンロードから最初の監視セッション開始まで、約 5 分で完了します。",
+    "installTitle": "1. ダウンロード & インストール",
+    "installBody": "<ol><li><a href=\"https://github.com/isitest1/XcodeSentinel/releases/latest\">GitHub Releases</a> から最新の <code>.dmg</code> をダウンロードします。</li><li>DMG を開き、<strong>XcodeSentinel</strong> を Applications フォルダにドラッグします。</li><li>起動します。Dock アイコンはなく、メニューバーに常駐します。</li></ol>",
     "gatekeeperTitle": "2. 初回起動（Gatekeeper）",
-    "gatekeeperBody": "<p>Developer ID 署名 + notarization 済みなので通常のダブルクリックで起動できます。macOS がブロックする場合は、アプリを右クリック →「開く」→「開く」を 1 回だけ実行してください。</p>",
+    "gatekeeperBody": "<p>Developer ID 署名 + notarization 済みのため、通常のダブルクリックで起動できます。macOS がブロックする場合は、Finder でアプリを右クリック →「<strong>開く</strong>」→「<strong>開く</strong>」を 1 回実行してください。以降は不要です。</p>",
     "permissionTitle": "3. アクセシビリティ権限の許可",
-    "permissionBody": "<p>初回起動時にアクセシビリティ権限を要求し、<b>システム設定 → プライバシーとセキュリティ → アクセシビリティ</b>を開きます。そこで XcodeSentinel を有効にしてください。画面収録権限は要求<b>しません</b>。</p>",
-    "targetTitle": "4. 対象を追加",
-    "targetBody": "<ol><li>設定 →<b>Targets</b> →<b>Add Target…</b></li><li>実行中の Xcode ウィンドウを一覧から選びます。</li><li>表示名と再開文言を入力します（既定:「Please continue from where you stopped.」）。</li><li><b>Test Detection</b> を押し、運用前に Claude パネルを検出できることを確認します。</li></ol>",
-    "dryRunTitle": "5. Dry-run で開始",
-    "dryRunBody": "<p>最初の 1 日は <b>Dry-run</b>（設定 → Scheduler）を有効にします。検出は通常どおり動きますが送信はせず、「何を送るはずだったか」がログに記録されます。検出を信頼できたら解除してください。</p>",
-    "screenshotsNote": "スクリーンショットは最初のタグ付きリリースで追加します。"
+    "permissionBody": "<p>初回起動時にアクセシビリティ権限を要求し、<strong>システム設定 → プライバシーとセキュリティ → アクセシビリティ</strong>を開きます。XcodeSentinel を有効にしてください。画面収録権限は要求<strong>しません</strong>。アクセシビリティの属性のみを読み取り、画面のピクセルは一切使用しません。</p>",
+    "targetTitle": "4. 対象を登録",
+    "targetBody": "<ol><li>メニューバーアイコン → <strong>設定</strong> → <strong>Targets</strong> → <strong>Add Target…</strong></li><li>実行中の Xcode ウィンドウをリストから選びます（ワークスペース名で識別されます）。</li><li>表示名と再開文言を入力します（既定:「Please continue from where you stopped.」）。</li><li><strong>Test Detection</strong> を押して、Claude パネルを検出できることを確認してから運用を開始してください。</li></ol>",
+    "dryRunTitle": "5. Dry-run モードで開始",
+    "dryRunBody": "<p>最初の 1～2 日は <strong>Dry-run</strong>（設定 → Scheduler）を有効のままにします。検出は通常どおり動きますが送信はせず、ログに「何を送るはずだったか」が記録されます。検出結果を信頼できたら無効にしてください。</p>",
+    "screenshotsNote": "スクリーンショットは最初のタグ付きリリース時に追加します。"
   },
   "guide": {
-    "pageTitle": "ガイド",
-    "pageDescription": "全機能：対象、検出パターン、スケジューラ、Quiet Hours、Webhook 通知。",
+    "pageTitle": "ガイド — XcodeSentinel",
+    "pageDescription": "全機能の詳細：対象、検出パターン、スケジューラ、Quiet Hours、Webhook 通知。",
     "heading": "ガイド",
+    "headingLead": "XcodeSentinel の設定と使い方をすべて説明します。",
     "targetsTitle": "対象（Target）",
-    "targetsBody": "<p>対象は監視する Xcode ウィンドウ 1 つです。ワークスペースのパスと表示名で永続化し、起動ごとに live ウィンドウへ再解決します（Xcode を再起動すると PID が変わるため）。対象ごとの設定：優先度、再開文言、1 日あたりの自動再開上限、再開間隔の最小値、停止時通知、破壊的停止に手動承認を要求するか。</p>",
+    "targetsBody": "<p><em>対象</em>とは監視する Xcode ウィンドウ 1 つです。ワークスペースのパスと表示名で永続化し、起動ごとに live ウィンドウへ再解決します（Xcode を再起動すると PID が変わるため）。対象ごとの設定：</p><ul><li><strong>Priority</strong> — 低い値ほど再開キューで優先されます</li><li><strong>Resume prompt</strong> — 送信される文言（既定:「Please continue from where you stopped.」）</li><li><strong>1 日あたりの自動再開上限</strong> — 既定 12</li><li><strong>再開間隔の最小値</strong> — 既定 120 秒</li><li><strong>停止時通知</strong></li><li><strong>破壊的停止に手動承認を要求するか</strong></li></ul>",
     "detectionTitle": "検出パターン",
-    "detectionBody": "<p>状態はアクセシビリティのテキストから読み取り、<code>Patterns.json</code>（設定画面で編集可、再ビルド不要）のルールと照合します。各ルールは <code>anyOf</code> / <code>allOf</code> / <code>noneOf</code> の部分文字列、任意の role 制約、有効フラグを持ちます。最初にマッチしたルールが採用されるため、具体的なルール（週次制限）を一般的なルール（セッション制限）より前に置きます。「Test Detection」は判定結果と、惜しかったルールを表示します。</p>",
+    "detectionBody": "<p>状態はアクセシビリティのテキストから読み取り、<code>Patterns.json</code>（設定画面 → Detection で編集可、再ビルド不要）のルールと照合します。各ルールは <code>anyOf</code> / <code>allOf</code> / <code>noneOf</code> の部分文字列リスト、任意の role 制約、有効フラグを持ちます。最初にマッチしたルールが採用されるため、具体的なルール（週次制限）を一般的なルール（セッション制限）より前に置いてください。<strong>Test Detection</strong> は判定結果と惜しかったルールを表示します——Xcode 更新後は必ず確認しましょう。</p>",
     "schedulerTitle": "再開スケジューラ",
-    "schedulerBody": "<p>再開可能になった対象は即時実行せずキューに積みます。キューは優先度順、次に停止してからの経過時間順です。既定：同時 1 件（最大 3）、投入間隔 90 秒。制限状態はリセット時刻まで発火を保留します。</p>",
+    "schedulerBody": "<p>再開可能になった対象は即時実行せず<em>キューに積みます</em>。キューは優先度順、次に停止してからの経過時間順です。既定：</p><ul><li>同時 1 件（最大 3 まで設定可）</li><li>キュー投入間隔 90 秒</li><li>制限状態は掲示されたリセット時刻まで発火を保留</li></ul>",
     "quietHoursTitle": "Quiet Hours",
-    "quietHoursBody": "<p>時間帯（例：23:00–07:00）を設定すると、その間は通知のみで再開しません。日をまたぐ時間帯にも対応します。</p>",
+    "quietHoursBody": "<p>日次の時間帯（例：23:00–07:00）を設定すると、その間は通知のみで再開しません。日をまたぐ時間帯にも対応します。就寝中は再開しないように設定する際に便利です。</p>",
     "safetyTitle": "安全上限",
-    "safetyBody": "<ul><li>1 停止につき自動再開 1 回。同理由で再発した場合のみ 2 回目。3 回目で停止して通知。</li><li>対象ごとの 1 日上限（既定 12）。</li><li>再開間のクールダウン（既定 120 秒）。</li><li>承認プロンプトや Claude の質問には自動応答しない（通知のみ）。</li><li>Dry-run：検出のみ、送信しない。</li></ul>",
+    "safetyBody": "<ul><li>1 停止につき自動再開 1 回。同理由で再発した場合のみ 2 回目。3 回目で停止して通知。</li><li>対象ごとの 1 日上限（既定 12）。深夜 0 時にリセット。</li><li>再開間のクールダウン（既定 120 秒）。</li><li><code>awaitingApproval</code> / <code>awaitingUserAnswer</code> には自動応答しない（通知のみ）。</li><li><code>unknown</code> / <code>errored</code> でも何もしない。</li><li>Dry-run：検出のみ、送信しない。</li></ul>",
     "webhookTitle": "Webhook 通知",
-    "webhookBody": "<p>エンドポイント URL を設定し、プリセット（ntfy / Pushover / Discord / Slack）か、<code>{{title}}</code> / <code>{{message}}</code> / <code>{{timestamp}}</code> を使うカスタム JSON テンプレートを選びます。送信内容は対象の表示名・状態・時刻のみで、チャット本文やソースコードは含めません。</p>",
+    "webhookBody": "<p>エンドポイント URL を設定し、プリセット（ntfy / Pushover / Discord / Slack）か、<code>{{title}}</code> / <code>{{message}}</code> / <code>{{timestamp}}</code> を使うカスタム JSON テンプレートを選びます。送信内容は対象の表示名・状態・タイムスタンプのみ——<strong>チャット本文やソースコードは含めません</strong>。</p>",
     "axInspectorTitle": "AX Inspector",
-    "axInspectorBody": "<p>Debug → AX Inspector で、選んだウィンドウのアクセシビリティツリーを role / title / value / identifier 付きで表示し、マッチ中のパターンをハイライトし、ツリーを JSON でエクスポートします。Issue 報告にはその JSON を添付してください（実在のプロジェクト名やパスが含まれないことを確認してから）。</p>"
+    "axInspectorBody": "<p>Debug → AX Inspector で、選んだウィンドウのアクセシビリティツリーを role / title / value / identifier 付きで表示し、マッチ中のパターンをハイライトし、ツリーを JSON でエクスポートします。Xcode 更新後に検出が壊れた際は、その JSON を添付して GitHub Issue を作成してください（実在のプロジェクト名やパスが含まれないことを確認してから）。</p>"
   },
   "troubleshooting": {
-    "pageTitle": "トラブルシューティング",
-    "pageDescription": "検出失敗、権限の喪失、Xcode 更新、AX Inspector の使い方。",
+    "pageTitle": "トラブルシューティング — XcodeSentinel",
+    "pageDescription": "検出失敗、権限の喪失、Xcode 更新後の対処、AX Inspector の使い方。",
     "heading": "トラブルシューティング",
     "detectionTitle": "状態が常に「unknown」",
-    "detectionBody": "<ol><li>Debug → AX Inspector で対象ウィンドウのツリーをダンプします。</li><li>Claude パネルの要素が見えない場合、パネルが独立ウィンドウの可能性があります。対象を登録し直します。</li><li>テキストはあるが文言が変わっている場合、設定 → Detection で <code>Patterns.json</code> を更新します。</li><li>「unknown」が 3 回連続すると監視は一時停止し通知します。原因を直してから再開してください。</li></ol>",
+    "detectionBody": "<ol><li>Debug → <strong>AX Inspector</strong> で対象ウィンドウのツリーをダンプします。</li><li>Claude パネルの要素が見えない場合、パネルが独立ウィンドウの可能性があります。対象を削除して登録し直してください。</li><li>テキストはあるが文言が変わっている場合（Xcode 更新後によくある）、設定 → Detection で <code>Patterns.json</code> を更新します。</li><li>「unknown」が 3 回連続すると監視は一時停止し通知します。原因を直してから「監視を再開」を押してください。</li></ol>",
     "permissionTitle": "アクセシビリティ権限が外れた",
     "permissionBody": "<p>アプリの再署名や OS アップデートで権限が失われることがあります。アプリが検出して通知します。システム設定 → プライバシーとセキュリティ → アクセシビリティで XcodeSentinel を再度有効にしてください。</p>",
     "xcodeTitle": "Xcode 更新後に検出が壊れた",
-    "xcodeBody": "<p>Xcode の Claude パネルのアクセシビリティ構造は非公開で、バージョン間で変わり得ます。多くは <code>Patterns.json</code> の更新で対応できます。構造自体が変わった場合は、AX Inspector のダンプを添えて Issue を作成してください。</p>",
+    "xcodeBody": "<p>Xcode の Claude パネルのアクセシビリティ構造は非公開で、バージョン間で変わり得ます。多くは <code>Patterns.json</code> の更新（設定 → Detection）で対応できます。構造自体が変わった場合は、AX Inspector のダンプを添えて GitHub Issue を作成してください。</p>",
     "noResumeTitle": "自動再開されない",
     "noResumeBody": "<p>多くは意図どおりです。<code>awaitingApproval</code> / <code>awaitingUserAnswer</code> / <code>unknown</code> / <code>errored</code> では自動再開しません。それ以外では、1 日上限・クールダウン・停止ごとのリトライ上限・Dry-run モード・Quiet Hours を確認してください。</p>",
     "weeklyTitle": "週次制限が解除されない",
-    "weeklyBody": "<p>週次制限は 5 時間経ってもリセットされません。<code>weeklyLimited</code> では長い待機（約 30 分間隔で再確認）に切り替えて通知します。</p>",
+    "weeklyBody": "<p>週次制限は 5 時間経ってもリセットされません。<code>weeklyLimited</code> では長い待機（約 30 分間隔で再確認）に切り替えて通知します。制限を早くリセットすることはできません。</p>",
     "webhookTitle": "外出先への通知が届かない",
-    "webhookBody": "<p>設定 → Notifications でエンドポイント URL とテンプレートを確認してください。プリセット（ntfy / Pushover / Discord / Slack）が形式を補完します。</p>"
+    "webhookBody": "<p>設定 → Notifications でエンドポイント URL とテンプレートを確認してください。プリセット（ntfy / Pushover / Discord / Slack）が必要なフォーマットを自動で補完します。設定画面のテスト送信ボタンで確認できます。</p>"
   },
   "privacy": {
-    "pageTitle": "プライバシー",
-    "pageDescription": "XcodeSentinel が読み取るもの、送信するもの、送信しないもの。",
+    "pageTitle": "プライバシー — XcodeSentinel",
+    "pageDescription": "XcodeSentinel が読み取るもの、送信するもの、決して送信しないもの。",
     "heading": "プライバシー",
+    "headingLead": "XcodeSentinel はアクセスする情報を最小限に抑え、透明性を保つよう設計されています。",
     "readsTitle": "読み取るもの",
-    "readsBody": "<p>登録したウィンドウについて、アクセシビリティ API 経由で Claude パネルの要素の role・title・value・identifier と階層を読み取ります。これによりセッションの状態を検出し、入力欄と送信ボタンを特定します。</p>",
+    "readsBody": "<p>登録したウィンドウについて、macOS アクセシビリティ API 経由で Claude パネル内の要素の<strong>role・title・value・identifier と階層</strong>を読み取ります。これによりセッションの状態を検出し、入力欄と送信ボタンを特定します。</p><p>ピクセルの内容は<strong>一切読み取りません</strong>。スクリーンショットも OCR も使用しません。</p>",
     "sendsTitle": "送信するもの",
-    "sendsBody": "<ul><li>ローカルの macOS 通知：対象名・状態・次アクション。</li><li>任意の Webhook（設定した場合のみ）：対象の表示名・状態・タイムスタンプ。</li></ul>",
+    "sendsBody": "<ul><li><strong>ローカルの macOS 通知：</strong>対象の表示名・状態・次アクション。</li><li><strong>任意の Webhook（URL を設定した場合のみ）：</strong>対象の表示名・状態・タイムスタンプ。</li></ul>",
     "neverTitle": "決して送信しないもの",
-    "neverBody": "<ul><li>チャットの内容。</li><li>ソースコードやファイルの内容。</li><li>Webhook ペイロード内の実在のファイルパスやプロジェクト名。</li></ul><p>より多くを含み得る詳細デバッグログはオプトインで、既定では無効です。ログは既定でチャット本文を記録しません。</p>",
+    "neverBody": "<ul><li>チャットメッセージの内容。</li><li>ソースコードやファイルの内容。</li><li>Webhook ペイロード内の実在のファイルパスやプロジェクト名。</li></ul><p>より多くを含み得る詳細デバッグログはオプトインで、既定では無効です。どの既定設定でも、ログはチャット本文を記録しません。</p>",
     "permsTitle": "権限",
-    "permsBody": "<ul><li><b>アクセシビリティ</b> — 上記のために必須。</li><li><b>画面収録</b> — 使用しません。スクリーンショットも OCR もありません。</li></ul>",
+    "permsBody": "<ul><li><strong>アクセシビリティ</strong> — パネルの状態を読み取り、入力を送信するために必須。</li><li><strong>画面収録</strong> — 使用しません。スクリーンショットも OCR もありません。</li><li><strong>通知</strong> — 初回起動時に要求。ローカル通知のみに使用。</li></ul>",
     "networkTitle": "ネットワーク",
-    "networkBody": "<p>アナリティクス・トラッキング・テレメトリはありません。外向きの通信は、あなたが設定した Webhook を、あなたが指定した URL へ送るものだけです。</p>"
+    "networkBody": "<p>アナリティクス・トラッキング・テレメトリはありません。外向きの通信は、あなたが設定した Webhook を、あなたが指定した URL へ送るものだけです。サーバーサイドのコンポーネントはありません。</p>"
   },
   "faq": {
-    "pageTitle": "FAQ",
+    "pageTitle": "FAQ — XcodeSentinel",
     "pageDescription": "スコープ・制限・App Store 配布・安全性に関するよくある質問。",
     "heading": "FAQ",
-    "q1": "これで利用量制限を回避できますか？",
-    "a1": "いいえ。制限を回避・延長・迂回しません。制限が解除されたあとにユーザー自身のセッションを再開するだけで、制限中に送信を続けることはしません。",
-    "q2": "なぜ Xcode 限定ですか？ VS Code やターミナルの Claude Code は？",
-    "a2": "Claude Code には公式の「利用量制限で自動継続」設定（既定で有効）があり、VS Code 拡張はその上に構築されているため恩恵を受けます。Xcode の Claude 連携は別系統の Apple の IDE 機能で、同等の仕組みがありません。その隙間がこのアプリの理由です。",
-    "q3": "なぜ Mac App Store にないのですか？",
-    "a3": "他アプリ（Xcode）をアクセシビリティ API で操作するため、App Store が要求する App Sandbox 内では動作できません。署名・notarization 済みの DMG を GitHub Releases で配布します。",
-    "q4": "無人で動かして安全ですか？",
-    "a4": "フェイルセーフに作られています：unknown 状態では動作せず、承認プロンプトや質問には応答せず、リトライと 1 日の再開回数に上限があり、Dry-run モードがあります。それでも安全設定を確認し、Dry-run で開始してください。",
-    "q5": "週次制限にも対応しますか？",
-    "a5": "週次制限を検出し、長い待機に切り替えて通知します。週次制限を早くリセットすることはできません。",
-    "q6": "これは Anthropic か Apple が作ったものですか？",
-    "a6": "いいえ。独立したツールです。「Xcode」「Claude」は各社の商標です。"
+    "headingLead": "よくある質問",
+    "items": [
+      {
+        "q": "これで利用量制限を回避できますか？",
+        "a": "<p>いいえ。制限を回避・延長・迂回しません。制限が解除されたあとにユーザー自身のセッションを再開するだけで、制限中に送信を続けることはしません。</p>"
+      },
+      {
+        "q": "なぜ Xcode 限定なのですか？ VS Code やターミナルの Claude Code は？",
+        "a": "<p>Claude Code には公式の「利用量制限で自動継続」設定（v2.1.234 以降、既定で有効）があり、VS Code 拡張はその上に構築されているため恩恵を受けます。Xcode の Claude 連携は別系統の Apple の IDE 機能で、同等の仕組みがありません。その空白がこのアプリの存在理由です。</p>"
+      },
+      {
+        "q": "なぜ Mac App Store にないのですか？",
+        "a": "<p>他アプリ（Xcode）をアクセシビリティ API で操作するため、App Store が要求する App Sandbox 内では動作できません。Developer ID 署名・notarization 済みの DMG を GitHub Releases で配布します。</p>"
+      },
+      {
+        "q": "無人で動かして安全ですか？",
+        "a": "<p>フェイルセーフに設計されています：unknown 状態では動作しない、承認プロンプトや Claude の質問には応答しない、リトライと 1 日の再開回数に上限がある、何も送信しない Dry-run モードがある。それでも安全設定を確認し、最初の 1 日は Dry-run で運用することを推奨します。</p>"
+      },
+      {
+        "q": "週次制限にも対応しますか？",
+        "a": "<p>週次制限を検出し、長い待機（約 30 分間隔）に切り替えて通知します。週次制限を早くリセットすることはできません。</p>"
+      },
+      {
+        "q": "Mac の画面がロック中でも動きますか？",
+        "a": "<p>画面がロックされている間、OS はキーイベントの配信をアプリにブロックします。XcodeSentinel はこの状態を検出し、保留中の再開をロック解除後まで延期して即座に実行します。監視（状態検出）はロック中も継続します。</p>"
+      },
+      {
+        "q": "これは Anthropic か Apple が作ったものですか？",
+        "a": "<p>いいえ。個人開発者による独立したオープンソースツールです。「Xcode」「Claude」は各社の商標です。</p>"
+      }
+    ]
   },
   "changelog": {
-    "pageTitle": "変更履歴",
+    "pageTitle": "変更履歴 — XcodeSentinel",
     "pageDescription": "XcodeSentinel のリリース履歴。",
     "heading": "変更履歴",
-    "body": "<p>正となる履歴はリポジトリの <a href=\"https://github.com/isitest1/XcodeSentinel/blob/main/CHANGELOG.md\">CHANGELOG.md</a> です。</p><h3>Unreleased</h3><ul><li>M1 — プロジェクトの土台、SentinelCore ロジックパッケージ、CI、ドキュメント。</li><li>M2 — 対象の再解決とパネル対応の検出。</li><li>M3 — 再開オーケストレーションのパイプライン。</li><li>M4 — Webhook ペイロード生成、メニューバー状態の集約、この Web サイト。</li></ul><p>タグ付きリリースはまだありません。</p>"
+    "body": "<p>正となる履歴はリポジトリの <a href=\"https://github.com/isitest1/XcodeSentinel/blob/main/CHANGELOG.md\">CHANGELOG.md</a> です。</p><h3>Unreleased</h3><ul><li>M1 — プロジェクトの土台、SentinelCore ロジックパッケージ、CI、ドキュメント。</li><li>M2 — 対象の再解決とパネル対応の検出。</li><li>M3 — 再開オーケストレーションのパイプライン。</li><li>M4 — Webhook ペイロード生成、メニューバー状態の集約、この Web サイト。</li><li>M5 — Developer ID 署名、notarization、DMG、GitHub Releases。</li></ul><p>タグ付きリリースはまだありません。</p>"
   }
 }

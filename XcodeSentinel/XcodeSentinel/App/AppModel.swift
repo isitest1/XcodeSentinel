@@ -92,6 +92,11 @@ final class AppModel {
     private let webhookStore: WebhookStore?
     private var notifier: Notifier = Notifier()
     private var timerTask: Task<Void, Never>?
+    /// True while the display is locked. CGEvent delivery is blocked by the OS
+    /// when locked, so we defer sends until after unlock.
+    private var isScreenLocked = false
+    /// Set when checkAndFire finds a due schedule during lock; cleared on unlock.
+    private var pendingFireAfterUnlock = false
 
     // MARK: - Init
 
@@ -106,7 +111,33 @@ final class AppModel {
         self.isAccessibilityTrusted = AccessibilityPermission.isTrusted
         self.notifier = Notifier(webhook: webhook.sender)
 
+        setupScreenLockObservers()
         Task { [weak self] in await self?.startTimer() }
+    }
+
+    private func setupScreenLockObservers() {
+        let center = DistributedNotificationCenter.default()
+        center.addObserver(
+            forName: NSNotification.Name("com.apple.screenIsLocked"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated { self?.isScreenLocked = true }
+        }
+        center.addObserver(
+            forName: NSNotification.Name("com.apple.screenIsUnlocked"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self else { return }
+                self.isScreenLocked = false
+                if self.pendingFireAfterUnlock {
+                    self.pendingFireAfterUnlock = false
+                    Task { await self.checkAndFire() }
+                }
+            }
+        }
     }
 
     private func startTimer() async {
@@ -123,8 +154,17 @@ final class AppModel {
     // MARK: - Fire
 
     /// Checks every 30 s; fires any enabled schedule whose sendAt has passed.
+    /// If the screen is locked, defers until unlock (CGEvent is blocked by the OS).
     private func checkAndFire() async {
         let now = Date()
+        let hasDue = schedules.contains { $0.isEnabled && $0.sendAt <= now }
+        guard hasDue else { return }
+
+        if isScreenLocked {
+            pendingFireAfterUnlock = true
+            return
+        }
+
         var changed = false
         for i in schedules.indices {
             guard schedules[i].isEnabled, schedules[i].sendAt <= now else { continue }

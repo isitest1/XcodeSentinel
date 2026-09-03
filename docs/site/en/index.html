@@ -3,19 +3,23 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>XcodeSentinel</title>
-    <meta name="description" content="XcodeSentinel — a macOS menu-bar app that resumes a stalled Claude session in Xcode." />
+    <title>XcodeSentinel — Keep Your Xcode Claude Sessions Running</title>
+    <meta name="description" content="A free macOS menu-bar app that watches the Claude coding session inside Xcode and resumes it automatically when it stalls." />
+    <meta name="keywords" content="Xcode, Claude, AI coding, macOS, menu bar, auto resume, usage limit, iOS development" />
+    <meta name="author" content="isitest1" />
     <link rel="canonical" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <link rel="alternate" hreflang="en" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <link rel="alternate" hreflang="ja" href="https://isitest1.github.io/XcodeSentinel/ja/" />
     <link rel="alternate" hreflang="x-default" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="XcodeSentinel" />
-    <meta property="og:title" content="XcodeSentinel" />
-    <meta property="og:description" content="Resume a stalled Claude session in Xcode, automatically." />
+    <meta property="og:title" content="XcodeSentinel — Keep Your Xcode Claude Sessions Running" />
+    <meta property="og:description" content="A free macOS menu-bar app that watches the Claude coding session inside Xcode and resumes it automatically when it stalls." />
     <meta property="og:url" content="https://isitest1.github.io/XcodeSentinel/en/" />
     <meta property="og:image" content="https://isitest1.github.io/XcodeSentinel/assets/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="XcodeSentinel — Keep Your Xcode Claude Sessions Running" />
+    <meta name="twitter:description" content="Auto-resume stalled Claude sessions in Xcode." />
     <link rel="icon" href="../assets/favicon.svg" />
     <link rel="stylesheet" href="../assets/style.css" />
   </head>
@@ -24,38 +28,165 @@
     <header id="site-header" class="site-header">
       <div class="wrap">
         <a class="brand" href="./">XcodeSentinel</a>
-        <nav>
-          <a href="./">Home</a>
-        </nav>
+        <nav><a href="./" class="active">Home</a></nav>
         <span class="lang-switch"><a href="../ja/">日本語</a></span>
       </div>
     </header>
+
     <main id="main">
-      <div class="wrap">
+
+      <!-- ── Hero ─────────────────────────────────────────────────── -->
       <section class="hero">
-        <h1 data-i18n="index.heroTitle"></h1>
-        <p class="lead" data-i18n="index.heroLead"></p>
-        <p><a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.download"></a>
-           <a class="btn secondary" href="https://github.com/isitest1/XcodeSentinel" data-i18n="index.viewSource"></a></p>
+        <div class="wrap">
+          <span class="hero-badge" data-i18n="index.heroBadge">Free &amp; Open Source · macOS 15+</span>
+          <h1 data-i18n-html="index.heroTitle">Keep Your <em>Xcode Claude</em> Sessions Running</h1>
+          <p class="lead" data-i18n="index.heroLead">Step away from your Mac and come back to a finished build, not a frozen Claude session.</p>
+          <div class="hero-cta">
+            <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.download">⬇ Download for macOS</a>
+            <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel" data-i18n="index.viewSource">View Source →</a>
+          </div>
+          <p class="hero-meta" data-i18n="index.heroMeta">macOS 15 or later · Developer ID signed · Notarized · Free</p>
+        </div>
       </section>
-      <p class="note" data-i18n="common.noBypass"></p>
-      <h2 data-i18n="index.problemTitle"></h2>
-      <div data-i18n-html="index.problemBody"></div>
-      <h2 data-i18n="index.solutionTitle"></h2>
-      <div data-i18n-html="index.solutionBody"></div>
-      <h2 data-i18n="index.featuresTitle"></h2>
-      <div data-i18n-html="index.featuresBody"></div>
-      <h2 data-i18n="index.requirementsTitle"></h2>
-      <div data-i18n-html="index.requirementsBody"></div>
-      <h2 data-i18n="index.limitsTitle"></h2>
-      <p class="note" data-i18n="common.xcodeOnly"></p>
-      <p class="note" data-i18n="common.noAppStore"></p>
-      <p class="note" data-i18n="common.signed"></p>
-      <p class="note" data-i18n="common.notOfficial"></p>
-      <h2 data-i18n="index.otherProjectsTitle"></h2>
-      <div data-i18n-html="index.otherProjectsBody"></div>
-      </div>
+
+      <!-- ── Body ──────────────────────────────────────────────────── -->
+      <div class="site-body">
+        <div class="wrap">
+
+          <!-- Download box -->
+          <div class="download-box">
+            <div class="download-box-icon">📦</div>
+            <div class="download-box-text">
+              <h3 data-i18n="index.downloadTitle">Download XcodeSentinel</h3>
+              <p data-i18n="index.downloadSubtitle">Free, open source, and signed with a Developer ID.</p>
+              <p data-i18n="index.downloadMeta">macOS 15+ · Developer ID signed &amp; notarized · Free</p>
+            </div>
+            <a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.downloadBtn">Download latest release</a>
+          </div>
+
+          <!-- Disclaimer -->
+          <p class="note" data-i18n="common.noBypass"></p>
+
+          <!-- Problem -->
+          <h2 data-i18n="index.problemTitle">The Problem</h2>
+          <div data-i18n-html="index.problemBody"></div>
+
+          <!-- Solution -->
+          <h2 data-i18n="index.solutionTitle">How It Works</h2>
+          <div data-i18n-html="index.solutionBody"></div>
+
+          <!-- Features -->
+          <h2 data-i18n="index.featuresTitle">Features</h2>
+          <div data-i18n-html="index.featuresBody"></div>
+
+          <!-- Screenshots -->
+          <h2 data-i18n="index.screenshotsTitle">Screenshots</h2>
+          <div class="screenshots-grid">
+            <figure>
+              <div class="screenshot-frame">
+                <div class="macos-bar">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <div class="screenshot-placeholder">
+                  <span>🖥️</span>
+                  <span>Menu bar &amp; status dropdown</span>
+                </div>
+              </div>
+              <figcaption>Menu bar icon showing monitored targets and their current state</figcaption>
+            </figure>
+            <figure>
+              <div class="screenshot-frame">
+                <div class="macos-bar">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <div class="screenshot-placeholder">
+                  <span>⚙️</span>
+                  <span>Settings — Add Target</span>
+                </div>
+              </div>
+              <figcaption>Register a target by picking from running Xcode windows</figcaption>
+            </figure>
+            <figure>
+              <div class="screenshot-frame">
+                <div class="macos-bar">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <div class="screenshot-placeholder">
+                  <span>🔬</span>
+                  <span>AX Inspector</span>
+                </div>
+              </div>
+              <figcaption>AX Inspector shows the Accessibility tree of the Claude panel</figcaption>
+            </figure>
+          </div>
+          <p class="note note-ok" data-i18n="index.screenshotsNote">Screenshots will be added with the first tagged release. Check back soon.</p>
+
+          <!-- How to install -->
+          <h2 data-i18n="index.howToInstallTitle">Install in 3 Steps</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h3>Download the DMG</h3>
+                <p>Grab the latest <code>.dmg</code> from <a href="https://github.com/isitest1/XcodeSentinel/releases/latest">GitHub Releases</a>. Double-click to mount it.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h3>Drag to Applications</h3>
+                <p>Drag <strong>XcodeSentinel</strong> to your Applications folder. Launch it — it lives in the menu bar with no Dock icon.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h3>Grant Accessibility permission</h3>
+                <p>On first run it opens System Settings → Privacy → Accessibility. Enable it there. No Screen Recording permission needed.</p>
+              </div>
+            </div>
+          </div>
+          <p><a class="btn secondary" href="getting-started.html">Full setup guide →</a></p>
+
+          <!-- Requirements -->
+          <h2 data-i18n="index.requirementsTitle">Requirements</h2>
+          <div data-i18n-html="index.requirementsBody"></div>
+
+          <!-- What it's not -->
+          <h2 data-i18n="index.limitsTitle">What It Is Not</h2>
+          <p class="note" data-i18n="common.xcodeOnly"></p>
+          <p class="note" data-i18n="common.noAppStore"></p>
+          <p class="note" data-i18n="common.signed"></p>
+          <p class="note" data-i18n="common.notOfficial"></p>
+
+          <!-- Contact -->
+          <h2 data-i18n="index.contactTitle">Contact</h2>
+          <div class="contact-box">
+            <div class="contact-box-icon">✉️</div>
+            <div class="contact-box-body">
+              <h3>Questions &amp; Bug Reports</h3>
+              <p data-i18n-html="index.contactBody">Questions, bug reports, or Xcode AX structure changes? Open a <a href="https://github.com/isitest1/XcodeSentinel/issues">GitHub Issue</a> or send an email.</p>
+              <p><a href="mailto:kouhei10@gmail.com">kouhei10@gmail.com</a></p>
+            </div>
+          </div>
+
+          <hr class="divider" />
+
+          <!-- Other projects -->
+          <h2 data-i18n="index.otherProjectsTitle">About the Author</h2>
+          <div data-i18n-html="index.otherProjectsBody"></div>
+
+        </div><!-- .wrap -->
+      </div><!-- .site-body -->
+
     </main>
+
     <footer id="site-footer" class="site-footer">
       <div class="wrap"><p>XcodeSentinel is not an official Anthropic or Apple product.</p></div>
     </footer>

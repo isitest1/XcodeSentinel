@@ -3,16 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>XcodeSentinel</title>
-    <meta name="description" content="XcodeSentinel — a macOS menu-bar app that resumes a stalled Claude session in Xcode." />
+    <title>XcodeSentinel — Xcode の Claude セッションを止めない</title>
+    <meta name="description" content="Xcode 内の Claude コーディングセッションを監視し、停止したら自動で再開する macOS メニューバーアプリ。無料・オープンソース。" />
+    <meta name="keywords" content="Xcode, Claude, AIコーディング, macOS, メニューバー, 自動再開, 利用量制限, iOS開発" />
+    <meta name="author" content="isitest1" />
     <link rel="canonical" href="https://isitest1.github.io/XcodeSentinel/ja/" />
     <link rel="alternate" hreflang="ja" href="https://isitest1.github.io/XcodeSentinel/ja/" />
     <link rel="alternate" hreflang="en" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <link rel="alternate" hreflang="x-default" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="XcodeSentinel" />
-    <meta property="og:title" content="XcodeSentinel" />
-    <meta property="og:description" content="Resume a stalled Claude session in Xcode, automatically." />
+    <meta property="og:title" content="XcodeSentinel — Xcode の Claude セッションを止めない" />
+    <meta property="og:description" content="Xcode 内の Claude コーディングセッションを監視し、停止したら自動で再開する macOS メニューバーアプリ。" />
     <meta property="og:url" content="https://isitest1.github.io/XcodeSentinel/ja/" />
     <meta property="og:image" content="https://isitest1.github.io/XcodeSentinel/assets/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -20,44 +22,171 @@
     <link rel="stylesheet" href="../assets/style.css" />
   </head>
   <body>
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">コンテンツへスキップ</a>
     <header id="site-header" class="site-header">
       <div class="wrap">
         <a class="brand" href="./">XcodeSentinel</a>
-        <nav>
-          <a href="./">Home</a>
-        </nav>
+        <nav><a href="./" class="active">ホーム</a></nav>
         <span class="lang-switch"><a href="../en/">English</a></span>
       </div>
     </header>
+
     <main id="main">
-      <div class="wrap">
+
+      <!-- ── Hero ─────────────────────────────────────────────────── -->
       <section class="hero">
-        <h1 data-i18n="index.heroTitle"></h1>
-        <p class="lead" data-i18n="index.heroLead"></p>
-        <p><a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.download"></a>
-           <a class="btn secondary" href="https://github.com/isitest1/XcodeSentinel" data-i18n="index.viewSource"></a></p>
+        <div class="wrap">
+          <span class="hero-badge" data-i18n="index.heroBadge">無料 &amp; オープンソース · macOS 15+</span>
+          <h1 data-i18n-html="index.heroTitle"><em>Xcode の Claude</em> セッションを止めない</h1>
+          <p class="lead" data-i18n="index.heroLead">席を外して戻ってきたら、Claude が止まっていた——そんな経験はありませんか。XcodeSentinel が監視し、自動で再開します。</p>
+          <div class="hero-cta">
+            <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.download">⬇ macOS 版をダウンロード</a>
+            <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel" data-i18n="index.viewSource">ソースを見る →</a>
+          </div>
+          <p class="hero-meta" data-i18n="index.heroMeta">macOS 15 以降 · Developer ID 署名・notarization 済 · 無料</p>
+        </div>
       </section>
-      <p class="note" data-i18n="common.noBypass"></p>
-      <h2 data-i18n="index.problemTitle"></h2>
-      <div data-i18n-html="index.problemBody"></div>
-      <h2 data-i18n="index.solutionTitle"></h2>
-      <div data-i18n-html="index.solutionBody"></div>
-      <h2 data-i18n="index.featuresTitle"></h2>
-      <div data-i18n-html="index.featuresBody"></div>
-      <h2 data-i18n="index.requirementsTitle"></h2>
-      <div data-i18n-html="index.requirementsBody"></div>
-      <h2 data-i18n="index.limitsTitle"></h2>
-      <p class="note" data-i18n="common.xcodeOnly"></p>
-      <p class="note" data-i18n="common.noAppStore"></p>
-      <p class="note" data-i18n="common.signed"></p>
-      <p class="note" data-i18n="common.notOfficial"></p>
-      <h2 data-i18n="index.otherProjectsTitle"></h2>
-      <div data-i18n-html="index.otherProjectsBody"></div>
-      </div>
+
+      <!-- ── Body ──────────────────────────────────────────────────── -->
+      <div class="site-body">
+        <div class="wrap">
+
+          <!-- Download box -->
+          <div class="download-box">
+            <div class="download-box-icon">📦</div>
+            <div class="download-box-text">
+              <h3 data-i18n="index.downloadTitle">XcodeSentinel をダウンロード</h3>
+              <p data-i18n="index.downloadSubtitle">無料・オープンソース・Developer ID 署名済みです。</p>
+              <p data-i18n="index.downloadMeta">macOS 15 以降 · Developer ID 署名・notarization 済 · 無料</p>
+            </div>
+            <a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.downloadBtn">最新リリースをダウンロード</a>
+          </div>
+
+          <!-- Disclaimer -->
+          <p class="note" data-i18n="common.noBypass"></p>
+
+          <!-- Problem -->
+          <h2 data-i18n="index.problemTitle">解決する課題</h2>
+          <div data-i18n-html="index.problemBody"></div>
+
+          <!-- Solution -->
+          <h2 data-i18n="index.solutionTitle">できること</h2>
+          <div data-i18n-html="index.solutionBody"></div>
+
+          <!-- Features -->
+          <h2 data-i18n="index.featuresTitle">主な機能</h2>
+          <div data-i18n-html="index.featuresBody"></div>
+
+          <!-- Screenshots -->
+          <h2 data-i18n="index.screenshotsTitle">スクリーンショット</h2>
+          <div class="screenshots-grid">
+            <figure>
+              <div class="screenshot-frame">
+                <div class="macos-bar">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <div class="screenshot-placeholder">
+                  <span>🖥️</span>
+                  <span>メニューバーとステータス表示</span>
+                </div>
+              </div>
+              <figcaption>監視中の対象と現在の状態を表示するメニューバードロップダウン</figcaption>
+            </figure>
+            <figure>
+              <div class="screenshot-frame">
+                <div class="macos-bar">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <div class="screenshot-placeholder">
+                  <span>⚙️</span>
+                  <span>設定 — 対象の追加</span>
+                </div>
+              </div>
+              <figcaption>起動中の Xcode ウィンドウ一覧から対象を選んで登録</figcaption>
+            </figure>
+            <figure>
+              <div class="screenshot-frame">
+                <div class="macos-bar">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <div class="screenshot-placeholder">
+                  <span>🔬</span>
+                  <span>AX Inspector</span>
+                </div>
+              </div>
+              <figcaption>Claude パネルのアクセシビリティツリーを表示する AX Inspector</figcaption>
+            </figure>
+          </div>
+          <p class="note note-ok" data-i18n="index.screenshotsNote">スクリーンショットは最初のタグ付きリリース時に追加します。</p>
+
+          <!-- How to install -->
+          <h2 data-i18n="index.howToInstallTitle">3 ステップでインストール</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h3>DMG をダウンロード</h3>
+                <p><a href="https://github.com/isitest1/XcodeSentinel/releases/latest">GitHub Releases</a> から最新の <code>.dmg</code> を取得し、ダブルクリックしてマウントします。</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h3>Applications にドラッグ</h3>
+                <p><strong>XcodeSentinel</strong> を Applications フォルダにドラッグ。起動するとメニューバーに常駐します（Dock アイコンなし）。</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h3>アクセシビリティ権限を許可</h3>
+                <p>初回起動時にシステム設定 → プライバシー → アクセシビリティが開きます。XcodeSentinel を有効にします。画面収録権限は不要です。</p>
+              </div>
+            </div>
+          </div>
+          <p><a class="btn secondary" href="getting-started.html">詳しいセットアップ手順 →</a></p>
+
+          <!-- Requirements -->
+          <h2 data-i18n="index.requirementsTitle">動作要件</h2>
+          <div data-i18n-html="index.requirementsBody"></div>
+
+          <!-- What it's not -->
+          <h2 data-i18n="index.limitsTitle">これは何ではないか</h2>
+          <p class="note" data-i18n="common.xcodeOnly"></p>
+          <p class="note" data-i18n="common.noAppStore"></p>
+          <p class="note" data-i18n="common.signed"></p>
+          <p class="note" data-i18n="common.notOfficial"></p>
+
+          <!-- Contact -->
+          <h2 data-i18n="index.contactTitle">お問い合わせ</h2>
+          <div class="contact-box">
+            <div class="contact-box-icon">✉️</div>
+            <div class="contact-box-body">
+              <h3>質問・バグ報告</h3>
+              <p data-i18n-html="index.contactBody">不具合報告・Xcode 更新後の AX 構造変更の報告は <a href="https://github.com/isitest1/XcodeSentinel/issues">GitHub Issue</a> またはメールでお知らせください。</p>
+              <p><a href="mailto:kouhei10@gmail.com">kouhei10@gmail.com</a></p>
+            </div>
+          </div>
+
+          <hr class="divider" />
+
+          <!-- Other projects -->
+          <h2 data-i18n="index.otherProjectsTitle">作者について</h2>
+          <div data-i18n-html="index.otherProjectsBody"></div>
+
+        </div><!-- .wrap -->
+      </div><!-- .site-body -->
+
     </main>
+
     <footer id="site-footer" class="site-footer">
-      <div class="wrap"><p>XcodeSentinel is not an official Anthropic or Apple product.</p></div>
+      <div class="wrap"><p>XcodeSentinel は Anthropic および Apple の公式製品ではありません。</p></div>
     </footer>
     <script src="../assets/site.js"></script>
   </body>

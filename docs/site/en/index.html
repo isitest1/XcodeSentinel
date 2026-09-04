@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>XcodeSentinel — Keep Your Xcode Claude Sessions Running</title>
-    <meta name="description" content="A free macOS menu-bar app that watches the Claude coding session inside Xcode and resumes it automatically when it stalls." />
-    <meta name="keywords" content="Xcode, Claude, AI coding, macOS, menu bar, auto resume, usage limit, iOS development" />
+    <meta name="description" content="A free macOS menu-bar app that watches the Claude coding session inside Xcode and automatically resumes it when it stalls — so you come back to a finished build, not a frozen session." />
+    <meta name="keywords" content="Xcode, Claude AI, macOS, menu bar app, auto resume, usage limit, iOS development, Swift, productivity" />
     <meta name="author" content="isitest1" />
     <link rel="canonical" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <link rel="alternate" hreflang="en" href="https://isitest1.github.io/XcodeSentinel/en/" />
@@ -14,12 +14,12 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="XcodeSentinel" />
     <meta property="og:title" content="XcodeSentinel — Keep Your Xcode Claude Sessions Running" />
-    <meta property="og:description" content="A free macOS menu-bar app that watches the Claude coding session inside Xcode and resumes it automatically when it stalls." />
+    <meta property="og:description" content="A free macOS menu-bar app that watches your Xcode Claude session and resumes it automatically when it stalls." />
     <meta property="og:url" content="https://isitest1.github.io/XcodeSentinel/en/" />
     <meta property="og:image" content="https://isitest1.github.io/XcodeSentinel/assets/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="XcodeSentinel — Keep Your Xcode Claude Sessions Running" />
-    <meta name="twitter:description" content="Auto-resume stalled Claude sessions in Xcode." />
+    <meta name="twitter:description" content="Auto-resume stalled Claude sessions in Xcode. Free, open source, macOS 15+." />
     <link rel="icon" href="../assets/favicon.svg" />
     <link rel="stylesheet" href="../assets/style.css" />
   </head>
@@ -37,150 +37,397 @@
 
       <!-- ── Hero ─────────────────────────────────────────────────── -->
       <section class="hero">
-        <div class="wrap">
-          <span class="hero-badge" data-i18n="index.heroBadge">Free &amp; Open Source · macOS 15+</span>
-          <h1 data-i18n-html="index.heroTitle">Keep Your <em>Xcode Claude</em> Sessions Running</h1>
-          <p class="lead" data-i18n="index.heroLead">Step away from your Mac and come back to a finished build, not a frozen Claude session.</p>
-          <div class="hero-cta">
-            <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.download">⬇ Download for macOS</a>
-            <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel" data-i18n="index.viewSource">View Source →</a>
+        <div class="wrap hero-wrap">
+
+          <!-- Left: text -->
+          <div class="hero-text">
+            <span class="hero-badge" data-i18n="index.heroBadge">Free &amp; Open Source · macOS 15+</span>
+            <h1 data-i18n-html="index.heroTitle">Keep Your <em>Xcode Claude</em> Sessions Running</h1>
+            <p class="lead" data-i18n="index.heroLead">Step away from your Mac and come back to a finished build — not a frozen Claude session. XcodeSentinel schedules automatic sends so the session keeps moving.</p>
+            <div class="hero-cta">
+              <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest">⬇ Download for macOS</a>
+              <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel">View Source →</a>
+            </div>
+            <p class="hero-meta" data-i18n="index.heroMeta">macOS 15 or later · Developer ID signed · Notarized · Free</p>
           </div>
-          <p class="hero-meta" data-i18n="index.heroMeta">macOS 15 or later · Developer ID signed · Notarized · Free</p>
+
+          <!-- Right: app mockup -->
+          <div class="hero-visual" aria-hidden="true">
+            <div class="app-mockup">
+              <div class="mk-popover">
+                <div class="mk-header">⏱ XcodeSentinel</div>
+
+                <div class="mk-row">
+                  <span class="mk-dot on"></span>
+                  <div class="mk-item-body">
+                    <div class="mk-name">FishingLog</div>
+                    <div class="mk-sub">3:00 AM · Daily</div>
+                    <div class="mk-msg">"Please continue from where you stopped."</div>
+                  </div>
+                  <div class="mk-toggle on"></div>
+                </div>
+
+                <div class="mk-row">
+                  <span class="mk-dot on"></span>
+                  <div class="mk-item-body">
+                    <div class="mk-name">XcodeSentinel</div>
+                    <div class="mk-sub">6:00 AM · Weekdays</div>
+                    <div class="mk-msg">"Continue with the next feature."</div>
+                  </div>
+                  <div class="mk-toggle on"></div>
+                </div>
+
+                <div class="mk-row">
+                  <span class="mk-dot off"></span>
+                  <div class="mk-item-body">
+                    <div class="mk-name">DemoKit</div>
+                    <div class="mk-sub">Disabled</div>
+                  </div>
+                  <div class="mk-toggle off"></div>
+                </div>
+
+                <div class="mk-divider"></div>
+
+                <div class="mk-section-label">Recent Activity</div>
+
+                <div class="mk-log-row">
+                  <span class="mk-log-icon ok">✓</span>
+                  <span class="mk-log-name">FishingLog</span>
+                  <span class="mk-log-msg"> — Sent</span>
+                  <span class="mk-log-time">03:02</span>
+                </div>
+                <div class="mk-log-row">
+                  <span class="mk-log-icon ok">✓</span>
+                  <span class="mk-log-name">XcodeSentinel</span>
+                  <span class="mk-log-msg"> — Sent</span>
+                  <span class="mk-log-time">06:01</span>
+                </div>
+                <div class="mk-log-row">
+                  <span class="mk-log-icon warn">⏳</span>
+                  <span class="mk-log-name">DemoKit</span>
+                  <span class="mk-log-msg"> — Screen locked, deferred</span>
+                  <span class="mk-log-time">22:45</span>
+                </div>
+
+                <div class="mk-divider"></div>
+
+                <div class="mk-action mk-row">
+                  <span class="mk-action-icon">+</span>Add schedule…
+                </div>
+                <div class="mk-action mk-row">
+                  <span class="mk-action-icon">⚙</span>Settings…
+                </div>
+                <div class="mk-action mk-row quit">
+                  <span class="mk-action-icon">⏻</span>Quit XcodeSentinel
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      <!-- ── Body ──────────────────────────────────────────────────── -->
+      <!-- ── Stats bar ──────────────────────────────────────────── -->
+      <div class="stats-bar">
+        <div class="wrap">
+          <div class="stats-inner">
+            <div class="stat">
+              <span class="stat-val">Free</span>
+              <span class="stat-label">Open Source<br>MIT License</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">0</span>
+              <span class="stat-label">Screen Recording<br>Required</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">Local</span>
+              <span class="stat-label">No Cloud<br>No Analytics</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">macOS 15+</span>
+              <span class="stat-label">Sequoia<br>and later</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Body ──────────────────────────────────────────────── -->
       <div class="site-body">
         <div class="wrap">
 
           <!-- Download box -->
-          <div class="download-box">
+          <div class="download-box" style="margin-top:40px">
             <div class="download-box-icon">📦</div>
             <div class="download-box-text">
-              <h3 data-i18n="index.downloadTitle">Download XcodeSentinel</h3>
-              <p data-i18n="index.downloadSubtitle">Free, open source, and signed with a Developer ID.</p>
-              <p data-i18n="index.downloadMeta">macOS 15+ · Developer ID signed &amp; notarized · Free</p>
+              <h3>Download XcodeSentinel</h3>
+              <p>Free, open source, Developer ID signed &amp; notarized.</p>
+              <p style="font-size:0.82rem;color:var(--muted);margin-top:4px">macOS 15 (Sequoia) or later required</p>
             </div>
-            <a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.downloadBtn">Download latest release</a>
+            <a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest">⬇ Download latest</a>
           </div>
 
-          <!-- Disclaimer -->
-          <p class="note" data-i18n="common.noBypass"></p>
+          <!-- Use-case scenario -->
+          <div class="scenario">
+            <p class="scenario-quote">
+              You kick off a long Claude coding session in Xcode at 11&nbsp;PM.
+              The usage limit resets at <em>4:00 AM</em> — but you'll be asleep.
+              Without XcodeSentinel, the session sits frozen until 9&nbsp;AM when you finally open your laptop.
+            </p>
+            <p class="scenario-resolution">
+              <strong>With XcodeSentinel:</strong>
+              schedule a send for 4:10&nbsp;AM and Claude picks up exactly where it left off —
+              while you sleep.
+            </p>
+          </div>
 
-          <!-- Problem -->
-          <h2 data-i18n="index.problemTitle">The Problem</h2>
-          <div data-i18n-html="index.problemBody"></div>
-
-          <!-- Solution -->
-          <h2 data-i18n="index.solutionTitle">How It Works</h2>
-          <div data-i18n-html="index.solutionBody"></div>
+          <!-- How it works -->
+          <h2>How It Works</h2>
+          <div class="flow">
+            <div class="flow-step">
+              <span class="flow-icon">🛑</span>
+              <div class="flow-title">Session Stalls</div>
+              <div class="flow-desc">Claude hits the 5-hour usage limit, needs "Continue", or you simply want a message sent at a future time.</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <span class="flow-icon">⏱</span>
+              <div class="flow-title">Scheduled Send</div>
+              <div class="flow-desc">XcodeSentinel checks your schedules every 30 seconds and sends your message to the Claude input at the exact time you set.</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <span class="flow-icon">🚀</span>
+              <div class="flow-title">Session Resumes</div>
+              <div class="flow-desc">Claude receives the message and continues coding. You get a macOS notification — or a phone push if you configure a webhook.</div>
+            </div>
+          </div>
 
           <!-- Features -->
           <h2 data-i18n="index.featuresTitle">Features</h2>
-          <div data-i18n-html="index.featuresBody"></div>
-
-          <!-- Screenshots -->
-          <h2 data-i18n="index.screenshotsTitle">Screenshots</h2>
-          <div class="screenshots-grid">
-            <figure>
-              <div class="screenshot-frame">
-                <div class="macos-bar">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot green"></span>
-                </div>
-                <div class="screenshot-placeholder">
-                  <span>🖥️</span>
-                  <span>Menu bar &amp; status dropdown</span>
-                </div>
-              </div>
-              <figcaption>Menu bar icon showing monitored targets and their current state</figcaption>
-            </figure>
-            <figure>
-              <div class="screenshot-frame">
-                <div class="macos-bar">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot green"></span>
-                </div>
-                <div class="screenshot-placeholder">
-                  <span>⚙️</span>
-                  <span>Settings — Add Target</span>
-                </div>
-              </div>
-              <figcaption>Register a target by picking from running Xcode windows</figcaption>
-            </figure>
-            <figure>
-              <div class="screenshot-frame">
-                <div class="macos-bar">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot green"></span>
-                </div>
-                <div class="screenshot-placeholder">
-                  <span>🔬</span>
-                  <span>AX Inspector</span>
-                </div>
-              </div>
-              <figcaption>AX Inspector shows the Accessibility tree of the Claude panel</figcaption>
-            </figure>
+          <div class="grid" style="margin-top:16px">
+            <div class="card">
+              <span class="card-icon">🗓️</span>
+              <b>Scheduled Sends</b>
+              <p>Set any message to be typed into your Xcode Claude panel at a specific time. Repeat daily, on weekdays, or just once. Survives sleep and restarts.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">📋</span>
+              <b>Execution Log</b>
+              <p>Every send attempt is logged with timestamp and outcome (Sent, Failed, Deferred). View the last 50 entries from the menu bar — no digging through Console.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🔒</span>
+              <b>Screen-Lock Aware</b>
+              <p>Enable "Prevent screen lock" and the app holds a display-sleep assertion while schedules are pending, so the session fires even overnight.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">📲</span>
+              <b>Away Notifications</b>
+              <p>Webhook support with ntfy / Pushover / Discord / Slack presets. Sends only the target name and status — never chat text or source code.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🔬</span>
+              <b>AX Inspector</b>
+              <p>Dump any window's Accessibility tree to JSON. Export for bug reports or regression fixtures when Xcode updates change the UI structure.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">⚡</span>
+              <b>Lightweight</b>
+              <p>Menu-bar app, no Dock icon. Pure Swift 6, zero external dependencies. Accessibility API only — no Screen Recording permission needed.</p>
+            </div>
           </div>
-          <p class="note note-ok" data-i18n="index.screenshotsNote">Screenshots will be added with the first tagged release. Check back soon.</p>
 
-          <!-- How to install -->
-          <h2 data-i18n="index.howToInstallTitle">Install in 3 Steps</h2>
+          <!-- UI showcase (mockups) -->
+          <h2>App Interface</h2>
+          <div class="showcase">
+
+            <!-- Panel 1: Schedule form -->
+            <div class="showcase-panel">
+              <div class="showcase-titlebar">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="showcase-wintitle">New Schedule</span>
+              </div>
+              <div class="showcase-body" style="padding:16px">
+                <div class="mk-form-row">
+                  <label class="mk-form-label">Xcode window</label>
+                  <div class="mk-form-field">✓ FishingLog — FishingLog.xcodeproj</div>
+                </div>
+                <div class="mk-form-row">
+                  <label class="mk-form-label">Name</label>
+                  <div class="mk-form-field">FishingLog</div>
+                </div>
+                <div class="mk-form-row">
+                  <label class="mk-form-label">Send at</label>
+                  <div class="mk-form-field">Tomorrow, 3:00 AM</div>
+                </div>
+                <div class="mk-form-row">
+                  <label class="mk-form-label">Repeat</label>
+                  <div class="mk-form-field" style="gap:8px">
+                    <span style="background:var(--accent);color:#fff;padding:2px 10px;border-radius:4px;font-size:11px">Once</span>
+                    <span style="color:var(--muted);font-size:11px">Daily</span>
+                    <span style="color:var(--muted);font-size:11px">Weekdays</span>
+                  </div>
+                </div>
+                <div class="mk-form-row">
+                  <label class="mk-form-label">Message to send</label>
+                  <div class="mk-form-field" style="font-size:11px;color:var(--muted)">Please continue from where you stopped.</div>
+                </div>
+                <div class="mk-btn-row">
+                  <div class="mk-btn secondary">Cancel</div>
+                  <div class="mk-btn primary">Add</div>
+                </div>
+              </div>
+              <div class="showcase-caption">Register a schedule by picking a window and setting a time</div>
+            </div>
+
+            <!-- Panel 2: Settings > Schedules -->
+            <div class="showcase-panel">
+              <div class="showcase-titlebar">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="showcase-wintitle">Settings — Schedules</span>
+              </div>
+              <div class="showcase-body" style="padding:14px">
+                <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:10px">
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--accent-light);border-bottom:1px solid var(--border)">
+                    <span style="width:8px;height:8px;border-radius:50%;background:#30d158;flex-shrink:0"></span>
+                    <div style="flex:1">
+                      <div style="font-size:12px;font-weight:600">FishingLog</div>
+                      <div style="font-size:10px;color:var(--muted)">3:00 AM · Daily</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border)">
+                    <span style="width:8px;height:8px;border-radius:50%;background:#30d158;flex-shrink:0"></span>
+                    <div style="flex:1">
+                      <div style="font-size:12px;font-weight:600">XcodeSentinel</div>
+                      <div style="font-size:10px;color:var(--muted)">6:00 AM · Weekdays</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px">
+                    <span style="width:8px;height:8px;border-radius:50%;background:var(--subtle);flex-shrink:0"></span>
+                    <div style="flex:1">
+                      <div style="font-size:12px;font-weight:600;color:var(--muted)">DemoKit</div>
+                      <div style="font-size:10px;color:var(--subtle)">Disabled</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:6px;margin-bottom:12px">
+                  <div class="mk-btn primary" style="font-size:11px">Add…</div>
+                  <div class="mk-btn secondary" style="font-size:11px">Edit…</div>
+                  <div class="mk-btn secondary" style="font-size:11px">Remove</div>
+                </div>
+                <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 10px">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <div style="width:28px;height:17px;border-radius:9px;background:var(--accent);flex-shrink:0"></div>
+                    <div>
+                      <div style="font-size:12px;font-weight:600">Prevent screen lock while schedules active</div>
+                      <div style="font-size:10px;color:var(--muted)">Holds a display-sleep assertion overnight</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="showcase-caption">Manage all schedules and configure the screen-lock prevention</div>
+            </div>
+
+            <!-- Panel 3: Log view -->
+            <div class="showcase-panel">
+              <div class="showcase-titlebar">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="showcase-wintitle">Settings — Log</span>
+              </div>
+              <div class="showcase-body" style="padding:14px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <span style="font-size:11px;color:var(--muted)">6 entries (newest first)</span>
+                  <div class="mk-btn secondary" style="font-size:10px;padding:3px 10px">Clear</div>
+                </div>
+                <table class="mk-log-table">
+                  <tr>
+                    <td class="col-time">03:02</td>
+                    <td class="col-target">FishingLog</td>
+                    <td class="col-msg"><span class="badge-ok">✓ Sent</span></td>
+                  </tr>
+                  <tr>
+                    <td class="col-time">06:01</td>
+                    <td class="col-target">XcodeS…</td>
+                    <td class="col-msg"><span class="badge-ok">✓ Sent</span></td>
+                  </tr>
+                  <tr>
+                    <td class="col-time">22:45</td>
+                    <td class="col-target">DemoKit</td>
+                    <td class="col-msg"><span class="badge-warn">⏳ Deferred</span></td>
+                  </tr>
+                  <tr>
+                    <td class="col-time">14:32</td>
+                    <td class="col-target">FishingLog</td>
+                    <td class="col-msg"><span class="badge-ok">✓ Sent</span></td>
+                  </tr>
+                  <tr>
+                    <td class="col-time">12:01</td>
+                    <td class="col-target">XcodeS…</td>
+                    <td class="col-msg"><span class="badge-err">✗ Window not found</span></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="showcase-caption">Full execution log — what was sent, when, and whether it succeeded</div>
+            </div>
+
+          </div><!-- .showcase -->
+
+          <!-- Install -->
+          <h2>Install in 3 Steps</h2>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
                 <h3>Download the DMG</h3>
-                <p>Grab the latest <code>.dmg</code> from <a href="https://github.com/isitest1/XcodeSentinel/releases/latest">GitHub Releases</a>. Double-click to mount it.</p>
+                <p>Grab the latest <code>.dmg</code> from <a href="https://github.com/isitest1/XcodeSentinel/releases/latest">GitHub Releases</a>. Double-click to mount it, then drag <strong>XcodeSentinel</strong> to your Applications folder.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <h3>Drag to Applications</h3>
-                <p>Drag <strong>XcodeSentinel</strong> to your Applications folder. Launch it — it lives in the menu bar with no Dock icon.</p>
+                <h3>Launch — it lives in the menu bar</h3>
+                <p>No Dock icon. XcodeSentinel appears as a clock icon (⏱) in the menu bar. Click it to open the schedule list.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
                 <h3>Grant Accessibility permission</h3>
-                <p>On first run it opens System Settings → Privacy → Accessibility. Enable it there. No Screen Recording permission needed.</p>
+                <p>On first run, it opens <strong>System Settings → Privacy &amp; Security → Accessibility</strong>. Toggle XcodeSentinel on. No Screen Recording or Full Disk Access needed.</p>
               </div>
             </div>
           </div>
-          <p><a class="btn secondary" href="getting-started.html">Full setup guide →</a></p>
+          <p style="margin-top:20px"><a class="btn secondary" href="getting-started.html">Full setup guide →</a></p>
+
+          <!-- Notes -->
+          <h2 style="margin-top:52px">Important Notes</h2>
+          <p class="note">⚠️ <strong>XcodeSentinel does not bypass or extend any usage limit.</strong> It only sends a message you pre-wrote — after the limit has already cleared. Limits still apply normally.</p>
+          <p class="note">🎯 <strong>Scope is Xcode only.</strong> The VS Code extension and Claude Code CLI have official auto-continue built in, so they are out of scope for this app.</p>
+          <p class="note">🏪 <strong>Not on the Mac App Store.</strong> An app that uses the Accessibility API to drive another app cannot ship in the App Sandbox. Downloads come from GitHub Releases only.</p>
+          <p class="note note-ok">✅ <strong>Developer ID signed &amp; notarized by Apple.</strong> No unsigned binaries. Normal Gatekeeper process.</p>
 
           <!-- Requirements -->
-          <h2 data-i18n="index.requirementsTitle">Requirements</h2>
-          <div data-i18n-html="index.requirementsBody"></div>
-
-          <!-- What it's not -->
-          <h2 data-i18n="index.limitsTitle">What It Is Not</h2>
-          <p class="note" data-i18n="common.xcodeOnly"></p>
-          <p class="note" data-i18n="common.noAppStore"></p>
-          <p class="note" data-i18n="common.signed"></p>
-          <p class="note" data-i18n="common.notOfficial"></p>
+          <h2>Requirements</h2>
+          <ul>
+            <li><strong>macOS 15 (Sequoia)</strong> or later</li>
+            <li>Xcode with the built-in Claude integration enabled</li>
+            <li>Accessibility permission (see <a href="privacy.html">Privacy</a> for what's accessed)</li>
+          </ul>
 
           <!-- Contact -->
-          <h2 data-i18n="index.contactTitle">Contact</h2>
-          <div class="contact-box">
+          <hr class="divider" />
+          <div class="contact-box" style="margin-top:32px">
             <div class="contact-box-icon">✉️</div>
             <div class="contact-box-body">
               <h3>Questions &amp; Bug Reports</h3>
-              <p data-i18n-html="index.contactBody">Questions, bug reports, or Xcode AX structure changes? Open a <a href="https://github.com/isitest1/XcodeSentinel/issues">GitHub Issue</a> or send an email.</p>
-              <p><a href="mailto:kouhei10@gmail.com">kouhei10@gmail.com</a></p>
+              <p>Open a <a href="https://github.com/isitest1/XcodeSentinel/issues">GitHub Issue</a> for bug reports or Xcode AX structure changes after an Xcode update. Or send an email directly.</p>
+              <p style="margin-top:6px"><a href="mailto:kouhei10@gmail.com">kouhei10@gmail.com</a></p>
             </div>
           </div>
 
-          <hr class="divider" />
-
-          <!-- Other projects -->
-          <h2 data-i18n="index.otherProjectsTitle">About the Author</h2>
-          <div data-i18n-html="index.otherProjectsBody"></div>
+          <!-- Author -->
+          <h2>About the Author</h2>
+          <p>Built by a solo iOS/macOS developer. See the <a href="https://isitest1.github.io/portfolio-hub">portfolio hub</a> for other apps and tools.</p>
 
         </div><!-- .wrap -->
       </div><!-- .site-body -->

@@ -19,6 +19,11 @@ struct MenuBarContentView: View {
                 scheduleList
             }
 
+            if !model.executionLog.isEmpty {
+                Divider()
+                recentActivitySection
+            }
+
             Divider()
             menuActions
         }
@@ -72,6 +77,33 @@ struct MenuBarContentView: View {
             }
         }
         .padding(.vertical, 4)
+    }
+
+    // MARK: - Recent activity
+
+    private var recentActivitySection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack {
+                Text("Recent Activity")
+                    .font(.caption2.uppercaseSmallCaps())
+                    .foregroundStyle(.tertiary)
+                    .padding(.horizontal, 12)
+                    .padding(.top, 8)
+                    .padding(.bottom, 4)
+                Spacer()
+            }
+            ForEach(model.executionLog.prefix(3)) { entry in
+                LogEntryRow(entry: entry)
+            }
+            if model.executionLog.count > 3 {
+                Button("View all \(model.executionLog.count) entries…") { openSettings() }
+                    .font(.caption2)
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 12)
+                    .padding(.bottom, 6)
+            }
+        }
     }
 
     // MARK: - Menu actions
@@ -341,6 +373,60 @@ struct ScheduleFormView: View {
             ))
         }
         dismiss()
+    }
+}
+
+// MARK: - Log entry row
+
+private struct LogEntryRow: View {
+    let entry: LogEntry
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: entry.outcome.iconName)
+                .foregroundStyle(entry.outcome.color)
+                .font(.caption2)
+                .frame(width: 12)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(entry.targetName)
+                    .font(.caption2.bold())
+                    .foregroundStyle(.primary)
+                    .lineLimit(1)
+                Text(entry.message)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
+
+            Spacer(minLength: 0)
+
+            Text(entry.date, style: .time)
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 3)
+    }
+}
+
+private extension LogEntry.Outcome {
+    var iconName: String {
+        switch self {
+        case .success:  "checkmark.circle.fill"
+        case .failure:  "xmark.circle.fill"
+        case .deferred: "clock.arrow.2.circlepath"
+        case .warning:  "exclamationmark.triangle.fill"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .success:  .green
+        case .failure:  .red
+        case .deferred: .orange
+        case .warning:  .yellow
+        }
     }
 }
 

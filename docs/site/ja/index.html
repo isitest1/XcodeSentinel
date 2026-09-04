@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>XcodeSentinel — Xcode の Claude セッションを止めない</title>
     <meta name="description" content="Xcode 内の Claude コーディングセッションを監視し、停止したら自動で再開する macOS メニューバーアプリ。無料・オープンソース。" />
-    <meta name="keywords" content="Xcode, Claude, AIコーディング, macOS, メニューバー, 自動再開, 利用量制限, iOS開発" />
+    <meta name="keywords" content="Xcode, Claude, AIコーディング, macOS, メニューバー, 自動再開, 利用量制限, iOS開発, Swift, 生産性" />
     <meta name="author" content="isitest1" />
     <link rel="canonical" href="https://isitest1.github.io/XcodeSentinel/ja/" />
     <link rel="alternate" hreflang="ja" href="https://isitest1.github.io/XcodeSentinel/ja/" />
@@ -18,6 +18,8 @@
     <meta property="og:url" content="https://isitest1.github.io/XcodeSentinel/ja/" />
     <meta property="og:image" content="https://isitest1.github.io/XcodeSentinel/assets/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="XcodeSentinel — Xcode の Claude セッションを止めない" />
+    <meta name="twitter:description" content="Xcode の Claude セッションを自動で再開。無料・オープンソース・macOS 15+。" />
     <link rel="icon" href="../assets/favicon.svg" />
     <link rel="stylesheet" href="../assets/style.css" />
   </head>
@@ -35,150 +37,397 @@
 
       <!-- ── Hero ─────────────────────────────────────────────────── -->
       <section class="hero">
-        <div class="wrap">
-          <span class="hero-badge" data-i18n="index.heroBadge">無料 &amp; オープンソース · macOS 15+</span>
-          <h1 data-i18n-html="index.heroTitle"><em>Xcode の Claude</em> セッションを止めない</h1>
-          <p class="lead" data-i18n="index.heroLead">席を外して戻ってきたら、Claude が止まっていた——そんな経験はありませんか。XcodeSentinel が監視し、自動で再開します。</p>
-          <div class="hero-cta">
-            <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.download">⬇ macOS 版をダウンロード</a>
-            <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel" data-i18n="index.viewSource">ソースを見る →</a>
+        <div class="wrap hero-wrap">
+
+          <!-- Left: text -->
+          <div class="hero-text">
+            <span class="hero-badge">無料 &amp; オープンソース · macOS 15+</span>
+            <h1><em>Xcode の Claude</em> セッションを止めない</h1>
+            <p class="lead">Mac を離れても、戻ってきたらビルドが完了している——止まったまま放置されない。XcodeSentinel がスケジュール送信でセッションを前進させ続けます。</p>
+            <div class="hero-cta">
+              <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest">⬇ macOS 版をダウンロード</a>
+              <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel">ソースを見る →</a>
+            </div>
+            <p class="hero-meta">macOS 15 以降 · Developer ID 署名・notarization 済 · 無料</p>
           </div>
-          <p class="hero-meta" data-i18n="index.heroMeta">macOS 15 以降 · Developer ID 署名・notarization 済 · 無料</p>
+
+          <!-- Right: app mockup -->
+          <div class="hero-visual" aria-hidden="true">
+            <div class="app-mockup">
+              <div class="mk-popover">
+                <div class="mk-header">⏱ XcodeSentinel</div>
+
+                <div class="mk-row">
+                  <span class="mk-dot on"></span>
+                  <div class="mk-item-body">
+                    <div class="mk-name">FishingLog</div>
+                    <div class="mk-sub">午前 3:00 · 毎日</div>
+                    <div class="mk-msg">"Please continue from where you stopped."</div>
+                  </div>
+                  <div class="mk-toggle on"></div>
+                </div>
+
+                <div class="mk-row">
+                  <span class="mk-dot on"></span>
+                  <div class="mk-item-body">
+                    <div class="mk-name">XcodeSentinel</div>
+                    <div class="mk-sub">午前 6:00 · 平日のみ</div>
+                    <div class="mk-msg">"Continue with the next feature."</div>
+                  </div>
+                  <div class="mk-toggle on"></div>
+                </div>
+
+                <div class="mk-row">
+                  <span class="mk-dot off"></span>
+                  <div class="mk-item-body">
+                    <div class="mk-name">DemoKit</div>
+                    <div class="mk-sub">無効</div>
+                  </div>
+                  <div class="mk-toggle off"></div>
+                </div>
+
+                <div class="mk-divider"></div>
+
+                <div class="mk-section-label">最近のアクティビティ</div>
+
+                <div class="mk-log-row">
+                  <span class="mk-log-icon ok">✓</span>
+                  <span class="mk-log-name">FishingLog</span>
+                  <span class="mk-log-msg"> — 送信済み</span>
+                  <span class="mk-log-time">03:02</span>
+                </div>
+                <div class="mk-log-row">
+                  <span class="mk-log-icon ok">✓</span>
+                  <span class="mk-log-name">XcodeSentinel</span>
+                  <span class="mk-log-msg"> — 送信済み</span>
+                  <span class="mk-log-time">06:01</span>
+                </div>
+                <div class="mk-log-row">
+                  <span class="mk-log-icon warn">⏳</span>
+                  <span class="mk-log-name">DemoKit</span>
+                  <span class="mk-log-msg"> — 画面ロック中、保留</span>
+                  <span class="mk-log-time">22:45</span>
+                </div>
+
+                <div class="mk-divider"></div>
+
+                <div class="mk-action mk-row">
+                  <span class="mk-action-icon">+</span>スケジュールを追加…
+                </div>
+                <div class="mk-action mk-row">
+                  <span class="mk-action-icon">⚙</span>設定…
+                </div>
+                <div class="mk-action mk-row quit">
+                  <span class="mk-action-icon">⏻</span>XcodeSentinel を終了
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      <!-- ── Body ──────────────────────────────────────────────────── -->
+      <!-- ── Stats bar ──────────────────────────────────────────── -->
+      <div class="stats-bar">
+        <div class="wrap">
+          <div class="stats-inner">
+            <div class="stat">
+              <span class="stat-val">無料</span>
+              <span class="stat-label">オープンソース<br>MIT ライセンス</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">0</span>
+              <span class="stat-label">画面収録権限<br>不要</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">ローカル</span>
+              <span class="stat-label">クラウド不使用<br>アナリティクスなし</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">macOS 15+</span>
+              <span class="stat-label">Sequoia<br>以降対応</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Body ──────────────────────────────────────────────── -->
       <div class="site-body">
         <div class="wrap">
 
           <!-- Download box -->
-          <div class="download-box">
+          <div class="download-box" style="margin-top:40px">
             <div class="download-box-icon">📦</div>
             <div class="download-box-text">
-              <h3 data-i18n="index.downloadTitle">XcodeSentinel をダウンロード</h3>
-              <p data-i18n="index.downloadSubtitle">無料・オープンソース・Developer ID 署名済みです。</p>
-              <p data-i18n="index.downloadMeta">macOS 15 以降 · Developer ID 署名・notarization 済 · 無料</p>
+              <h3>XcodeSentinel をダウンロード</h3>
+              <p>無料・オープンソース・Developer ID 署名済みです。</p>
+              <p style="font-size:0.82rem;color:var(--muted);margin-top:4px">macOS 15 (Sequoia) 以降が必要です</p>
             </div>
-            <a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest" data-i18n="index.downloadBtn">最新リリースをダウンロード</a>
+            <a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest">⬇ 最新版をダウンロード</a>
           </div>
 
-          <!-- Disclaimer -->
-          <p class="note" data-i18n="common.noBypass"></p>
+          <!-- Use-case scenario -->
+          <div class="scenario">
+            <p class="scenario-quote">
+              夜 11 時に Xcode で Claude の長いコーディングセッションを開始。
+              利用量制限は <em>午前 4:00</em> にリセットされる——でも、その時間は寝ている。
+              XcodeSentinel がなければ、朝 9 時に開いたときに Claude はまだ止まったままです。
+            </p>
+            <p class="scenario-resolution">
+              <strong>XcodeSentinel なら：</strong>
+              午前 4:10 に送信をスケジュールしておけば、Claude はそこから続きを再開——
+              あなたが眠っている間に。
+            </p>
+          </div>
 
-          <!-- Problem -->
-          <h2 data-i18n="index.problemTitle">解決する課題</h2>
-          <div data-i18n-html="index.problemBody"></div>
-
-          <!-- Solution -->
-          <h2 data-i18n="index.solutionTitle">できること</h2>
-          <div data-i18n-html="index.solutionBody"></div>
+          <!-- How it works -->
+          <h2>仕組み</h2>
+          <div class="flow">
+            <div class="flow-step">
+              <span class="flow-icon">🛑</span>
+              <div class="flow-title">セッション停止</div>
+              <div class="flow-desc">5 時間の利用量制限に到達、「Continue」待ち、または指定時刻にメッセージを送りたい。</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <span class="flow-icon">⏱</span>
+              <div class="flow-title">スケジュール送信</div>
+              <div class="flow-desc">XcodeSentinel が 30 秒ごとにスケジュールを確認し、設定した時刻に正確にメッセージを Claude に送信します。</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <span class="flow-icon">🚀</span>
+              <div class="flow-title">セッション再開</div>
+              <div class="flow-desc">Claude がメッセージを受け取り、コーディングを継続。macOS 通知、または Webhook 設定時はスマートフォンへもプッシュが届きます。</div>
+            </div>
+          </div>
 
           <!-- Features -->
-          <h2 data-i18n="index.featuresTitle">主な機能</h2>
-          <div data-i18n-html="index.featuresBody"></div>
-
-          <!-- Screenshots -->
-          <h2 data-i18n="index.screenshotsTitle">スクリーンショット</h2>
-          <div class="screenshots-grid">
-            <figure>
-              <div class="screenshot-frame">
-                <div class="macos-bar">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot green"></span>
-                </div>
-                <div class="screenshot-placeholder">
-                  <span>🖥️</span>
-                  <span>メニューバーとステータス表示</span>
-                </div>
-              </div>
-              <figcaption>監視中の対象と現在の状態を表示するメニューバードロップダウン</figcaption>
-            </figure>
-            <figure>
-              <div class="screenshot-frame">
-                <div class="macos-bar">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot green"></span>
-                </div>
-                <div class="screenshot-placeholder">
-                  <span>⚙️</span>
-                  <span>設定 — 対象の追加</span>
-                </div>
-              </div>
-              <figcaption>起動中の Xcode ウィンドウ一覧から対象を選んで登録</figcaption>
-            </figure>
-            <figure>
-              <div class="screenshot-frame">
-                <div class="macos-bar">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot green"></span>
-                </div>
-                <div class="screenshot-placeholder">
-                  <span>🔬</span>
-                  <span>AX Inspector</span>
-                </div>
-              </div>
-              <figcaption>Claude パネルのアクセシビリティツリーを表示する AX Inspector</figcaption>
-            </figure>
+          <h2>主な機能</h2>
+          <div class="grid" style="margin-top:16px">
+            <div class="card">
+              <span class="card-icon">🗓️</span>
+              <b>スケジュール送信</b>
+              <p>指定した時刻に任意のメッセージを Xcode の Claude パネルへ自動入力。毎日・平日のみ・1 回限りの繰り返し設定に対応。スリープ・再起動後も維持されます。</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">📋</span>
+              <b>実行ログ</b>
+              <p>送信試行ごとにタイムスタンプと結果（送信済み・失敗・保留）を記録。メニューバーから最新 50 件を確認できます。Console を掘る必要なし。</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🔒</span>
+              <b>画面ロック対応</b>
+              <p>「スクリーンロックを防止」を有効にすると、スケジュールが残っている間はディスプレイスリープを抑制。徹夜セッションでもロックされません。</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">📲</span>
+              <b>外出先への通知</b>
+              <p>Webhook 通知に対応。ntfy / Pushover / Discord / Slack のプリセット付き。チャット本文やソースコードは一切送信しません。</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🔬</span>
+              <b>AX Inspector</b>
+              <p>任意のウィンドウのアクセシビリティツリーを JSON でエクスポート。Xcode 更新後の構造変化をバグ報告やテストフィクスチャとして活用できます。</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">⚡</span>
+              <b>軽量設計</b>
+              <p>Dock アイコンなし・メニューバー常駐。Swift 6 製・外部依存ゼロ。Accessibility API のみ使用——画面収録権限は不要です。</p>
+            </div>
           </div>
-          <p class="note note-ok" data-i18n="index.screenshotsNote">スクリーンショットは最初のタグ付きリリース時に追加します。</p>
 
-          <!-- How to install -->
-          <h2 data-i18n="index.howToInstallTitle">3 ステップでインストール</h2>
+          <!-- UI showcase (mockups) -->
+          <h2>アプリの画面</h2>
+          <div class="showcase">
+
+            <!-- Panel 1: Schedule form -->
+            <div class="showcase-panel">
+              <div class="showcase-titlebar">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="showcase-wintitle">新しいスケジュール</span>
+              </div>
+              <div class="showcase-body" style="padding:16px">
+                <div class="mk-form-row">
+                  <label class="mk-form-label">Xcode ウィンドウ</label>
+                  <div class="mk-form-field">✓ FishingLog — FishingLog.xcodeproj</div>
+                </div>
+                <div class="mk-form-row">
+                  <label class="mk-form-label">名前</label>
+                  <div class="mk-form-field">FishingLog</div>
+                </div>
+                <div class="mk-form-row">
+                  <label class="mk-form-label">送信時刻</label>
+                  <div class="mk-form-field">明日 午前 3:00</div>
+                </div>
+                <div class="mk-form-row">
+                  <label class="mk-form-label">繰り返し</label>
+                  <div class="mk-form-field" style="gap:8px">
+                    <span style="background:var(--accent);color:#fff;padding:2px 10px;border-radius:4px;font-size:11px">1 回のみ</span>
+                    <span style="color:var(--muted);font-size:11px">毎日</span>
+                    <span style="color:var(--muted);font-size:11px">平日のみ</span>
+                  </div>
+                </div>
+                <div class="mk-form-row">
+                  <label class="mk-form-label">送信メッセージ</label>
+                  <div class="mk-form-field" style="font-size:11px;color:var(--muted)">Please continue from where you stopped.</div>
+                </div>
+                <div class="mk-btn-row">
+                  <div class="mk-btn secondary">キャンセル</div>
+                  <div class="mk-btn primary">追加</div>
+                </div>
+              </div>
+              <div class="showcase-caption">ウィンドウと時刻を選ぶだけでスケジュールを登録</div>
+            </div>
+
+            <!-- Panel 2: Settings > Schedules -->
+            <div class="showcase-panel">
+              <div class="showcase-titlebar">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="showcase-wintitle">設定 — スケジュール</span>
+              </div>
+              <div class="showcase-body" style="padding:14px">
+                <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:10px">
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--accent-light);border-bottom:1px solid var(--border)">
+                    <span style="width:8px;height:8px;border-radius:50%;background:#30d158;flex-shrink:0"></span>
+                    <div style="flex:1">
+                      <div style="font-size:12px;font-weight:600">FishingLog</div>
+                      <div style="font-size:10px;color:var(--muted)">午前 3:00 · 毎日</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border)">
+                    <span style="width:8px;height:8px;border-radius:50%;background:#30d158;flex-shrink:0"></span>
+                    <div style="flex:1">
+                      <div style="font-size:12px;font-weight:600">XcodeSentinel</div>
+                      <div style="font-size:10px;color:var(--muted)">午前 6:00 · 平日のみ</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px">
+                    <span style="width:8px;height:8px;border-radius:50%;background:var(--subtle);flex-shrink:0"></span>
+                    <div style="flex:1">
+                      <div style="font-size:12px;font-weight:600;color:var(--muted)">DemoKit</div>
+                      <div style="font-size:10px;color:var(--subtle)">無効</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:6px;margin-bottom:12px">
+                  <div class="mk-btn primary" style="font-size:11px">追加…</div>
+                  <div class="mk-btn secondary" style="font-size:11px">編集…</div>
+                  <div class="mk-btn secondary" style="font-size:11px">削除</div>
+                </div>
+                <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 10px">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <div style="width:28px;height:17px;border-radius:9px;background:var(--accent);flex-shrink:0"></div>
+                    <div>
+                      <div style="font-size:12px;font-weight:600">スケジュール中はスクリーンロックを防止</div>
+                      <div style="font-size:10px;color:var(--muted)">夜間のディスプレイスリープを抑制します</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="showcase-caption">全スケジュールの管理とスクリーンロック防止の設定</div>
+            </div>
+
+            <!-- Panel 3: Log view -->
+            <div class="showcase-panel">
+              <div class="showcase-titlebar">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="showcase-wintitle">設定 — ログ</span>
+              </div>
+              <div class="showcase-body" style="padding:14px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <span style="font-size:11px;color:var(--muted)">6 件（新しい順）</span>
+                  <div class="mk-btn secondary" style="font-size:10px;padding:3px 10px">クリア</div>
+                </div>
+                <table class="mk-log-table">
+                  <tr>
+                    <td class="col-time">03:02</td>
+                    <td class="col-target">FishingLog</td>
+                    <td class="col-msg"><span class="badge-ok">✓ 送信済み</span></td>
+                  </tr>
+                  <tr>
+                    <td class="col-time">06:01</td>
+                    <td class="col-target">XcodeS…</td>
+                    <td class="col-msg"><span class="badge-ok">✓ 送信済み</span></td>
+                  </tr>
+                  <tr>
+                    <td class="col-time">22:45</td>
+                    <td class="col-target">DemoKit</td>
+                    <td class="col-msg"><span class="badge-warn">⏳ 保留中</span></td>
+                  </tr>
+                  <tr>
+                    <td class="col-time">14:32</td>
+                    <td class="col-target">FishingLog</td>
+                    <td class="col-msg"><span class="badge-ok">✓ 送信済み</span></td>
+                  </tr>
+                  <tr>
+                    <td class="col-time">12:01</td>
+                    <td class="col-target">XcodeS…</td>
+                    <td class="col-msg"><span class="badge-err">✗ ウィンドウ未検出</span></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="showcase-caption">送信した内容・時刻・結果を記録する実行ログ</div>
+            </div>
+
+          </div><!-- .showcase -->
+
+          <!-- Install -->
+          <h2>3 ステップでインストール</h2>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
                 <h3>DMG をダウンロード</h3>
-                <p><a href="https://github.com/isitest1/XcodeSentinel/releases/latest">GitHub Releases</a> から最新の <code>.dmg</code> を取得し、ダブルクリックしてマウントします。</p>
+                <p><a href="https://github.com/isitest1/XcodeSentinel/releases/latest">GitHub Releases</a> から最新の <code>.dmg</code> を取得。ダブルクリックしてマウントしたら、<strong>XcodeSentinel</strong> を Applications フォルダにドラッグします。</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <h3>Applications にドラッグ</h3>
-                <p><strong>XcodeSentinel</strong> を Applications フォルダにドラッグ。起動するとメニューバーに常駐します（Dock アイコンなし）。</p>
+                <h3>起動——メニューバーに常駐</h3>
+                <p>Dock アイコンはありません。XcodeSentinel はメニューバーに時計アイコン（⏱）として表示されます。クリックするとスケジュール一覧が開きます。</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
                 <h3>アクセシビリティ権限を許可</h3>
-                <p>初回起動時にシステム設定 → プライバシー → アクセシビリティが開きます。XcodeSentinel を有効にします。画面収録権限は不要です。</p>
+                <p>初回起動時に<strong>システム設定 → プライバシーとセキュリティ → アクセシビリティ</strong>が開きます。XcodeSentinel をオンにします。画面収録やフルディスクアクセスは不要です。</p>
               </div>
             </div>
           </div>
-          <p><a class="btn secondary" href="getting-started.html">詳しいセットアップ手順 →</a></p>
+          <p style="margin-top:20px"><a class="btn secondary" href="getting-started.html">詳しいセットアップ手順 →</a></p>
+
+          <!-- Notes -->
+          <h2 style="margin-top:52px">重要事項</h2>
+          <p class="note">⚠️ <strong>XcodeSentinel は利用量制限を回避・突破するものではありません。</strong> あらかじめ書いたメッセージを、制限が解除された後に送信するだけです。制限は通常どおり適用されます。</p>
+          <p class="note">🎯 <strong>対象は Xcode 専用です。</strong> VS Code 拡張や Claude Code CLI には公式の自動継続機能が組み込まれているため、本アプリの対象外です。</p>
+          <p class="note">🏪 <strong>Mac App Store では配布していません。</strong> Accessibility API で他アプリを操作するアプリは App Sandbox の制約により Store に出せません。ダウンロードは GitHub Releases のみです。</p>
+          <p class="note note-ok">✅ <strong>Developer ID 署名・Apple による notarization 済み。</strong> 未署名バイナリはありません。通常の Gatekeeper 手順で起動できます。</p>
 
           <!-- Requirements -->
-          <h2 data-i18n="index.requirementsTitle">動作要件</h2>
-          <div data-i18n-html="index.requirementsBody"></div>
-
-          <!-- What it's not -->
-          <h2 data-i18n="index.limitsTitle">これは何ではないか</h2>
-          <p class="note" data-i18n="common.xcodeOnly"></p>
-          <p class="note" data-i18n="common.noAppStore"></p>
-          <p class="note" data-i18n="common.signed"></p>
-          <p class="note" data-i18n="common.notOfficial"></p>
+          <h2>動作要件</h2>
+          <ul>
+            <li><strong>macOS 15 (Sequoia)</strong> 以降</li>
+            <li>Xcode に Claude 連携が有効になっていること</li>
+            <li>アクセシビリティ権限（何にアクセスするかは <a href="privacy.html">プライバシー</a> ページを参照）</li>
+          </ul>
 
           <!-- Contact -->
-          <h2 data-i18n="index.contactTitle">お問い合わせ</h2>
-          <div class="contact-box">
+          <hr class="divider" />
+          <div class="contact-box" style="margin-top:32px">
             <div class="contact-box-icon">✉️</div>
             <div class="contact-box-body">
               <h3>質問・バグ報告</h3>
-              <p data-i18n-html="index.contactBody">不具合報告・Xcode 更新後の AX 構造変更の報告は <a href="https://github.com/isitest1/XcodeSentinel/issues">GitHub Issue</a> またはメールでお知らせください。</p>
-              <p><a href="mailto:kouhei10@gmail.com">kouhei10@gmail.com</a></p>
+              <p>不具合報告・Xcode 更新後の AX 構造変化の報告は <a href="https://github.com/isitest1/XcodeSentinel/issues">GitHub Issue</a> またはメールでお知らせください。</p>
+              <p style="margin-top:6px"><a href="mailto:kouhei10@gmail.com">kouhei10@gmail.com</a></p>
             </div>
           </div>
 
-          <hr class="divider" />
-
-          <!-- Other projects -->
-          <h2 data-i18n="index.otherProjectsTitle">作者について</h2>
-          <div data-i18n-html="index.otherProjectsBody"></div>
+          <!-- Author -->
+          <h2>作者について</h2>
+          <p>iOS / macOS アプリを個人で開発しています。他のプロジェクトは <a href="https://isitest1.github.io/portfolio-hub/ja">ポートフォリオハブ</a> をご覧ください。</p>
 
         </div><!-- .wrap -->
       </div><!-- .site-body -->

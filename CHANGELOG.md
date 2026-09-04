@@ -6,6 +6,34 @@
 
 ## [Unreleased]
 
+### 追加（M5: 配布準備・公開・自動化修正）
+
+- **スケジューラ専用 App**（`AppModel` を完全刷新）：検出エンジンとの密結合をなくし、
+  ユーザーが設定した日時に Xcode の Claude 入力欄へメッセージを自動送信する
+  シンプルなスケジューラへ再設計。対象・時刻・メッセージ・繰り返しポリシー（1 回 /
+  毎日 / 平日のみ）をフォームから設定する。
+- **実行ログ**（`LogEntry` / `LogView`）：送信成功・失敗・延期をタイムスタンプ付きで
+  最大 50 件記録。ログクリアも可能。
+- **画面ロック中の送信延期**：macOS の `com.apple.screenIsLocked` / `screenIsUnlocked`
+  分散通知を監視し、ロック中に発火予定のスケジュールはロック解除後に自動リトライ。
+  `CGEvent` はロック中に OS によってブロックされるため。
+- **スクリーンセーバー / 画面スリープ防止**（`preventScreenLock` 設定）：送信予定が
+  ある間は `IOPMAssertion`（`PreventUserIdleDisplaySleep`）を取得し、スクリーンロックで
+  送信がブロックされないようにする。
+- **自動化修正（WKWebView 対応）**：Xcode の Claude 入力欄は WKWebView 内の要素
+  （`AXUnknown`）であり、`kAXValueAttribute` の直接書き込みは React の `input` /
+  `change` イベントを発火させない。クリップボード経由の Cmd+V（`paste` イベント）に
+  切り替えることで、React の状態が更新されて送信ボタンが有効になる問題を修正。
+- **AX ツリー探索の修正**：`findChatGroup` が Xcode のプロジェクトナビゲータ（同じく
+  `AXOpaqueProviderGroup` を持つ）を誤ヒットする問題を修正。`AXUnknown` 直接子を
+  必須条件に追加。`findInputInChatGroup` は先頭ではなく末尾の `AXUnknown`（実際の
+  入力欄）を返すよう修正。
+- **公開サイト日本語 index 刷新**（`docs/site/ja/index.html`）：英語版に合わせて
+  ヒーロー 2 カラム・モックアップポップオーバー・シナリオ説明・6 機能カード・
+  3 パネルショーケース・インストール手順をフルリライト。
+- GitHub Actions `release.yml`：DMG ビルド・署名・notarization・GitHub Release 自動作成
+  のワークフロー骨格（`v*` タグ push で発火、5 つの Repository Secrets が必要）。
+
 ### 追加（M4: スケジューラと通知、公開サイト）
 
 - `WebhookPayloadBuilder`：Webhook ペイロード生成（ntfy / Pushover / Discord / Slack /

@@ -1,9 +1,13 @@
 import ApplicationServices
 import Foundation
+import IOKit.pwr_mgt
+import OSLog
 import Observation
 import SwiftUI
 import UserNotifications
 import SentinelCore
+
+private let fireLog = os.Logger(subsystem: "com.kohei.XcodeSentinel", category: "fire")
 
 // MARK: - Schedule model
 
@@ -61,6 +65,28 @@ enum RepeatPolicy: String, Codable, CaseIterable, Sendable {
     }
 }
 
+// MARK: - LogEntry
+
+struct LogEntry: Codable, Identifiable {
+    let id: UUID
+    let date: Date
+    let targetName: String
+    let message: String
+    let outcome: Outcome
+
+    enum Outcome: String, Codable {
+        case success, failure, deferred, warning
+    }
+
+    init(targetName: String, message: String, outcome: Outcome) {
+        self.id = UUID()
+        self.date = Date()
+        self.targetName = targetName
+        self.message = message
+        self.outcome = outcome
+    }
+}
+
 // MARK: - AppModel
 
 @Observable
@@ -70,6 +96,7 @@ final class AppModel {
     // MARK: - State
 
     var schedules: [Schedule] = []
+    var executionLog: [LogEntry] = []
     var isAccessibilityTrusted: Bool = false
     /// Set this to the schedule's ID before calling openWindow(id: "schedule-form").
     /// nil = new schedule, non-nil = edit existing.
@@ -78,6 +105,14 @@ final class AppModel {
         didSet {
             saveWebhookConfig()
             notifier = Notifier(webhook: webhookConfig.sender)
+        }
+    }
+    /// When true, acquires an IOPMAssertion to prevent idle display sleep (and thus screen lock)
+    /// while there are active future schedules. Persisted in UserDefaults.
+    var preventScreenLock: Bool = false {
+        didSet {
+            UserDefaults.standard.set(preventScreenLock, forKey: "preventScreenLock")
+            updateDisplayAssertion()
         }
     }
 
@@ -97,6 +132,8 @@ final class AppModel {
     private var isScreenLocked = false
     /// Set when checkAndFire finds a due schedule during lock; cleared on unlock.
     private var pendingFireAfterUnlock = false
+    /// IOPMAssertion ID for preventing idle display sleep. 0 = not held.
+    private var displayAssertionID: IOPMAssertionID = 0
 
     // MARK: - Init
 
@@ -110,8 +147,11 @@ final class AppModel {
         self.schedules = (try? sStore?.load()) ?? []
         self.isAccessibilityTrusted = AccessibilityPermission.isTrusted
         self.notifier = Notifier(webhook: webhook.sender)
+        self.preventScreenLock = UserDefaults.standard.bool(forKey: "preventScreenLock")
+        loadLog()
 
         setupScreenLockObservers()
+        updateDisplayAssertion()
         Task { [weak self] in await self?.startTimer() }
     }
 
@@ -151,6 +191,37 @@ final class AppModel {
         }
     }
 
+    // MARK: - Display sleep assertion
+
+    private func updateDisplayAssertion() {
+        guard preventScreenLock else {
+            releaseDisplayAssertion()
+            return
+        }
+        let hasFutureSchedules = schedules.contains { $0.isEnabled && $0.sendAt > Date() }
+        if hasFutureSchedules {
+            acquireDisplayAssertion()
+        } else {
+            releaseDisplayAssertion()
+        }
+    }
+
+    private func acquireDisplayAssertion() {
+        guard displayAssertionID == 0 else { return }
+        IOPMAssertionCreateWithName(
+            kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
+            IOPMAssertionLevel(kIOPMAssertionLevelOn),
+            "XcodeSentinel: scheduled sends pending" as CFString,
+            &displayAssertionID
+        )
+    }
+
+    private func releaseDisplayAssertion() {
+        guard displayAssertionID != 0 else { return }
+        IOPMAssertionRelease(displayAssertionID)
+        displayAssertionID = 0
+    }
+
     // MARK: - Fire
 
     /// Checks every 30 s; fires any enabled schedule whose sendAt has passed.
@@ -162,6 +233,13 @@ final class AppModel {
 
         if isScreenLocked {
             pendingFireAfterUnlock = true
+            for s in schedules where s.isEnabled && s.sendAt <= now {
+                appendLog(LogEntry(
+                    targetName: s.displayName,
+                    message: "Deferred — screen is locked. Will retry on unlock.",
+                    outcome: .deferred
+                ))
+            }
             return
         }
 
@@ -177,10 +255,14 @@ final class AppModel {
             }
             changed = true
         }
-        if changed { saveSchedules() }
+        if changed {
+            saveSchedules()
+            updateDisplayAssertion()
+        }
     }
 
     private func fire(_ schedule: Schedule) async {
+        fireLog.info("fire: starting for '\(schedule.displayName, privacy: .public)' path='\(schedule.workspacePath, privacy: .public)'")
         let identity = TargetIdentity(
             workspacePath: schedule.workspacePath,
             displayName: schedule.displayName
@@ -188,38 +270,79 @@ final class AppModel {
 
         let window: AXUIElement? = await AccessibilityActor.run {
             let windows = XcodeWindowEnumerator().currentWindows()
+            fireLog.info("fire: found \(windows.count, privacy: .public) Xcode windows")
+            for w in windows {
+                fireLog.info("fire: window '\(w.axTitle ?? "nil", privacy: .public)' path='\(w.axDocumentPath ?? "nil", privacy: .public)'")
+            }
             guard case .matched(let desc, _) = TargetResolver.resolve(identity, among: windows),
-                  let element = XcodeWindowEnumerator().liveElement(for: desc) else { return nil }
+                  let element = XcodeWindowEnumerator().liveElement(for: desc) else {
+                fireLog.error("fire: could not resolve target window")
+                return nil
+            }
+            fireLog.info("fire: resolved window '\(desc.axTitle ?? "nil", privacy: .public)'")
             return element
         }
 
         guard let window else {
-            await notifier.notify(
-                targetName: schedule.displayName,
-                line: "Scheduled send failed: Xcode window not found."
-            )
+            let msg = "Failed: Xcode window not found."
+            fireLog.error("fire: \(msg, privacy: .public)")
+            await notifier.notify(targetName: schedule.displayName, line: "Scheduled send failed: Xcode window not found.")
+            appendLog(LogEntry(targetName: schedule.displayName, message: msg, outcome: .failure))
             return
         }
 
+        fireLog.info("fire: calling ResumeController for '\(schedule.displayName, privacy: .public)'")
         let outcome = await ResumeController().resume(
-            window: window, prompt: schedule.message, dryRun: false
+            window: window, prompt: schedule.message, dryRun: false, confirmProgress: false
         )
+        fireLog.info("fire: outcome=\(String(describing: outcome), privacy: .public)")
         switch outcome {
         case .sent:
             await notifier.notify(targetName: schedule.displayName, line: "Scheduled message sent.")
+            appendLog(LogEntry(
+                targetName: schedule.displayName,
+                message: "Sent: \"\(schedule.message.prefix(60))\(schedule.message.count > 60 ? "…" : "")\"",
+                outcome: .success
+            ))
         case .couldNotFindInput:
-            await notifier.notify(
-                targetName: schedule.displayName,
-                line: "Scheduled send failed: Claude input field not found."
-            )
+            let msg = "Failed: Claude input field not found."
+            await notifier.notify(targetName: schedule.displayName, line: "Scheduled send failed: Claude input field not found.")
+            appendLog(LogEntry(targetName: schedule.displayName, message: msg, outcome: .failure))
         case .couldNotConfirmProgress:
-            await notifier.notify(
-                targetName: schedule.displayName,
-                line: "Message sent but Claude didn't start responding within 15 s."
-            )
+            let msg = "Sent, but Claude didn't start responding within 15 s."
+            await notifier.notify(targetName: schedule.displayName, line: msg)
+            appendLog(LogEntry(targetName: schedule.displayName, message: msg, outcome: .warning))
         case .dryRun:
-            break
+            appendLog(LogEntry(
+                targetName: schedule.displayName,
+                message: "Dry run: would send \"\(schedule.message.prefix(60))\(schedule.message.count > 60 ? "…" : "")\"",
+                outcome: .success
+            ))
         }
+    }
+
+    // MARK: - Log
+
+    private func appendLog(_ entry: LogEntry) {
+        executionLog.insert(entry, at: 0)
+        if executionLog.count > 50 { executionLog.removeLast() }
+        saveLog()
+    }
+
+    private func saveLog() {
+        guard let data = try? JSONEncoder().encode(executionLog) else { return }
+        UserDefaults.standard.set(data, forKey: "executionLog")
+    }
+
+    private func loadLog() {
+        guard let data = UserDefaults.standard.data(forKey: "executionLog"),
+              let entries = try? JSONDecoder().decode([LogEntry].self, from: data) else { return }
+        executionLog = entries
+    }
+
+    func clearLog() {
+        executionLog = []
+        saveLog()
     }
 
     // MARK: - Schedule management
@@ -227,17 +350,20 @@ final class AppModel {
     func addSchedule(_ schedule: Schedule) {
         schedules.append(schedule)
         saveSchedules()
+        updateDisplayAssertion()
     }
 
     func removeSchedules(at offsets: IndexSet) {
         schedules.remove(atOffsets: offsets)
         saveSchedules()
+        updateDisplayAssertion()
     }
 
     func updateSchedule(_ schedule: Schedule) {
         guard let i = schedules.firstIndex(where: { $0.id == schedule.id }) else { return }
         schedules[i] = schedule
         saveSchedules()
+        updateDisplayAssertion()
     }
 
     private func saveSchedules() {

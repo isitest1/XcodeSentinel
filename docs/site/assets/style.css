@@ -542,7 +542,282 @@ pre code { background: none; border: none; padding: 0; }
 .page-header h1 { margin: 0 0 8px; font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }
 .page-header p { margin: 0; color: var(--muted); font-size: 1.05rem; }
 
+/* ── Hero 2-column layout ────────────────────────────────────────────────── */
+.hero-wrap {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 56px;
+  align-items: center;
+  text-align: left;
+}
+.hero-text .hero-cta { justify-content: flex-start; }
+.hero-visual { display: flex; justify-content: center; align-items: center; }
+
+/* ── App mockup (used in hero and showcase) ──────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+.app-mockup {
+  animation: float 5s ease-in-out infinite;
+  filter: drop-shadow(0 24px 48px rgba(0,0,0,0.45));
+}
+.mk-popover {
+  background: #f5f5f7;
+  border-radius: 14px;
+  width: 300px;
+  overflow: hidden;
+  font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1c1c1e;
+}
+.mk-header {
+  background: #e8e8ed;
+  padding: 10px 14px 8px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #3a3a3c;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  letter-spacing: 0.2px;
+}
+.mk-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+}
+.mk-row + .mk-row { border-top: 1px solid rgba(0,0,0,0.06); }
+.mk-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 4px;
+}
+.mk-dot.on  { background: #30d158; }
+.mk-dot.off { background: #aeaeb2; }
+.mk-item-body { flex: 1; min-width: 0; }
+.mk-name { font-weight: 600; font-size: 13px; color: #1c1c1e; margin-bottom: 1px; }
+.mk-sub  { font-size: 11px; color: #6e6e73; margin-bottom: 2px; }
+.mk-msg  { font-size: 11px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-toggle {
+  width: 28px; height: 17px; border-radius: 9px;
+  flex-shrink: 0; margin-top: 3px;
+}
+.mk-toggle.on  { background: #007aff; }
+.mk-toggle.off { background: #aeaeb2; }
+.mk-divider { height: 1px; background: rgba(0,0,0,0.1); margin: 2px 0; }
+.mk-section-label {
+  padding: 8px 14px 2px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #8e8e93;
+}
+.mk-log-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  font-size: 11.5px;
+}
+.mk-log-row + .mk-log-row { border-top: 1px solid rgba(0,0,0,0.04); }
+.mk-log-icon { font-size: 10px; flex-shrink: 0; }
+.mk-log-icon.ok   { color: #30d158; }
+.mk-log-icon.warn { color: #ff9f0a; }
+.mk-log-name { font-weight: 600; color: #1c1c1e; flex-shrink: 0; }
+.mk-log-msg  { color: #6e6e73; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.mk-log-time { color: #aeaeb2; font-size: 10px; flex-shrink: 0; }
+.mk-action {
+  padding: 9px 14px;
+  font-size: 13px;
+  color: #1c1c1e;
+  cursor: default;
+  align-items: center;
+}
+.mk-action + .mk-action { border-top: 1px solid rgba(0,0,0,0.06); }
+.mk-action-icon { width: 18px; color: #6e6e73; flex-shrink: 0; font-size: 12px; }
+.mk-action.quit { color: #ff3b30; }
+
+/* ── Stats bar ───────────────────────────────────────────────────────────── */
+.stats-bar {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0;
+}
+.stats-inner {
+  display: flex;
+  justify-content: space-around;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.stat { text-align: center; padding: 4px 8px; }
+.stat-val {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1.1;
+}
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+/* ── Scenario / use-case ─────────────────────────────────────────────────── */
+.scenario {
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--card) 60%);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin: 32px 0;
+}
+.scenario-quote {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--fg);
+  margin: 0 0 12px;
+  font-style: italic;
+}
+.scenario-quote em { font-style: normal; font-weight: 600; color: var(--accent); }
+.scenario-resolution {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+.scenario-resolution strong { color: var(--green); }
+
+/* ── How-it-works flow ───────────────────────────────────────────────────── */
+.flow {
+  display: grid;
+  grid-template-columns: 1fr 32px 1fr 32px 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0 8px;
+}
+.flow-step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 16px;
+  text-align: center;
+}
+.flow-step:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+.flow-icon { font-size: 2.2rem; display: block; margin-bottom: 10px; line-height: 1; }
+.flow-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+.flow-desc { color: var(--muted); font-size: 0.84rem; line-height: 1.5; }
+.flow-arrow {
+  text-align: center;
+  font-size: 1.4rem;
+  color: var(--accent);
+  font-weight: 300;
+}
+
+/* ── Showcase (3-panel app UI demo) ─────────────────────────────────────── */
+.showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+.showcase-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.showcase-panel:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.showcase-titlebar {
+  background: var(--border);
+  height: 34px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.showcase-wintitle {
+  margin-left: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.showcase-body {
+  background: var(--card);
+  padding: 14px;
+  min-height: 200px;
+}
+.showcase-caption {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  padding: 8px 12px 4px;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+}
+
+/* ── Mini form elements for mockups ─────────────────────────────────────── */
+.mk-form-row {
+  margin-bottom: 10px;
+}
+.mk-form-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+.mk-form-field {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--fg);
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.mk-form-field.placeholder { color: var(--subtle); }
+.mk-btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: flex-end;
+}
+.mk-btn {
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.mk-btn.primary { background: var(--accent); color: #fff; }
+.mk-btn.secondary { background: var(--bg); border: 1px solid var(--border); color: var(--fg); }
+
+/* ── Log rows inside showcase ────────────────────────────────────────────── */
+.mk-log-table { width: 100%; border-collapse: collapse; }
+.mk-log-table tr { border-bottom: 1px solid var(--border); }
+.mk-log-table tr:last-child { border-bottom: none; }
+.mk-log-table td { padding: 6px 4px; font-size: 11px; vertical-align: middle; }
+.mk-log-table .col-time { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.mk-log-table .col-target { font-weight: 600; }
+.mk-log-table .col-msg { color: var(--muted); }
+.badge-ok   { background: #d1fae5; color: #065f46; border-radius: 4px; padding: 1px 5px; }
+.badge-warn { background: #fef3c7; color: #92400e; border-radius: 4px; padding: 1px 5px; }
+.badge-err  { background: #fee2e2; color: #991b1b; border-radius: 4px; padding: 1px 5px; }
+
 /* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-wrap { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+  .hero-text .hero-cta { justify-content: center; }
+  .hero-visual { display: none; }
+  .flow { grid-template-columns: 1fr; gap: 12px; }
+  .flow-arrow { transform: rotate(90deg); }
+}
 @media (max-width: 640px) {
   .hero { padding: 60px 0 52px; }
   .site-header nav { display: none; }
@@ -550,4 +825,6 @@ pre code { background: none; border: none; padding: 0; }
   .download-box-icon { font-size: 2rem; }
   main h2 { margin-top: 40px; }
   .page-header h1 { font-size: 1.6rem; }
+  .scenario { padding: 20px; }
+  .stats-inner { gap: 20px; }
 }

@@ -10,8 +10,10 @@ struct SettingsView: View {
                 .tabItem { Label("Schedules", systemImage: "clock") }
             NotificationsPane(model: model)
                 .tabItem { Label("Notifications", systemImage: "bell") }
+            LogPane(model: model)
+                .tabItem { Label("Log", systemImage: "list.bullet.rectangle") }
         }
-        .frame(width: 520, height: 400)
+        .frame(width: 520, height: 420)
     }
 }
 
@@ -56,6 +58,19 @@ private struct SchedulesPane: View {
 
             Text("The app checks every 30 seconds and sends the message at the scheduled time.")
                 .font(.caption).foregroundStyle(.secondary)
+
+            Divider()
+
+            Toggle(isOn: $model.preventScreenLock) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Prevent idle screen lock while schedules are active")
+                        .font(.callout)
+                    Text("Acquires an IOPMAssertion to keep the display awake until all scheduled sends complete. Required for unattended overnight operation.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
         }
         .padding()
     }
@@ -162,6 +177,89 @@ private struct NotificationsPane: View {
         }
         try? await Task.sleep(for: .seconds(4))
         testResult = nil
+    }
+}
+
+// MARK: - Log pane
+
+private struct LogPane: View {
+    @Bindable var model: AppModel
+
+    private static let timeFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateStyle = .short
+        f.timeStyle = .medium
+        return f
+    }()
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("\(model.executionLog.count) entries (newest first)")
+                    .font(.caption).foregroundStyle(.secondary)
+                Spacer()
+                Button("Clear") { model.clearLog() }
+                    .font(.caption)
+                    .disabled(model.executionLog.isEmpty)
+            }
+
+            if model.executionLog.isEmpty {
+                VStack(spacing: 8) {
+                    Image(systemName: "list.bullet.rectangle")
+                        .font(.largeTitle).foregroundStyle(.tertiary)
+                    Text("No activity yet.")
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                Table(model.executionLog) {
+                    TableColumn("Time") { entry in
+                        Text(Self.timeFormatter.string(from: entry.date))
+                            .font(.caption.monospaced())
+                    }
+                    .width(min: 120, ideal: 130, max: 140)
+
+                    TableColumn("Target") { entry in
+                        Text(entry.targetName)
+                            .font(.caption)
+                            .lineLimit(1)
+                    }
+                    .width(min: 80, ideal: 100)
+
+                    TableColumn("Result") { entry in
+                        HStack(spacing: 4) {
+                            Image(systemName: entry.outcome.iconName)
+                                .foregroundStyle(entry.outcome.color)
+                                .font(.caption2)
+                            Text(entry.message)
+                                .font(.caption)
+                                .lineLimit(1)
+                        }
+                    }
+                }
+            }
+        }
+        .padding()
+    }
+}
+
+private extension LogEntry.Outcome {
+    var iconName: String {
+        switch self {
+        case .success:  "checkmark.circle.fill"
+        case .failure:  "xmark.circle.fill"
+        case .deferred: "clock.arrow.2.circlepath"
+        case .warning:  "exclamationmark.triangle.fill"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .success:  .green
+        case .failure:  .red
+        case .deferred: .orange
+        case .warning:  .yellow
+        }
     }
 }
 

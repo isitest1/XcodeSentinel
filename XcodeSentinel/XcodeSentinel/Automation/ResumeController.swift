@@ -1,7 +1,10 @@
 import AppKit
 import ApplicationServices
 import Foundation
+import OSLog
 import SentinelCore
+
+private let log = os.Logger(subsystem: "com.kohei.XcodeSentinel", category: "resume")
 
 /// Performs a single resume against one Xcode window: writes the resume prompt
 /// into the chat input, presses Send, then confirms the session moved to
@@ -18,41 +21,138 @@ public struct ResumeController {
 
     public nonisolated init() {}
 
+    /// - Parameters:
+    ///   - confirmProgress: When false, return `.sent` immediately after pressing Return
+    ///     without the 15-second polling check. Use `false` for scheduler-driven sends
+    ///     where we don't need to verify Claude started responding.
     public func resume(
         window: AXUIElement,
         prompt: String,
-        dryRun: Bool
+        dryRun: Bool,
+        confirmProgress: Bool = true
     ) async -> Outcome {
         guard !dryRun else { return .dryRun }
 
         // 1. Find the chat input field inside the window.
         guard let inputElement = Self.findChatInput(in: window) else {
+            log.error("resume: chat input not found in window")
+            return .couldNotFindInput
+        }
+        let role = Self.string(inputElement, kAXRoleAttribute) ?? "?"
+        log.info("resume: found input role=\(role, privacy: .public)")
+
+        // 2. Bring the Xcode window to the foreground so CGEvents land correctly.
+        //    kAXFocusedAttribute writes alone are unreliable for WKWebView-based
+        //    inputs (Xcode's Claude panel), so we activate the app first.
+        Self.activateWindow(window)
+        try? await Task.sleep(nanoseconds: 500_000_000) // Allow Space switch to complete
+
+        // Verify Xcode is actually frontmost before proceeding.
+        if let pid = Self.pid(of: window) {
+            let isFront = NSWorkspace.shared.frontmostApplication?.processIdentifier == pid
+            log.info("resume: xcode is frontmost after activate: \(isFront, privacy: .public)")
+        }
+
+        // Recalculate center after Space switch — position may have changed.
+        let center = Self.elementCenter(inputElement)
+        let desc = Self.string(inputElement, kAXDescriptionAttribute) ?? ""
+        log.info("resume: element center=\(String(describing: center), privacy: .public) desc='\(desc, privacy: .public)'")
+
+        // If the element has no screen position the Claude panel is collapsed/hidden.
+        guard let center else {
+            log.error("resume: element has no screen position — Claude panel may be collapsed/hidden")
             return .couldNotFindInput
         }
 
-        // 2. Write the prompt into the field.
-        // AXValue write works for AXTextArea/AXTextField. For AXUnknown (Xcode's
-        // Claude input, verified 2026-08-31), fall back to clipboard paste.
-        let writeResult = AXUIElementSetAttributeValue(
-            inputElement, kAXValueAttribute as CFString, prompt as CFString
-        )
-        if writeResult != .success {
-            guard Self.pasteViaClipboard(prompt, into: inputElement, window: window)
-            else { return .couldNotFindInput }
+        // 3. ALWAYS click the element to ensure OS-level / DOM focus before any
+        //    text delivery or Return press.  AX value writes do NOT move keyboard
+        //    focus, so without this click Return lands in whatever Xcode element
+        //    was last focused by the user (e.g. the TARGETS list).
+        log.info("resume: clicking at \(center.x, privacy: .public),\(center.y, privacy: .public) to focus input")
+        Self.clickAt(center)
+        try? await Task.sleep(nanoseconds: 500_000_000) // Let WebKit/Xcode process the click
+
+        // 4. Deliver the prompt text.
+        //
+        //    WKWebView inputs (role == AXUnknown): kAXValueAttribute writes update
+        //    the accessibility tree but do NOT fire browser input/paste events.
+        //    React/Vue state never updates, so the submit button stays disabled and
+        //    Return does nothing.  Use clipboard paste (Cmd+V) instead — it fires
+        //    a real paste event that JavaScript handles correctly.
+        //
+        //    Native inputs (AXTextField / AXTextArea): direct AX write is fine.
+        let useClipboard = role == "AXUnknown"
+        if useClipboard {
+            // Clipboard paste path for WKWebView-based inputs.
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(prompt, forType: .string)
+            log.info("resume: clipboard paste path (WKWebView), prompt length=\(prompt.count, privacy: .public)")
+
+            let pid = Self.pid(of: window)
+            log.info("resume: Cmd+V to pid=\(String(describing: pid), privacy: .public)")
+            let src = CGEventSource(stateID: .hidSystemState)
+            let vDown = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: true)
+            let vUp   = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: false)
+            vDown?.flags = .maskCommand
+            vUp?.flags   = .maskCommand
+            if let pid {
+                vDown?.postToPid(pid)
+                vUp?.postToPid(pid)
+            } else {
+                vDown?.post(tap: .cghidEventTap)
+                vUp?.post(tap: .cghidEventTap)
+            }
+            try? await Task.sleep(nanoseconds: 400_000_000) // Let WebKit process the paste event
+
+            // Read back the AX value as a best-effort confirmation.
+            var valRef: CFTypeRef?
+            if AXUIElementCopyAttributeValue(inputElement, kAXValueAttribute as CFString, &valRef) == .success,
+               let val = valRef as? String, !val.isEmpty {
+                log.info("resume: post-paste AX value confirmed (length=\(val.count, privacy: .public))")
+            } else {
+                log.info("resume: post-paste AX value not readable — proceeding anyway (normal for WKWebView)")
+            }
+        } else {
+            // Direct AX write path for native text fields.
+            let wrote = AXUIElementSetAttributeValue(
+                inputElement, kAXValueAttribute as CFString, prompt as CFString
+            ) == .success
+            log.info("resume: AX value write (native field): \(wrote, privacy: .public)")
+            if !wrote {
+                // Fallback to clipboard even for native fields if write failed.
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(prompt, forType: .string)
+                let pid = Self.pid(of: window)
+                let src = CGEventSource(stateID: .hidSystemState)
+                let vDown = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: true)
+                let vUp   = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: false)
+                vDown?.flags = .maskCommand
+                vUp?.flags   = .maskCommand
+                if let pid { vDown?.postToPid(pid); vUp?.postToPid(pid) }
+                else { vDown?.post(tap: .cghidEventTap); vUp?.post(tap: .cghidEventTap) }
+                try? await Task.sleep(nanoseconds: 300_000_000)
+            }
         }
 
-        // 3. Send. Xcode's Claude panel has no AXButton with "send"/"submit"
-        // (verified 2026-08-31). Focus the input then press Return.
+        // 6. Send. Prefer AXButton; fall back to Return key.
         if let sendButton = Self.findSendButton(in: window) {
+            log.info("resume: pressing send button via AXPress")
             AXUIElementPerformAction(sendButton, kAXPressAction as CFString)
         } else {
-            AXUIElementSetAttributeValue(inputElement, kAXFocusedAttribute as CFString, kCFBooleanTrue)
-            // Small delay to let focus settle before sending.
+            log.info("resume: no send button found, pressing Return to pid=\(String(describing: Self.pid(of: window)), privacy: .public)")
             try? await Task.sleep(nanoseconds: 150_000_000)
             Self.pressReturn(toPid: Self.pid(of: window))
         }
 
-        // 4. Poll for .working for up to 15 s to confirm the send took.
+        // 6. For scheduler-driven sends, return immediately without waiting for
+        //    Claude to start responding (the user is away; the 15-second check
+        //    always timed out with the empty PatternSet used here).
+        guard confirmProgress else {
+            log.info("resume: confirmProgress=false, returning .sent")
+            return .sent
+        }
+
+        // 7. Poll for .working for up to 15 s to confirm the send took.
         let deadline = Date().addingTimeInterval(15)
         while Date() < deadline {
             try? await Task.sleep(nanoseconds: 1_000_000_000)
@@ -66,29 +166,40 @@ public struct ResumeController {
     // MARK: - AX element location (verified against real Xcode AX dump 2026-08-31)
 
     private static func findChatInput(in window: AXUIElement) -> AXUIElement? {
-        // Strategy 1: Locate the AXGroup containing AXOpaqueProviderGroup (the
-        // Claude chat container), then return its AXUnknown sibling — the actual
-        // chat input field in Xcode's Claude panel.
+        // Strategy 1: Locate the AXGroup that is the Claude chat container:
+        // - has an AXScrollArea child containing AXOpaqueProviderGroup (message history)
+        // - AND has at least one AXUnknown direct child (the text input)
+        // The second requirement distinguishes Claude's panel from other AXGroups
+        // (e.g. the Project Navigator list) that also contain AXOpaqueProviderGroup.
         if let chatGroup = findChatGroup(in: window),
            let input = findInputInChatGroup(chatGroup) {
+            log.info("findChatInput: strategy 1 (chat group) succeeded")
             return input
         }
         // Strategy 2: Fallback for future Xcode versions that may expose a typed field.
+        log.warning("findChatInput: strategy 1 failed — falling back to AXTextArea/AXTextField search")
         return findFirst(in: window, matching: { element in
             guard let role = Self.string(element, kAXRoleAttribute) else { return false }
             return role == "AXTextArea" || role == "AXTextField"
         })
     }
 
-    /// Returns the AXGroup whose DIRECT children include an AXScrollArea that
-    /// contains an AXOpaqueProviderGroup (the Claude chat scroll area).
+    /// Returns the AXGroup that is the Claude chat container. It must satisfy
+    /// BOTH conditions:
+    ///   1. A direct AXScrollArea child whose children include AXOpaqueProviderGroup
+    ///      (the WebKit-rendered chat message history).
+    ///   2. At least one direct AXUnknown child (the chat text-input field).
+    /// Requiring both avoids false matches on Project Navigator groups that also
+    /// contain AXOpaqueProviderGroup but have no editable AXUnknown sibling.
     private static func findChatGroup(in window: AXUIElement) -> AXUIElement? {
         findFirst(in: window, depth: 0, maxDepth: 15, matching: { element in
             guard Self.string(element, kAXRoleAttribute) == "AXGroup" else { return false }
             var ref: CFTypeRef?
             guard AXUIElementCopyAttributeValue(element, kAXChildrenAttribute as CFString, &ref) == .success,
                   let children = ref as? [AXUIElement] else { return false }
-            return children.contains { child in
+
+            // Condition 1: scroll area with opaque provider group (chat history)
+            let hasHistory = children.contains { child in
                 guard Self.string(child, kAXRoleAttribute) == "AXScrollArea" else { return false }
                 var childRef: CFTypeRef?
                 guard AXUIElementCopyAttributeValue(child, kAXChildrenAttribute as CFString, &childRef) == .success,
@@ -97,22 +208,33 @@ public struct ResumeController {
                     Self.string($0, kAXRoleAttribute) == "AXOpaqueProviderGroup"
                 }
             }
+            guard hasHistory else { return false }
+
+            // Condition 2: at least one AXUnknown direct child (the text input)
+            return children.contains { Self.string($0, kAXRoleAttribute) == "AXUnknown" }
         })
     }
 
-    /// Among the direct children of the chat group, returns the first AXUnknown
-    /// (the Claude text input) or any AXTextArea/AXTextField as a fallback.
+    /// Returns the chat text-input element from the Claude group's direct children.
+    /// Claude's text input is typically the LAST AXUnknown child (bottom of the panel).
+    /// Skips AXUnknown elements whose description suggests a filter/search field.
     private static func findInputInChatGroup(_ group: AXUIElement) -> AXUIElement? {
         var ref: CFTypeRef?
         guard AXUIElementCopyAttributeValue(group, kAXChildrenAttribute as CFString, &ref) == .success,
               let children = ref as? [AXUIElement] else { return nil }
+        var lastUnknown: AXUIElement? = nil
         var fallback: AXUIElement? = nil
         for child in children {
             let role = Self.string(child, kAXRoleAttribute) ?? ""
-            if role == "AXUnknown" { return child }
+            if role == "AXUnknown" {
+                let childDesc = (Self.string(child, kAXDescriptionAttribute) ?? "").lowercased()
+                // Skip filter/search fields that are not the chat input
+                let isFilter = childDesc.contains("filter") || childDesc.contains("search")
+                if !isFilter { lastUnknown = child }
+            }
             if role == "AXTextArea" || role == "AXTextField" { fallback = child }
         }
-        return fallback
+        return lastUnknown ?? fallback
     }
 
     private static func findSendButton(in window: AXUIElement) -> AXUIElement? {
@@ -171,6 +293,45 @@ public struct ResumeController {
             down?.post(tap: .cghidEventTap)
             up?.post(tap: .cghidEventTap)
         }
+    }
+
+    /// Activates the Xcode app and raises the target window to the foreground.
+    private static func activateWindow(_ window: AXUIElement) {
+        AXUIElementSetAttributeValue(window, kAXMainAttribute as CFString, kCFBooleanTrue)
+        AXUIElementSetAttributeValue(window, kAXFocusedAttribute as CFString, kCFBooleanTrue)
+        if let pid = Self.pid(of: window) {
+            NSRunningApplication(processIdentifier: pid)?.activate()
+        }
+    }
+
+    /// Returns the screen-space center of an AX element, or nil if unreachable.
+    private static func elementCenter(_ element: AXUIElement) -> CGPoint? {
+        var posRef: CFTypeRef?
+        var sizeRef: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, kAXPositionAttribute as CFString, &posRef) == .success,
+              AXUIElementCopyAttributeValue(element, kAXSizeAttribute as CFString, &sizeRef) == .success,
+              let posRef, let sizeRef else { return nil }
+        var pt = CGPoint.zero
+        var sz = CGSize.zero
+        // AXValue is a CFType; the force-cast is safe because
+        // kAXPositionAttribute/kAXSizeAttribute always return AXValue.
+        AXValueGetValue(posRef as! AXValue, .cgPoint, &pt)
+        AXValueGetValue(sizeRef as! AXValue, .cgSize, &sz)
+        guard sz.width > 0, sz.height > 0 else { return nil }
+        return CGPoint(x: pt.x + sz.width / 2, y: pt.y + sz.height / 2)
+    }
+
+    /// Posts a left mouse click at the given screen point via the global HID tap.
+    /// This gives OS-level focus to whatever UI element is at that point —
+    /// required for WKWebView inputs that ignore kAXFocusedAttribute writes.
+    private static func clickAt(_ point: CGPoint) {
+        let src = CGEventSource(stateID: .hidSystemState)
+        let down = CGEvent(mouseEventSource: src, mouseType: .leftMouseDown,
+                           mouseCursorPosition: point, mouseButton: .left)
+        let up   = CGEvent(mouseEventSource: src, mouseType: .leftMouseUp,
+                           mouseCursorPosition: point, mouseButton: .left)
+        down?.post(tap: .cghidEventTap)
+        up?.post(tap: .cghidEventTap)
     }
 
     /// Writes `text` to the clipboard then sends Cmd+V to `element`.

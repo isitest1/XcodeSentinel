@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 388" width="350" height="388">
+  <defs>
+    <style>
+      .f { font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; }
+      .t-pri  { fill: #1c1c1e; }
+      .t-sec  { fill: #8e8e93; }
+      .t-ter  { fill: #aeaeb2; }
+      .t-badge{ fill: #8e8e93; font-variant-caps: small-caps; letter-spacing: 0.04em; }
+    </style>
+    <filter id="sh" x="-8%" y="-5%" width="120%" height="118%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#00000026"/>
+    </filter>
+    <clipPath id="body-clip">
+      <rect x="15" y="23" width="320" height="350" rx="11"/>
+    </clipPath>
+  </defs>
+
+  <!-- Upward-pointing arrow (menu bar anchor) -->
+  <polygon points="175,10 157,25 193,25" fill="#f5f5f7"/>
+
+  <!-- Popover body -->
+  <rect x="15" y="23" width="320" height="350" rx="11" fill="#f5f5f7"
+        stroke="#d0d0d5" stroke-width="0.5" filter="url(#sh)"/>
+
+  <!-- ─── SCHEDULE LIST ─── -->
+
+  <!-- Row 1: FishingLog (enabled) -->
+  <!-- Blue dot -->
+  <circle cx="35" cy="58" r="4.5" fill="#007aff"/>
+  <!-- Name -->
+  <text x="52" y="52" class="f t-pri" font-size="13" font-weight="600">FishingLog</text>
+  <!-- Date -->
+  <text x="52" y="67" class="f t-sec" font-size="11">Sep 10, 2026 · 3:00 AM</text>
+  <!-- Message -->
+  <text x="52" y="80" class="f t-ter" font-size="10">Please continue from where you stopped.</text>
+  <!-- Toggle (on) -->
+  <rect x="264" y="46" width="34" height="20" rx="10" fill="#007aff"/>
+  <circle cx="287" cy="56" r="8" fill="#ffffff"/>
+  <!-- Edit pencil (approximated) -->
+  <text x="307" y="60" class="f t-ter" font-size="13">✎</text>
+
+  <!-- Divider -->
+  <line x1="27" y1="96" x2="323" y2="96" stroke="#d8d8d8" stroke-width="0.5"/>
+
+  <!-- Row 2: XcodeSentinel (enabled, Daily) -->
+  <circle cx="35" cy="126" r="4.5" fill="#007aff"/>
+  <text x="52" y="119" class="f t-pri" font-size="13" font-weight="600">XcodeSentinel</text>
+  <text x="52" y="134" class="f t-sec" font-size="11">Sep 10, 2026 · 8:00 AM</text>
+  <text x="52" y="147" class="f t-ter" font-size="10">Daily</text>
+  <text x="52" y="159" class="f t-ter" font-size="10">Please continue from where you stopped.</text>
+  <!-- Toggle (on) -->
+  <rect x="264" y="113" width="34" height="20" rx="10" fill="#007aff"/>
+  <circle cx="287" cy="123" r="8" fill="#ffffff"/>
+  <text x="307" y="127" class="f t-ter" font-size="13">✎</text>
+
+  <!-- ─── RECENT ACTIVITY ─── -->
+  <line x1="15" y1="174" x2="335" y2="174" stroke="#d8d8d8" stroke-width="0.5"/>
+  <text x="27" y="192" class="f t-badge" font-size="10">RECENT ACTIVITY</text>
+
+  <!-- Entry 1: success (FishingLog) -->
+  <circle cx="35" cy="207" r="5" fill="#34c759"/>
+  <text x="31" y="211" fill="#ffffff" font-size="7.5" font-family="sans-serif" font-weight="700">✓</text>
+  <text x="48" y="204" class="f t-pri" font-size="10" font-weight="600">FishingLog</text>
+  <text x="48" y="216" class="f t-sec" font-size="10">Sent: "Please continue from where you stopped."</text>
+  <text x="324" y="204" class="f t-ter" font-size="10" text-anchor="end">3:02 AM</text>
+
+  <!-- Entry 2: success (XcodeSentinel) -->
+  <circle cx="35" cy="231" r="5" fill="#34c759"/>
+  <text x="31" y="235" fill="#ffffff" font-size="7.5" font-family="sans-serif" font-weight="700">✓</text>
+  <text x="48" y="228" class="f t-pri" font-size="10" font-weight="600">XcodeSentinel</text>
+  <text x="48" y="240" class="f t-sec" font-size="10">Sent: "Please continue from where you stopped."</text>
+  <text x="324" y="228" class="f t-ter" font-size="10" text-anchor="end">8:01 AM</text>
+
+  <!-- ─── MENU ACTIONS ─── -->
+  <line x1="15" y1="254" x2="335" y2="254" stroke="#d8d8d8" stroke-width="0.5"/>
+
+  <!-- Add schedule… -->
+  <text x="31" y="277" class="f t-sec" font-size="15">+</text>
+  <text x="52" y="277" class="f t-pri" font-size="13">Add schedule…</text>
+
+  <!-- Settings… -->
+  <text x="31" y="302" class="f t-sec" font-size="14">⚙</text>
+  <text x="52" y="302" class="f t-pri" font-size="13">Settings…</text>
+
+  <!-- AX Inspector -->
+  <text x="31" y="327" class="f t-sec" font-size="13">⌕</text>
+  <text x="52" y="327" class="f t-pri" font-size="13">AX Inspector</text>
+
+  <!-- Inner separator -->
+  <line x1="15" y1="338" x2="335" y2="338" stroke="#d8d8d8" stroke-width="0.5"/>
+
+  <!-- Quit XcodeSentinel -->
+  <text x="31" y="361" class="f t-sec" font-size="14">⏻</text>
+  <text x="52" y="361" class="f t-pri" font-size="13">Quit XcodeSentinel</text>
+</svg>

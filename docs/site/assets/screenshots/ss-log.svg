@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 460" width="580" height="460">
+  <defs>
+    <style>
+      .f  { font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; }
+      .pri  { fill: #1c1c1e; }
+      .sec  { fill: #8e8e93; }
+      .ter  { fill: #aeaeb2; }
+      .mono { font-family: 'SF Mono', 'Menlo', monospace; }
+    </style>
+    <filter id="sh3" x="-3%" y="-3%" width="108%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0000001a"/>
+    </filter>
+  </defs>
+
+  <!-- Window body -->
+  <rect x="15" y="10" width="550" height="440" rx="10" fill="#f5f5f7"
+        stroke="#c8c8c8" stroke-width="0.5" filter="url(#sh3)"/>
+
+  <!-- ─── TITLE BAR ─── -->
+  <rect x="15" y="10" width="550" height="38" rx="10" fill="#e8e8e8"/>
+  <rect x="15" y="33" width="550" height="15" fill="#e8e8e8"/>
+  <!-- Traffic lights -->
+  <circle cx="41" cy="29" r="6.5" fill="#ff5f57"/>
+  <circle cx="63" cy="29" r="6.5" fill="#febc2e"/>
+  <circle cx="85" cy="29" r="6.5" fill="#28c840"/>
+  <!-- Title -->
+  <text x="290" y="35" class="f pri" font-size="13" font-weight="600"
+        text-anchor="middle">XcodeSentinel Settings</text>
+
+  <!-- ─── TAB BAR ─── -->
+  <rect x="15" y="48" width="550" height="40" fill="#ebebeb"/>
+  <!-- Tab: Schedules -->
+  <rect x="148" y="52" width="88" height="32" rx="7" fill="#ffffff"
+        stroke="#d0d0d5" stroke-width="0.3"/>
+  <text x="192" y="73" class="f sec" font-size="12" text-anchor="middle">🕐 Schedules</text>
+  <!-- Tab: Notifications -->
+  <text x="310" y="73" class="f sec" font-size="12" text-anchor="middle">🔔 Notifications</text>
+  <!-- Tab: Log (selected) -->
+  <rect x="378" y="52" width="60" height="32" rx="7" fill="#ffffff"
+        stroke="#007aff" stroke-width="1.5"/>
+  <text x="408" y="73" class="f" font-size="12" text-anchor="middle" fill="#007aff"
+        font-weight="600">📋 Log</text>
+
+  <!-- ─── LOG PANE CONTENT (padding 16) ─── -->
+  <!-- Header row -->
+  <text x="31" y="112" class="f sec" font-size="11">3 entries (newest first)</text>
+  <rect x="514" y="98" width="36" height="22" rx="5" fill="#e4e4e6" stroke="none"/>
+  <text x="532" y="113" class="f sec" font-size="12" text-anchor="middle">Clear</text>
+
+  <!-- Table header row -->
+  <rect x="31" y="124" width="518" height="26" rx="0" fill="#ebebeb"/>
+  <text x="43" y="141" class="f sec" font-size="11" font-weight="600">Time</text>
+  <text x="195" y="141" class="f sec" font-size="11" font-weight="600">Target</text>
+  <text x="310" y="141" class="f sec" font-size="11" font-weight="600">Result</text>
+
+  <!-- Table body: alternating rows -->
+  <!-- Row 1 -->
+  <rect x="31" y="150" width="518" height="38" fill="#ffffff" rx="0"/>
+  <text x="43" y="174" class="f mono pri" font-size="10">Sep 10, 3:02:14 AM</text>
+  <text x="195" y="174" class="f pri" font-size="11">FishingLog</text>
+  <!-- success icon -->
+  <circle cx="317" cy="169" r="6" fill="#34c759"/>
+  <text x="313" y="173" fill="#ffffff" font-size="8" font-weight="700">✓</text>
+  <text x="328" y="174" class="f pri" font-size="11">Sent: "Please continue from where you sto…"</text>
+
+  <!-- Row 2 -->
+  <rect x="31" y="188" width="518" height="38" fill="#f9f9f9" rx="0"/>
+  <text x="43" y="212" class="f mono pri" font-size="10">Sep 10, 8:01:07 AM</text>
+  <text x="195" y="212" class="f pri" font-size="11">XcodeSentinel</text>
+  <circle cx="317" cy="207" r="6" fill="#34c759"/>
+  <text x="313" y="211" fill="#ffffff" font-size="8" font-weight="700">✓</text>
+  <text x="328" y="212" class="f pri" font-size="11">Sent: "Please continue from where you sto…"</text>
+
+  <!-- Row 3 (warning) -->
+  <rect x="31" y="226" width="518" height="38" fill="#ffffff" rx="0"/>
+  <text x="43" y="250" class="f mono pri" font-size="10">Sep 9, 11:45:33 PM</text>
+  <text x="195" y="250" class="f pri" font-size="11">FishingLog</text>
+  <!-- warning icon -->
+  <polygon points="317,261 310,249 324,249" fill="#ff9500"/>
+  <text x="315" y="260" fill="#ffffff" font-size="7" font-weight="700">!</text>
+  <text x="328" y="250" class="f pri" font-size="11">Sent, but Claude didn't start responding…</text>
+
+  <!-- Table bottom border -->
+  <rect x="31" y="264" width="518" height="1" fill="#d8d8d8"/>
+</svg>

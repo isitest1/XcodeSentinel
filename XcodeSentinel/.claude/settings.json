@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__xcode-tools__XcodeRead",
+      "mcp__xcode-tools__XcodeRefreshCodeIssuesInFile",
+      "mcp__xcode-tools__XcodeGrep",
+      "mcp__xcode-tools__XcodeLS",
+      "mcp__xcode-tools__GetBuildLog",
+      "mcp__xcode-tools__DocumentationSearch",
+      "Bash(log show *)"
+    ],
+    "deny": []
+  }
+}

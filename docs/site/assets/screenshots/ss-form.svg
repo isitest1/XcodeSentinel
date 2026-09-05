@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510" width="510" height="510">
+  <defs>
+    <style>
+      .f  { font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; }
+      .pri  { fill: #1c1c1e; }
+      .sec  { fill: #8e8e93; }
+      .ter  { fill: #aeaeb2; }
+      .mono { font-family: 'SF Mono', 'Menlo', monospace; }
+    </style>
+    <filter id="sh2" x="-4%" y="-3%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0000001a"/>
+    </filter>
+  </defs>
+
+  <!-- Window shadow + body -->
+  <rect x="20" y="15" width="470" height="480" rx="10" fill="#f0f0f0"
+        stroke="#c8c8c8" stroke-width="0.5" filter="url(#sh2)"/>
+
+  <!-- ─── TITLE BAR ─── -->
+  <rect x="20" y="15" width="470" height="38" rx="10" fill="#e8e8e8"/>
+  <!-- Square off bottom of title bar -->
+  <rect x="20" y="38" width="470" height="15" fill="#e8e8e8"/>
+  <!-- Traffic lights -->
+  <circle cx="46" cy="34" r="6.5" fill="#ff5f57"/>
+  <circle cx="68" cy="34" r="6.5" fill="#febc2e"/>
+  <circle cx="90" cy="34" r="6.5" fill="#28c840"/>
+  <!-- Title -->
+  <text x="255" y="40" class="f pri" font-size="13" font-weight="600"
+        text-anchor="middle">New Schedule</text>
+
+  <!-- ─── CONTENT (padding 24px) ─── -->
+  <!-- Section label: Xcode window -->
+  <text x="44" y="93" class="f sec" font-size="11">Xcode window:</text>
+  <text x="440" y="93" class="f" font-size="11" fill="#007aff" text-anchor="end">Refresh</text>
+
+  <!-- Window list -->
+  <rect x="44" y="99" width="422" height="44" rx="6" fill="#ffffff"
+        stroke="#d0d0d5" stroke-width="0.5"/>
+  <!-- Selected row (highlighted) -->
+  <rect x="44" y="99" width="422" height="44" rx="6" fill="#007aff14"/>
+  <text x="58" y="126" class="f pri" font-size="13">XcodeSentinel — main</text>
+  <text x="452" y="121" class="f" font-size="12" fill="#007aff" text-anchor="end"
+        font-weight="600">✓</text>
+
+  <!-- Name label + field -->
+  <text x="44" y="164" class="f sec" font-size="11">Name (shown in notifications):</text>
+  <rect x="44" y="170" width="422" height="28" rx="5" fill="#ffffff"
+        stroke="#d0d0d5" stroke-width="0.5"/>
+  <text x="56" y="189" class="f pri" font-size="13">XcodeSentinel</text>
+
+  <!-- DatePicker -->
+  <text x="44" y="224" class="f pri" font-size="13" font-weight="400">Send at:</text>
+  <!-- Date control -->
+  <rect x="106" y="210" width="180" height="28" rx="5" fill="#ffffff"
+        stroke="#d0d0d5" stroke-width="0.5"/>
+  <text x="118" y="229" class="f pri" font-size="13">Sep 10, 2026, 3:00 AM</text>
+  <!-- Stepper arrows (simplified) -->
+  <text x="278" y="225" class="f sec" font-size="10">▲</text>
+  <text x="278" y="235" class="f sec" font-size="10">▼</text>
+
+  <!-- Repeat section -->
+  <text x="44" y="264" class="f sec" font-size="11">Repeat:</text>
+  <rect x="44" y="270" width="422" height="28" rx="6" fill="#e4e4e6"
+        stroke="none"/>
+  <!-- Selected segment: Daily -->
+  <rect x="155" y="272" width="139" height="24" rx="5" fill="#ffffff"
+        stroke="#d0d0d5" stroke-width="0.3"/>
+  <text x="108" y="290" class="f pri" font-size="12" text-anchor="middle">Once</text>
+  <text x="224" y="290" class="f pri" font-size="12" text-anchor="middle" font-weight="600">Daily</text>
+  <text x="376" y="290" class="f pri" font-size="12" text-anchor="middle">Weekdays only</text>
+
+  <!-- Message section -->
+  <text x="44" y="325" class="f sec" font-size="11">Message to send:</text>
+  <rect x="44" y="331" width="422" height="72" rx="5" fill="#ffffff"
+        stroke="#d0d0d5" stroke-width="0.5"/>
+  <text x="56" y="352" class="f pri" font-size="13">Please continue from where you stopped.</text>
+  <!-- Caption -->
+  <text x="44" y="416" class="f ter" font-size="10">This text is typed into the Claude input field and sent.</text>
+
+  <!-- ─── BUTTONS ─── -->
+  <text x="380" y="452" class="f pri" font-size="13">Cancel</text>
+  <!-- Add button (primary) -->
+  <rect x="418" y="437" width="52" height="28" rx="6" fill="#007aff"/>
+  <text x="444" y="456" class="f" font-size="13" fill="#ffffff" text-anchor="middle"
+        font-weight="600">Add</text>
+</svg>

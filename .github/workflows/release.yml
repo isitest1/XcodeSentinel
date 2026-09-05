@@ -38,7 +38,16 @@ jobs:
             DSTROOT=/tmp/xcs-install \
             install
 
-      - name: Sign, notarize and create DMG
+      - name: Create unsigned DMG (always)
+        run: |
+          mkdir -p dist staging
+          cp -R /tmp/xcs-install/Applications/XcodeSentinel.app staging/
+          ln -sf /Applications staging/Applications
+          hdiutil create -volname XcodeSentinel \
+            -srcfolder staging -ov -format UDZO dist/XcodeSentinel.dmg
+
+      - name: Sign, notarize and replace DMG (requires secrets)
+        if: ${{ secrets.APPLE_DEVELOPER_ID_CERT_BASE64 != '' }}
         env:
           CERT_BASE64: ${{ secrets.APPLE_DEVELOPER_ID_CERT_BASE64 }}
           CERT_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSWORD }}
@@ -46,7 +55,6 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
         run: |
-          # Import certificate
           echo "$CERT_BASE64" | base64 --decode > cert.p12
           security create-keychain -p "" build.keychain
           security import cert.p12 -k build.keychain -P "$CERT_PASSWORD" -T /usr/bin/codesign
@@ -55,25 +63,16 @@ jobs:
           security unlock-keychain -p "" build.keychain
           security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
 
-          APP=/tmp/xcs-install/Applications/XcodeSentinel.app
-
-          # Sign
+          APP=staging/XcodeSentinel.app
           codesign --force --deep --options runtime \
             --sign "Developer ID Application: $TEAM_ID" "$APP"
-
-          # Notarize
           ditto -c -k --keepParent "$APP" XcodeSentinel.zip
           xcrun notarytool submit XcodeSentinel.zip \
             --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" \
             --wait
-
-          # Staple
           xcrun stapler staple "$APP"
-
-          # Create DMG
-          mkdir -p dist
           hdiutil create -volname XcodeSentinel \
-            -srcfolder "$APP" -ov -format UDZO dist/XcodeSentinel.dmg
+            -srcfolder staging -ov -format UDZO dist/XcodeSentinel.dmg
 
       - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')

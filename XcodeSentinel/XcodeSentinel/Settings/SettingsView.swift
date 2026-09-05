@@ -13,7 +13,7 @@ struct SettingsView: View {
             LogPane(model: model)
                 .tabItem { Label("Log", systemImage: "list.bullet.rectangle") }
         }
-        .frame(width: 520, height: 420)
+        .frame(width: 520, height: 480)
     }
 }
 
@@ -184,6 +184,11 @@ private struct NotificationsPane: View {
 
 private struct LogPane: View {
     @Bindable var model: AppModel
+    @State private var selectedID: LogEntry.ID?
+
+    private var selectedEntry: LogEntry? {
+        model.executionLog.first { $0.id == selectedID }
+    }
 
     private static let timeFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -198,9 +203,12 @@ private struct LogPane: View {
                 Text("\(model.executionLog.count) entries (newest first)")
                     .font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                Button("Clear") { model.clearLog() }
-                    .font(.caption)
-                    .disabled(model.executionLog.isEmpty)
+                Button("Clear") {
+                    model.clearLog()
+                    selectedID = nil
+                }
+                .font(.caption)
+                .disabled(model.executionLog.isEmpty)
             }
 
             if model.executionLog.isEmpty {
@@ -212,7 +220,7 @@ private struct LogPane: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                Table(model.executionLog) {
+                Table(model.executionLog, selection: $selectedID) {
                     TableColumn("Time") { entry in
                         Text(Self.timeFormatter.string(from: entry.date))
                             .font(.caption.monospaced())
@@ -237,9 +245,57 @@ private struct LogPane: View {
                         }
                     }
                 }
+
+                // Detail panel — expands full message for the selected row
+                LogDetailPanel(entry: selectedEntry, timeFormatter: Self.timeFormatter)
             }
         }
         .padding()
+    }
+}
+
+private struct LogDetailPanel: View {
+    let entry: LogEntry?
+    let timeFormatter: DateFormatter
+
+    var body: some View {
+        Group {
+            if let entry {
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(spacing: 6) {
+                        Image(systemName: entry.outcome.iconName)
+                            .foregroundStyle(entry.outcome.color)
+                            .font(.caption)
+                        Text(entry.targetName).font(.caption.bold())
+                        Text("·").foregroundStyle(.tertiary)
+                        Text(timeFormatter.string(from: entry.date))
+                            .font(.caption.monospaced())
+                            .foregroundStyle(.secondary)
+                        Spacer(minLength: 0)
+                    }
+                    Text(entry.message)
+                        .font(.caption)
+                        .foregroundStyle(.primary)
+                        .textSelection(.enabled)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color(NSColor.textBackgroundColor))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                )
+            } else {
+                Text("Click a row to see the full message.")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.vertical, 10)
+            }
+        }
+        .frame(minHeight: 56)
     }
 }
 

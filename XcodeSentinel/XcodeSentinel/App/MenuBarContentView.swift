@@ -96,7 +96,7 @@ struct MenuBarContentView: View {
                 LogEntryRow(entry: entry)
             }
             if model.executionLog.count > 3 {
-                Button("View all \(model.executionLog.count) entries…") { openSettings() }
+                Button("View all \(model.executionLog.count) entries…") { showSettings() }
                     .font(.caption2)
                     .buttonStyle(.plain)
                     .foregroundStyle(.secondary)
@@ -114,12 +114,24 @@ struct MenuBarContentView: View {
                 model.scheduleBeingEdited = nil
                 openWindow(id: "schedule-form")
             }
-            menuButton("Settings…", icon: "gear") { openSettings() }
+            menuButton("Settings…", icon: "gear") { showSettings() }
             menuButton("AX Inspector", icon: "square.and.pencil") { openWindow(id: "ax-inspector") }
             Divider().padding(.vertical, 2)
             menuButton("Quit XcodeSentinel", icon: "power") { NSApplication.shared.terminate(nil) }
         }
         .padding(.vertical, 4)
+    }
+
+    // Raises the Settings window above all other apps, opening it first if needed.
+    private func showSettings() {
+        openSettings()
+        NSApp.activate(ignoringOtherApps: true)
+        // asyncAfter gives SwiftUI time to create the window before we order it front.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            NSApp.windows
+                .filter { $0.title == "Settings" && $0.canBecomeKey }
+                .forEach { $0.makeKeyAndOrderFront(nil) }
+        }
     }
 
     private func menuButton(_ title: String, icon: String, action: @escaping () -> Void) -> some View {

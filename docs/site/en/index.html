@@ -48,7 +48,7 @@
               <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest">⬇ Download for macOS</a>
               <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel">View Source →</a>
             </div>
-            <p class="hero-meta" data-i18n="index.heroMeta">macOS 15 or later · Developer ID signed · Notarized · Free</p>
+            <p class="hero-meta" data-i18n="index.heroMeta">macOS 15 or later · Open Source · Free · v0.1.0 Developer Preview</p>
           </div>
 
           <!-- Right: app mockup -->
@@ -156,7 +156,7 @@
         <div class="wrap">
 
           <!-- Download box -->
-          <div class="download-box" style="margin-top:40px">
+          <div class="download-box">
             <div class="download-box-icon">📦</div>
             <div class="download-box-text">
               <h3>Download XcodeSentinel</h3>
@@ -237,136 +237,33 @@
             </div>
           </div>
 
-          <!-- UI showcase (mockups) -->
+          <!-- UI screenshots -->
           <h2>App Interface</h2>
           <div class="showcase">
 
-            <!-- Panel 1: Schedule form -->
+            <!-- Panel 1: Schedule form screenshot -->
             <div class="showcase-panel">
-              <div class="showcase-titlebar">
-                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-                <span class="showcase-wintitle">New Schedule</span>
-              </div>
-              <div class="showcase-body" style="padding:16px">
-                <div class="mk-form-row">
-                  <label class="mk-form-label">Xcode window</label>
-                  <div class="mk-form-field">✓ FishingLog — FishingLog.xcodeproj</div>
-                </div>
-                <div class="mk-form-row">
-                  <label class="mk-form-label">Name</label>
-                  <div class="mk-form-field">FishingLog</div>
-                </div>
-                <div class="mk-form-row">
-                  <label class="mk-form-label">Send at</label>
-                  <div class="mk-form-field">Tomorrow, 3:00 AM</div>
-                </div>
-                <div class="mk-form-row">
-                  <label class="mk-form-label">Repeat</label>
-                  <div class="mk-form-field" style="gap:8px">
-                    <span style="background:var(--accent);color:#fff;padding:2px 10px;border-radius:4px;font-size:11px">Once</span>
-                    <span style="color:var(--muted);font-size:11px">Daily</span>
-                    <span style="color:var(--muted);font-size:11px">Weekdays</span>
-                  </div>
-                </div>
-                <div class="mk-form-row">
-                  <label class="mk-form-label">Message to send</label>
-                  <div class="mk-form-field" style="font-size:11px;color:var(--muted)">Please continue from where you stopped.</div>
-                </div>
-                <div class="mk-btn-row">
-                  <div class="mk-btn secondary">Cancel</div>
-                  <div class="mk-btn primary">Add</div>
-                </div>
-              </div>
+              <img src="../assets/screenshots/ss-form.svg"
+                   alt="New Schedule form showing Xcode window selection, date picker, repeat policy, and message field"
+                   width="510" height="510" loading="lazy" class="showcase-ss-img">
               <div class="showcase-caption">Register a schedule by picking a window and setting a time</div>
             </div>
 
-            <!-- Panel 2: Settings > Schedules -->
+            <!-- Panel 2: Menu bar popover screenshot -->
             <div class="showcase-panel">
-              <div class="showcase-titlebar">
-                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-                <span class="showcase-wintitle">Settings — Schedules</span>
+              <div class="showcase-ss-popover-wrap">
+                <img src="../assets/screenshots/ss-popover.svg"
+                     alt="Menu bar popover showing two active schedules and recent send activity"
+                     width="350" height="388" loading="lazy">
               </div>
-              <div class="showcase-body" style="padding:14px">
-                <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:10px">
-                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--accent-light);border-bottom:1px solid var(--border)">
-                    <span style="width:8px;height:8px;border-radius:50%;background:#30d158;flex-shrink:0"></span>
-                    <div style="flex:1">
-                      <div style="font-size:12px;font-weight:600">FishingLog</div>
-                      <div style="font-size:10px;color:var(--muted)">3:00 AM · Daily</div>
-                    </div>
-                  </div>
-                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border)">
-                    <span style="width:8px;height:8px;border-radius:50%;background:#30d158;flex-shrink:0"></span>
-                    <div style="flex:1">
-                      <div style="font-size:12px;font-weight:600">XcodeSentinel</div>
-                      <div style="font-size:10px;color:var(--muted)">6:00 AM · Weekdays</div>
-                    </div>
-                  </div>
-                  <div style="display:flex;align-items:center;gap:8px;padding:8px 10px">
-                    <span style="width:8px;height:8px;border-radius:50%;background:var(--subtle);flex-shrink:0"></span>
-                    <div style="flex:1">
-                      <div style="font-size:12px;font-weight:600;color:var(--muted)">DemoKit</div>
-                      <div style="font-size:10px;color:var(--subtle)">Disabled</div>
-                    </div>
-                  </div>
-                </div>
-                <div style="display:flex;gap:6px;margin-bottom:12px">
-                  <div class="mk-btn primary" style="font-size:11px">Add…</div>
-                  <div class="mk-btn secondary" style="font-size:11px">Edit…</div>
-                  <div class="mk-btn secondary" style="font-size:11px">Remove</div>
-                </div>
-                <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 10px">
-                  <div style="display:flex;align-items:center;gap:8px">
-                    <div style="width:28px;height:17px;border-radius:9px;background:var(--accent);flex-shrink:0"></div>
-                    <div>
-                      <div style="font-size:12px;font-weight:600">Prevent screen lock while schedules active</div>
-                      <div style="font-size:10px;color:var(--muted)">Holds a display-sleep assertion overnight</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="showcase-caption">Manage all schedules and configure the screen-lock prevention</div>
+              <div class="showcase-caption">Click the menu bar icon to see and manage your schedules</div>
             </div>
 
-            <!-- Panel 3: Log view -->
+            <!-- Panel 3: Execution log screenshot -->
             <div class="showcase-panel">
-              <div class="showcase-titlebar">
-                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-                <span class="showcase-wintitle">Settings — Log</span>
-              </div>
-              <div class="showcase-body" style="padding:14px">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                  <span style="font-size:11px;color:var(--muted)">6 entries (newest first)</span>
-                  <div class="mk-btn secondary" style="font-size:10px;padding:3px 10px">Clear</div>
-                </div>
-                <table class="mk-log-table">
-                  <tr>
-                    <td class="col-time">03:02</td>
-                    <td class="col-target">FishingLog</td>
-                    <td class="col-msg"><span class="badge-ok">✓ Sent</span></td>
-                  </tr>
-                  <tr>
-                    <td class="col-time">06:01</td>
-                    <td class="col-target">XcodeS…</td>
-                    <td class="col-msg"><span class="badge-ok">✓ Sent</span></td>
-                  </tr>
-                  <tr>
-                    <td class="col-time">22:45</td>
-                    <td class="col-target">DemoKit</td>
-                    <td class="col-msg"><span class="badge-warn">⏳ Deferred</span></td>
-                  </tr>
-                  <tr>
-                    <td class="col-time">14:32</td>
-                    <td class="col-target">FishingLog</td>
-                    <td class="col-msg"><span class="badge-ok">✓ Sent</span></td>
-                  </tr>
-                  <tr>
-                    <td class="col-time">12:01</td>
-                    <td class="col-target">XcodeS…</td>
-                    <td class="col-msg"><span class="badge-err">✗ Window not found</span></td>
-                  </tr>
-                </table>
-              </div>
+              <img src="../assets/screenshots/ss-log.svg"
+                   alt="Settings Log pane showing a table of sent messages with timestamps and status badges"
+                   width="580" height="460" loading="lazy" class="showcase-ss-img">
               <div class="showcase-caption">Full execution log — what was sent, when, and whether it succeeded</div>
             </div>
 
@@ -400,11 +297,11 @@
           <p style="margin-top:20px"><a class="btn secondary" href="getting-started.html">Full setup guide →</a></p>
 
           <!-- Notes -->
-          <h2 style="margin-top:52px">Important Notes</h2>
+          <h2>Important Notes</h2>
           <p class="note">⚠️ <strong>XcodeSentinel does not bypass or extend any usage limit.</strong> It only sends a message you pre-wrote — after the limit has already cleared. Limits still apply normally.</p>
           <p class="note">🎯 <strong>Scope is Xcode only.</strong> The VS Code extension and Claude Code CLI have official auto-continue built in, so they are out of scope for this app.</p>
           <p class="note">🏪 <strong>Not on the Mac App Store.</strong> An app that uses the Accessibility API to drive another app cannot ship in the App Sandbox. Downloads come from GitHub Releases only.</p>
-          <p class="note note-ok">✅ <strong>Developer ID signed &amp; notarized by Apple.</strong> No unsigned binaries. Normal Gatekeeper process.</p>
+          <p class="note">🔑 <strong>v0.1.0 is an unsigned developer preview.</strong> First open: right-click → Open, or after copying run <code>xattr -cr /Applications/XcodeSentinel.app</code> in Terminal. Notarized signed release planned when Apple Developer ID credentials are configured in CI.</p>
 
           <!-- Requirements -->
           <h2>Requirements</h2>

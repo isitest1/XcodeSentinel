@@ -380,6 +380,9 @@ h2 {
   margin-bottom: 28px;
 }
 [lang="ja"] h2 { text-transform: none; }
+/* Prevent mid-word breaks in Japanese h1; .h1-nobreak keeps e.g. "セッションを止めない" intact */
+[lang="ja"] h1 { word-break: keep-all; }
+.h1-nobreak { white-space: nowrap; }
 h3 {
   font-size: 16px;
   font-weight: 700;

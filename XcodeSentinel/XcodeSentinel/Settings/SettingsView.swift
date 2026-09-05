@@ -261,7 +261,8 @@ private struct LogDetailPanel: View {
     var body: some View {
         Group {
             if let entry {
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: 4) {
+                    // Header row — always fully visible
                     HStack(spacing: 6) {
                         Image(systemName: entry.outcome.iconName)
                             .foregroundStyle(entry.outcome.color)
@@ -273,14 +274,16 @@ private struct LogDetailPanel: View {
                             .foregroundStyle(.secondary)
                         Spacer(minLength: 0)
                     }
-                    Text(entry.message)
-                        .font(.caption)
-                        .foregroundStyle(.primary)
-                        .textSelection(.enabled)
-                        .fixedSize(horizontal: false, vertical: true)
+                    // Scrollable message — never truncated regardless of length
+                    ScrollView(.vertical, showsIndicators: true) {
+                        Text(entry.message)
+                            .font(.caption)
+                            .foregroundStyle(.primary)
+                            .textSelection(.enabled)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
                 .padding(10)
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color(NSColor.textBackgroundColor))
                 .clipShape(RoundedRectangle(cornerRadius: 6))
                 .overlay(
@@ -295,7 +298,8 @@ private struct LogDetailPanel: View {
                     .padding(.vertical, 10)
             }
         }
-        .frame(minHeight: 56)
+        // Fixed height: Table gets what's left above; panel always renders fully.
+        .frame(height: 88)
     }
 }
 

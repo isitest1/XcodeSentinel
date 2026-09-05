@@ -18,6 +18,10 @@ permissions:
 jobs:
   release:
     runs-on: macos-15
+    env:
+      # Pre-compute at job level so step if-conditions can use env context
+      # (secrets context in step if-conditions causes workflow validation errors).
+      HAS_CERTS: ${{ secrets.APPLE_DEVELOPER_ID_CERT_BASE64 != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -47,7 +51,7 @@ jobs:
             -srcfolder staging -ov -format UDZO dist/XcodeSentinel.dmg
 
       - name: Sign, notarize and replace DMG (requires secrets)
-        if: ${{ secrets.APPLE_DEVELOPER_ID_CERT_BASE64 != '' }}
+        if: env.HAS_CERTS == 'true'
         env:
           CERT_BASE64: ${{ secrets.APPLE_DEVELOPER_ID_CERT_BASE64 }}
           CERT_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSWORD }}

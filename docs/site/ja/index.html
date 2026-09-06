@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>XcodeSentinel — 寝ている間も、Xcode の Claude にコードを書かせる</title>
-    <meta name="description" content="XcodeSentinel は Xcode の Claude セッションへプロンプトをスケジュール送信。利用量制限が解除された時刻に自動で再開するので、朝起きたらビルドが終わっています。無料・オープンソース。" />
-    <meta name="keywords" content="Xcode Claude, Claude AI, macOS, 自動再開, 利用量制限, スケジュール送信, Claude Agent, iOS開発, Swift, 生産性" />
+    <title>XcodeSentinel — 寝ている間も、Xcode の AI にコードを書かせる</title>
+    <meta name="description" content="XcodeSentinel は Xcode の Claude・GitHub Copilot などの AI パネルへプロンプトをスケジュール送信。利用量制限が解除された時刻に自動で再開するので、朝起きたらビルドが終わっています。無料・オープンソース。" />
+    <meta name="keywords" content="Xcode AI, Xcode Claude, GitHub Copilot Xcode, Codex Xcode, macOS, 自動再開, 利用量制限, スケジュール送信, AIコーディング, iOS開発, Swift, 生産性" />
     <meta name="author" content="isitest1" />
     <link rel="canonical" href="https://isitest1.github.io/XcodeSentinel/ja/" />
     <link rel="alternate" hreflang="ja" href="https://isitest1.github.io/XcodeSentinel/ja/" />
@@ -13,13 +13,13 @@
     <link rel="alternate" hreflang="x-default" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="XcodeSentinel" />
-    <meta property="og:title" content="XcodeSentinel — 寝ている間も、Xcode の Claude にコードを書かせる" />
-    <meta property="og:description" content="利用量制限が解除されたらスケジュール送信で自動再開。朝起きたらビルドが終わっている。無料・オープンソース。" />
+    <meta property="og:title" content="XcodeSentinel — 寝ている間も、Xcode の AI にコードを書かせる" />
+    <meta property="og:description" content="Claude・GitHub Copilot など Xcode の AI が利用量制限で止まったら、スケジュール送信で自動再開。朝起きたらビルドが終わっている。" />
     <meta property="og:url" content="https://isitest1.github.io/XcodeSentinel/ja/" />
     <meta property="og:image" content="https://isitest1.github.io/XcodeSentinel/assets/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="XcodeSentinel — 寝ている間も、Xcode の Claude にコードを書かせる" />
-    <meta name="twitter:description" content="利用量制限リセット後にスケジュール送信で自動再開。無料・オープンソース・macOS 15+。" />
+    <meta name="twitter:title" content="XcodeSentinel — 寝ている間も、Xcode の AI にコードを書かせる" />
+    <meta name="twitter:description" content="Claude・Copilot など Xcode AI の利用量制限リセット後にスケジュール送信で自動再開。無料・オープンソース・macOS 15+。" />
     <link rel="icon" href="../assets/favicon.svg" />
     <link rel="stylesheet" href="../assets/style.css" />
   </head>
@@ -42,8 +42,8 @@
           <!-- Left: text -->
           <div class="hero-text">
             <span class="hero-badge">無料 &amp; オープンソース · macOS 15+</span>
-            <h1>寝ている間も、<em>Xcode の Claude</em> に<wbr>コードを書かせる。</h1>
-            <p class="lead">利用量制限で止まった Claude セッションが、朝起きたら先へ進んでいる。XcodeSentinel はリセット時刻にあなたのプロンプトを自動送信します。</p>
+            <h1>寝ている間も、<em>Xcode の AI</em> に<wbr>コードを書かせる。</h1>
+            <p class="lead">Claude・GitHub Copilot など Xcode の AI が利用量制限で止まっても、朝起きたら先へ進んでいる。XcodeSentinel はリセット時刻にあなたのプロンプトを自動送信します。</p>
             <div class="hero-cta">
               <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest/download/XcodeSentinel.dmg">⬇ macOS 版をダウンロード</a>
               <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel">ソースを見る →</a>
@@ -169,13 +169,13 @@
           <!-- Use-case scenario -->
           <div class="scenario">
             <p class="scenario-quote">
-              夜 11 時に Xcode で Claude の長いコーディングセッションを開始。
+              夜 11 時に Xcode で Claude（または GitHub Copilot）の長いコーディングセッションを開始。
               利用量制限は <em>午前 4:00</em> にリセットされる——でも、その時間は寝ている。
-              XcodeSentinel がなければ、朝 9 時に開いたときに Claude はまだ止まったままです。
+              XcodeSentinel がなければ、朝 9 時に開いたときに AI はまだ止まったままです。
             </p>
             <p class="scenario-resolution">
               <strong>XcodeSentinel なら：</strong>
-              午前 4:10 に送信をスケジュールしておけば、Claude はそこから続きを再開——
+              午前 4:10 に送信をスケジュールしておけば、AI はそこから続きを再開——
               あなたが眠っている間に。
             </p>
           </div>
@@ -192,13 +192,13 @@
             <div class="flow-step">
               <span class="flow-icon">⏱</span>
               <div class="flow-title">スケジュール送信</div>
-              <div class="flow-desc">XcodeSentinel が 30 秒ごとにスケジュールを確認し、設定した時刻に正確にメッセージを Claude に送信します。</div>
+              <div class="flow-desc">XcodeSentinel が 30 秒ごとにスケジュールを確認し、設定した時刻に正確にメッセージを AI パネルへ送信します。</div>
             </div>
             <div class="flow-arrow">→</div>
             <div class="flow-step">
               <span class="flow-icon">🚀</span>
               <div class="flow-title">セッション再開</div>
-              <div class="flow-desc">Claude がメッセージを受け取り、コーディングを継続。macOS 通知、または Webhook 設定時はスマートフォンへもプッシュが届きます。</div>
+              <div class="flow-desc">AI がメッセージを受け取り、コーディングを継続。macOS 通知、または Webhook 設定時はスマートフォンへもプッシュが届きます。</div>
             </div>
           </div>
 
@@ -208,7 +208,7 @@
             <div class="card">
               <span class="card-icon">🗓️</span>
               <b>スケジュール送信</b>
-              <p>指定した時刻に任意のメッセージを Xcode の Claude パネルへ自動入力。毎日・平日のみ・1 回限りの繰り返し設定に対応。スリープ・再起動後も維持されます。</p>
+              <p>指定した時刻に任意のメッセージを Xcode の AI パネル（Claude・GitHub Copilot 等）へ自動入力。毎日・平日のみ・1 回限りの繰り返し設定に対応。スリープ・再起動後も維持されます。</p>
             </div>
             <div class="card">
               <span class="card-icon">📋</span>
@@ -299,7 +299,7 @@
           <!-- Notes -->
           <h2>重要事項</h2>
           <p class="note">⚠️ <strong>XcodeSentinel は利用量制限を回避・突破するものではありません。</strong> あらかじめ書いたメッセージを、制限が解除された後に送信するだけです。制限は通常どおり適用されます。</p>
-          <p class="note">🎯 <strong>対象は Xcode 専用です。</strong> VS Code 拡張や Claude Code CLI には公式の自動継続機能が組み込まれているため、本アプリの対象外です。</p>
+          <p class="note">🎯 <strong>対象は Xcode の AI パネル専用です。</strong> Xcode 内に表示される Claude・GitHub Copilot などのチャットパネルが対象です。Codex CLI・Claude Code CLI・VS Code 拡張はターミナルまたは別エディタで動作するため対象外です（それらには公式の自動継続機能があります）。</p>
           <p class="note">🏪 <strong>Mac App Store では配布していません。</strong> Accessibility API で他アプリを操作するアプリは App Sandbox の制約により Store に出せません。ダウンロードは GitHub Releases のみです。</p>
           <p class="note">🔑 <strong>v0.1.0 は署名なしの開発プレビュー版です。</strong> 初回起動は右クリック → 開く、またはコピー後に Terminal で <code>xattr -cr /Applications/XcodeSentinel.app</code> を実行してください。CI に Apple Developer ID 認証情報を設定すれば、次回以降は notarization 済みのバイナリを配布できます。</p>
 
@@ -307,7 +307,7 @@
           <h2>動作要件</h2>
           <ul>
             <li><strong>macOS 15 (Sequoia)</strong> 以降</li>
-            <li>Xcode に Claude 連携が有効になっていること</li>
+            <li>Xcode に AI 連携が有効になっていること（Claude・GitHub Copilot 等）</li>
             <li>アクセシビリティ権限（何にアクセスするかは <a href="privacy.html">プライバシー</a> ページを参照）</li>
           </ul>
 

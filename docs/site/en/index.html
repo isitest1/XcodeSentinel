@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>XcodeSentinel — Let Claude Agent Keep Coding While You Sleep</title>
-    <meta name="description" content="XcodeSentinel schedules prompts to your Xcode Claude session so it keeps working after your usage limit resets — while you sleep. Free, open source, macOS 15+." />
-    <meta name="keywords" content="Xcode Claude, Claude AI, macOS, auto resume, usage limit, schedule prompt, Claude Agent, Xcode AI, iOS development, Swift, productivity" />
+    <title>XcodeSentinel — Keep Your Xcode AI Coding While You Sleep</title>
+    <meta name="description" content="XcodeSentinel schedules prompts to Claude, GitHub Copilot, or any AI chat panel in Xcode so it keeps working after your usage limit resets — while you sleep. Free, open source, macOS 15+." />
+    <meta name="keywords" content="Xcode AI, Claude Xcode, GitHub Copilot Xcode, Codex Xcode, macOS, auto resume, usage limit, schedule prompt, AI coding assistant, iOS development, Swift, productivity" />
     <meta name="author" content="isitest1" />
     <link rel="canonical" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <link rel="alternate" hreflang="en" href="https://isitest1.github.io/XcodeSentinel/en/" />
@@ -13,13 +13,13 @@
     <link rel="alternate" hreflang="x-default" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="XcodeSentinel" />
-    <meta property="og:title" content="XcodeSentinel — Let Claude Agent Keep Coding While You Sleep" />
-    <meta property="og:description" content="Schedule prompts to your Xcode Claude session so it keeps working after your usage limit resets — while you sleep." />
+    <meta property="og:title" content="XcodeSentinel — Keep Your Xcode AI Coding While You Sleep" />
+    <meta property="og:description" content="Schedule prompts to Claude, Copilot, or any AI in Xcode so it keeps working after your usage limit resets — while you sleep." />
     <meta property="og:url" content="https://isitest1.github.io/XcodeSentinel/en/" />
     <meta property="og:image" content="https://isitest1.github.io/XcodeSentinel/assets/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="XcodeSentinel — Let Claude Agent Keep Coding While You Sleep" />
-    <meta name="twitter:description" content="Schedule prompts to Xcode Claude so it resumes after your usage limit resets. Free, open source, macOS 15+." />
+    <meta name="twitter:title" content="XcodeSentinel — Keep Your Xcode AI Coding While You Sleep" />
+    <meta name="twitter:description" content="Schedule prompts to Claude, Copilot, or any AI in Xcode so it resumes after limits reset. Free, open source, macOS 15+." />
     <link rel="icon" href="../assets/favicon.svg" />
     <link rel="stylesheet" href="../assets/style.css" />
   </head>
@@ -42,8 +42,8 @@
           <!-- Left: text -->
           <div class="hero-text">
             <span class="hero-badge" data-i18n="index.heroBadge">Free &amp; Open Source · macOS 15+</span>
-            <h1>Let Claude Agent<br><em>keep coding</em> while you sleep.</h1>
-            <p class="lead">Claude in Xcode stops when you hit your usage limit — and stays frozen until you're back. XcodeSentinel schedules a prompt for when the limit resets, so Claude picks up exactly where it left off.</p>
+            <h1>Keep your <em>Xcode AI</em><br>coding while you sleep.</h1>
+            <p class="lead">Claude, GitHub Copilot, and other AI assistants in Xcode stop when they hit a usage limit — and stay frozen until you're back. XcodeSentinel schedules a prompt for when the limit resets, so your AI picks up exactly where it left off.</p>
             <div class="hero-cta">
               <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest/download/XcodeSentinel.dmg">⬇ Download for macOS</a>
               <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel">View Source →</a>
@@ -169,7 +169,7 @@
           <!-- Use-case scenario -->
           <div class="scenario">
             <p class="scenario-quote">
-              You kick off a long Claude coding session in Xcode at 11&nbsp;PM.
+              You kick off a long Claude (or Copilot) coding session in Xcode at 11&nbsp;PM.
               The usage limit resets at <em>4:00 AM</em> — but you'll be asleep.
               Without XcodeSentinel, the session sits frozen until 9&nbsp;AM when you finally open your laptop.
             </p>
@@ -186,19 +186,19 @@
             <div class="flow-step">
               <span class="flow-icon">🛑</span>
               <div class="flow-title">Session Stalls</div>
-              <div class="flow-desc">Claude hits the 5-hour usage limit, needs "Continue", or you simply want a message sent at a future time.</div>
+              <div class="flow-desc">Your AI hits the usage limit, needs "Continue", or you simply want a message sent at a future time.</div>
             </div>
             <div class="flow-arrow">→</div>
             <div class="flow-step">
               <span class="flow-icon">⏱</span>
               <div class="flow-title">Scheduled Send</div>
-              <div class="flow-desc">XcodeSentinel checks your schedules every 30 seconds and sends your message to the Claude input at the exact time you set.</div>
+              <div class="flow-desc">XcodeSentinel checks your schedules every 30 seconds and sends your message to the AI panel at the exact time you set.</div>
             </div>
             <div class="flow-arrow">→</div>
             <div class="flow-step">
               <span class="flow-icon">🚀</span>
               <div class="flow-title">Session Resumes</div>
-              <div class="flow-desc">Claude receives the message and continues coding. You get a macOS notification — or a phone push if you configure a webhook.</div>
+              <div class="flow-desc">The AI receives the message and continues coding. You get a macOS notification — or a phone push if you configure a webhook.</div>
             </div>
           </div>
 
@@ -208,7 +208,7 @@
             <div class="card">
               <span class="card-icon">🗓️</span>
               <b>Scheduled Sends</b>
-              <p>Set any message to be typed into your Xcode Claude panel at a specific time. Repeat daily, on weekdays, or just once. Survives sleep and restarts.</p>
+              <p>Set any message to be typed into your Xcode AI panel (Claude, GitHub Copilot, etc.) at a specific time. Repeat daily, on weekdays, or just once. Survives sleep and restarts.</p>
             </div>
             <div class="card">
               <span class="card-icon">📋</span>
@@ -299,7 +299,7 @@
           <!-- Notes -->
           <h2>Important Notes</h2>
           <p class="note">⚠️ <strong>XcodeSentinel does not bypass or extend any usage limit.</strong> It only sends a message you pre-wrote — after the limit has already cleared. Limits still apply normally.</p>
-          <p class="note">🎯 <strong>Scope is Xcode only.</strong> The VS Code extension and Claude Code CLI have official auto-continue built in, so they are out of scope for this app.</p>
+          <p class="note">🎯 <strong>Scope is Xcode AI panels only.</strong> This app works with any AI chat panel inside Xcode (Claude, GitHub Copilot, etc.) that exposes an Accessibility API text input. Terminal-based tools (Codex CLI, Claude Code CLI) and VS Code extensions are out of scope — those have their own auto-continue features.</p>
           <p class="note">🏪 <strong>Not on the Mac App Store.</strong> An app that uses the Accessibility API to drive another app cannot ship in the App Sandbox. Downloads come from GitHub Releases only.</p>
           <p class="note">🔑 <strong>v0.1.0 is an unsigned developer preview.</strong> First open: right-click → Open, or after copying run <code>xattr -cr /Applications/XcodeSentinel.app</code> in Terminal. Notarized signed release planned when Apple Developer ID credentials are configured in CI.</p>
 
@@ -307,7 +307,7 @@
           <h2>Requirements</h2>
           <ul>
             <li><strong>macOS 15 (Sequoia)</strong> or later</li>
-            <li>Xcode with the built-in Claude integration enabled</li>
+            <li>Xcode with an AI integration enabled (Claude, GitHub Copilot, etc.)</li>
             <li>Accessibility permission (see <a href="privacy.html">Privacy</a> for what's accessed)</li>
           </ul>
 

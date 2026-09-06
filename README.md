@@ -1,11 +1,11 @@
 # XcodeSentinel
 
-**Let Claude Agent keep coding while you sleep.**
+**Keep your Xcode AI coding while you sleep.**
 
-Claude in Xcode can stop when you hit your usage limit  
-or when it is waiting for your next instruction.
+Claude, GitHub Copilot, and other AI assistants in Xcode stop when you hit a usage limit  
+or when they're waiting for your next instruction.
 
-XcodeSentinel lets you schedule prompts to your Xcode Claude session —  
+XcodeSentinel lets you schedule prompts to any AI chat panel in Xcode —  
 so you can start a long coding session before bed and let it continue  
 after your usage window resets.
 
@@ -17,17 +17,17 @@ Free. Open source. No cloud. No subscription.
 
 ## The Problem
 
-You kick off a long Claude coding session in Xcode at 11 PM.  
+You kick off a long Claude (or Copilot) coding session in Xcode at 11 PM.  
 The 5-hour usage limit resets at 4 AM — but you'll be asleep.  
 Without help, the session sits frozen until you open your laptop in the morning.
 
-Same thing happens when Claude is waiting for a "Continue" — and you're not there to click it.
+Same thing happens when the AI is waiting for a "Continue" — and you're not there to click it.
 
 ## What XcodeSentinel Does
 
 Schedule a message (e.g. `"Please continue."`) for 4:10 AM.  
-At that time, XcodeSentinel types it into the Xcode Claude panel and sends it.  
-Claude resumes. You wake up to a finished build.
+At that time, XcodeSentinel types it into the AI panel in Xcode and sends it.  
+The session resumes. You wake up to a finished build.
 
 ---
 
@@ -42,7 +42,7 @@ Claude resumes. You wake up to a finished build.
 ## Requirements
 
 - macOS 15 (Sequoia) or later
-- Xcode with the built-in Claude integration
+- Xcode with an AI integration enabled (Claude, GitHub Copilot, etc.)
 - Accessibility permission — no Screen Recording needed
 
 ## Install
@@ -54,12 +54,14 @@ Claude resumes. You wake up to a finished build.
 XcodeSentinel lives in the menu bar — no Dock icon.  
 Full setup guide: [isitest1.github.io/XcodeSentinel/en/getting-started.html](https://isitest1.github.io/XcodeSentinel/en/getting-started.html)
 
-## Why Xcode Only?
+## Why Xcode Panels Only?
 
-The VS Code extension and Claude Code CLI already have official auto-continue built in  
-(`/config` → "Continue automatically at usage limit", enabled by default).  
-Xcode's Claude integration is a separate Apple IDE feature — those settings don't apply there.  
-That gap is what this app fills.
+This app works with any AI chat panel **inside Xcode** (Claude, GitHub Copilot, etc.)
+that exposes an Accessibility API text input.
+Detection patterns live in `Patterns.json` and can be extended for any AI integration.
+
+Terminal-based tools (Codex CLI, Claude Code CLI) and VS Code extensions are out of scope —
+those run outside Xcode and have their own auto-continue features built in.
 
 ## Limitations
 

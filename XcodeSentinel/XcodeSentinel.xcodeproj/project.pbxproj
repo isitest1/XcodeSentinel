@@ -28,18 +28,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		99D7CB8B3045873D002BF7A8 /* XcodeSentinel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XcodeSentinel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		99D7CB8B3045873D002BF7A8 /* xcode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xcode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D7CB983045873E002BF7A8 /* XcodeSentinelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodeSentinelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D7CBA23045873E002BF7A8 /* XcodeSentinelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodeSentinelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		99D7CBDC3045A78E002BF7A8 /* Exceptions for "XcodeSentinel" folder in "XcodeSentinel" target */ = {
+		99D7CBDC3045A78E002BF7A8 /* Exceptions for "XcodeSentinel" folder in "xcode" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 99D7CB8A3045873D002BF7A8 /* XcodeSentinel */;
+			target = 99D7CB8A3045873D002BF7A8 /* xcode */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -47,7 +47,7 @@
 		99D7CB8D3045873D002BF7A8 /* XcodeSentinel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				99D7CBDC3045A78E002BF7A8 /* Exceptions for "XcodeSentinel" folder in "XcodeSentinel" target */,
+				99D7CBDC3045A78E002BF7A8 /* Exceptions for "XcodeSentinel" folder in "xcode" target */,
 			);
 			path = XcodeSentinel;
 			sourceTree = "<group>";
@@ -104,7 +104,7 @@
 		99D7CB8C3045873D002BF7A8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				99D7CB8B3045873D002BF7A8 /* XcodeSentinel.app */,
+				99D7CB8B3045873D002BF7A8 /* xcode.app */,
 				99D7CB983045873E002BF7A8 /* XcodeSentinelTests.xctest */,
 				99D7CBA23045873E002BF7A8 /* XcodeSentinelUITests.xctest */,
 			);
@@ -121,9 +121,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		99D7CB8A3045873D002BF7A8 /* XcodeSentinel */ = {
+		99D7CB8A3045873D002BF7A8 /* xcode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 99D7CBAC3045873E002BF7A8 /* Build configuration list for PBXNativeTarget "XcodeSentinel" */;
+			buildConfigurationList = 99D7CBAC3045873E002BF7A8 /* Build configuration list for PBXNativeTarget "xcode" */;
 			buildPhases = (
 				99D7CB873045873D002BF7A8 /* Sources */,
 				99D7CB883045873D002BF7A8 /* Frameworks */,
@@ -136,12 +136,12 @@
 			fileSystemSynchronizedGroups = (
 				99D7CB8D3045873D002BF7A8 /* XcodeSentinel */,
 			);
-			name = XcodeSentinel;
+			name = xcode;
 			packageProductDependencies = (
 				99D7CBDF3046400E002BF7A8 /* SentinelCore */,
 			);
 			productName = XcodeSentinel;
-			productReference = 99D7CB8B3045873D002BF7A8 /* XcodeSentinel.app */;
+			productReference = 99D7CB8B3045873D002BF7A8 /* xcode.app */;
 			productType = "com.apple.product-type.application";
 		};
 		99D7CB973045873E002BF7A8 /* XcodeSentinelTests */ = {
@@ -230,7 +230,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				99D7CB8A3045873D002BF7A8 /* XcodeSentinel */,
+				99D7CB8A3045873D002BF7A8 /* xcode */,
 				99D7CB973045873E002BF7A8 /* XcodeSentinelTests */,
 				99D7CBA13045873E002BF7A8 /* XcodeSentinelUITests */,
 			);
@@ -288,12 +288,12 @@
 /* Begin PBXTargetDependency section */
 		99D7CB9A3045873E002BF7A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 99D7CB8A3045873D002BF7A8 /* XcodeSentinel */;
+			target = 99D7CB8A3045873D002BF7A8 /* xcode */;
 			targetProxy = 99D7CB993045873E002BF7A8 /* PBXContainerItemProxy */;
 		};
 		99D7CBA43045873E002BF7A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 99D7CB8A3045873D002BF7A8 /* XcodeSentinel */;
+			target = 99D7CB8A3045873D002BF7A8 /* xcode */;
 			targetProxy = 99D7CBA33045873E002BF7A8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -581,7 +581,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		99D7CBAC3045873E002BF7A8 /* Build configuration list for PBXNativeTarget "XcodeSentinel" */ = {
+		99D7CBAC3045873E002BF7A8 /* Build configuration list for PBXNativeTarget "xcode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				99D7CBAD3045873E002BF7A8 /* Debug */,

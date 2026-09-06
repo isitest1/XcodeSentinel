@@ -1,109 +1,107 @@
 # XcodeSentinel
 
-macOS のメニューバーに常駐し、**Xcode に組み込まれた Claude のコーディングセッションへ、あらかじめ設定した日時にメッセージを自動送信する**スケジューラです。
+**Let Claude Agent keep coding while you sleep.**
 
-外出中・就寝中に Claude が利用量制限で止まり、制限が解除されても何時間も放置される問題を解決します。「午前 3 時に "続けて" を送る」を設定しておくだけで、翌朝には作業が進んでいます。
+Claude in Xcode can stop when you hit your usage limit  
+or when it is waiting for your next instruction.
 
-> **これは Anthropic および Apple の公式製品ではありません。**
+XcodeSentinel lets you schedule prompts to your Xcode Claude session —  
+so you can start a long coding session before bed and let it continue  
+after your usage window resets.
+
+Free. Open source. No cloud. No subscription.
+
+[⬇ Download .dmg](https://github.com/isitest1/XcodeSentinel/releases/latest/download/XcodeSentinel.dmg) · [Website](https://isitest1.github.io/XcodeSentinel/en/) · [Getting Started](https://isitest1.github.io/XcodeSentinel/en/getting-started.html)
 
 ---
 
-## 1. 何を解決するか
+## The Problem
 
-Xcode で Claude にコードを書かせていると、次のような理由で作業が止まります。
+You kick off a long Claude coding session in Xcode at 11 PM.  
+The 5-hour usage limit resets at 4 AM — but you'll be asleep.  
+Without help, the session sits frozen until you open your laptop in the morning.
 
-- 5 時間のセッション利用量制限に達した
-- 週次の利用量上限に達した
-- 出力が長くて「続ける」待ちになっている
+Same thing happens when Claude is waiting for a "Continue" — and you're not there to click it.
 
-外出中・就寝中はこの停止に気づけず、制限が解除されてからも何時間も止まったままになります。
+## What XcodeSentinel Does
 
-**XcodeSentinel のアプローチ：** 制限が解除されそうな時刻（例: 就寝前から 5 時間後 = 午前 3 時）を設定しておくと、その時刻に Xcode の Claude 入力欄へ指定のメッセージを自動送信します。送信成功・失敗・延期は実行ログに記録され、Webhook 経由でスマートフォンへも通知できます。
+Schedule a message (e.g. `"Please continue."`) for 4:10 AM.  
+At that time, XcodeSentinel types it into the Xcode Claude panel and sends it.  
+Claude resumes. You wake up to a finished build.
 
-## 2. なぜ Xcode 限定なのか
+---
 
-**対象は Xcode の Claude 連携のみです。VS Code 拡張やターミナルの Claude Code は対象外です。**
+## Features
 
-Claude Code には既に公式の自動継続機能があります（`/config` の "Continue automatically at usage limit"、既定で有効）。VS Code 拡張も Claude Code を基盤とするためこの恩恵を受けます。
+- **Scheduled sends** — any message, any time, repeat daily / weekdays / once
+- **Screen-lock aware** — holds a display assertion so scheduled sends fire overnight
+- **Execution log** — every attempt logged with timestamp and outcome (Sent / Failed / Deferred)
+- **Away notifications** — Webhook support with ntfy / Pushover / Discord / Slack presets
+- **AX Inspector** — dump any window's Accessibility tree to JSON for bug reports and fixtures
 
-一方、**Xcode の Claude 連携は Apple の IDE 機能で、Claude Code とは別系統**です。上記の自動継続は適用されません。ここに機能上の空白があり、それがこのアプリの存在理由です。
+## Requirements
 
-なお Claude Code の自動継続も万能ではなく、以下は自動では解決されません（将来的な検討事項）。
+- macOS 15 (Sequoia) or later
+- Xcode with the built-in Claude integration
+- Accessibility permission — no Screen Recording needed
 
-- 週次制限（自動継続はセッション制限のみ対象）
-- 権限確認・ツール実行の承認待ち
-- Claude が質問を投げて応答待ちになった場合
-- 異常終了
-- 外出先への通知
+## Install
 
-## 3. できないこと（免責）
+1. [Download the .dmg](https://github.com/isitest1/XcodeSentinel/releases/latest/download/XcodeSentinel.dmg)
+2. Drag **XcodeSentinel** to Applications and launch it
+3. Grant **Accessibility** permission in System Settings → Privacy & Security → Accessibility
 
-**本アプリは利用量制限を回避・突破するものではありません。** 制限が解除されたあとに、ユーザー自身の既存セッションを再開する補助ツールです。制限中に何かを送り続けることはしません。
+XcodeSentinel lives in the menu bar — no Dock icon.  
+Full setup guide: [isitest1.github.io/XcodeSentinel/en/getting-started.html](https://isitest1.github.io/XcodeSentinel/en/getting-started.html)
 
-- 権限確認・Claude からの質問には**自動応答しません**（通知のみ）。
-- 状態が判別できないときは**何も送信しません**（通知のみ）。
-- チャット本文やソースコードを外部へ送信することはありません（通知は対象名・状態・時刻のみ）。
+## Why Xcode Only?
 
-## 4. 必要な権限
+The VS Code extension and Claude Code CLI already have official auto-continue built in  
+(`/config` → "Continue automatically at usage limit", enabled by default).  
+Xcode's Claude integration is a separate Apple IDE feature — those settings don't apply there.  
+That gap is what this app fills.
 
-| 権限 | 用途 |
+## Limitations
+
+**This app does not bypass or extend any usage limit.**  
+It only sends a pre-written message after the limit has already cleared.
+
+- Does not auto-respond to permission prompts or Claude's questions — notification only
+- Does not send anything when the session state is unclear — notification only
+- Never transmits chat text or source code to any external service
+
+## Why Not on the Mac App Store?
+
+An app that drives another app via the Accessibility API cannot run inside the App Sandbox.  
+Distribution is via GitHub Releases only — Developer ID signed and notarized.
+
+## If Detection Breaks After an Xcode Update
+
+Xcode's Accessibility tree structure is undocumented and can change with any update.
+
+1. Open the built-in **AX Inspector** and export the window tree to JSON
+2. File a [GitHub Issue](https://github.com/isitest1/XcodeSentinel/issues) with the JSON attached — check for project names / paths first
+3. Detection patterns live in `Patterns.json` — many fixes don't require a rebuild
+
+## Development
+
+| Work | Where |
 |---|---|
-| アクセシビリティ | Xcode ウィンドウ内の Claude パネルの状態を読み取り、入力欄への文字入力と送信ボタンの押下を行うため |
+| Edit code, `SentinelCore` build + tests, site preview | VS Code Dev Container (Linux) |
+| App build, run, AX testing, signing, DMG | Host macOS (Xcode) |
 
-- 画面収録権限は**使用しません**（OCR やスクリーンショット解析には頼りません）。
-- 読み取る内容・送信する内容・送信しない内容の詳細は [`docs/`](docs/) と公開サイトの privacy ページに記載します。
-
-## 5. インストール
-
-Developer ID 署名 + notarization 済みの DMG を [GitHub Releases](../../releases/latest) で配布します（App Store では配布しません。理由は次項）。
-
-初回起動時の Gatekeeper の扱いと詳細な手順は[公開サイトの getting-started](https://isitest1.github.io/XcodeSentinel/en/getting-started.html) を参照してください。
-
-## 6. なぜ Mac App Store で配布しないのか
-
-本アプリは他アプリ（Xcode）をアクセシビリティ API で操作します。App Sandbox の制約により、この種のアプリは Mac App Store では配布できません。配布と告知は GitHub Releases と公開サイトで完結させます。
-
-## 7. Xcode 更新で検出が壊れたら
-
-Xcode 内 Claude パネルのアクセシビリティ構造は非公開仕様で、Xcode の更新で変わり得ます。検出が壊れた場合:
-
-1. アプリ内の **AX Inspector** で対象ウィンドウのツリーを JSON エクスポートする
-2. その JSON を添えて Issue を作成する（実在のプロジェクト名やパスが含まれないことを確認してください）
-3. 検出パターンは `Patterns.json`（設定画面の Detection タブから確認可）に外出しされているため、多くの場合は再ビルドなしで対応できます
-
-## 8. 開発環境
-
-| 作業 | 場所 |
-|---|---|
-| コード編集、`SentinelCore` のビルド・テスト、公開サイトのプレビュー、ドキュメント執筆 | VS Code Dev Container（Linux） |
-| `XcodeSentinel/`（SwiftUI / AppKit / アクセシビリティ）のビルド・実行・実機確認、署名・notarization・DMG 作成 | ホストの macOS（Xcode） |
-
-**Dev Container は Linux コンテナのため、macOS アプリはビルドできません。** これは原理的な制約です。詳細は [`docs/development.md`](docs/development.md)。
+The Dev Container is a Linux container — macOS apps cannot be built inside it by design.  
+`SentinelCore` (pure logic, no macOS dependencies) is tested on Linux in CI.  
+See [docs/development.md](docs/development.md).
 
 ```sh
-# Dev Container 内
-swift build --package-path Packages/SentinelCore
-swift test  --package-path Packages/SentinelCore --parallel
-python3 -m http.server 8080 --directory docs/site   # 公開サイトのプレビュー
+# Inside Dev Container
+swift test --package-path Packages/SentinelCore --parallel
+python3 -m http.server 8080 --directory docs/site   # site preview
 ```
 
-## 9. リポジトリ構成
+## License
 
-```
-Packages/SentinelCore/   macOS 非依存のロジック（Linux でビルド・テスト可）
-XcodeSentinel/           macOS 専用アプリ（ホストの Xcode でのみビルド）
-docs/                    設計・運用ドキュメント（日本語）
-docs/site/               公開サイト（GitHub Pages、英語 / 日本語）
-.github/workflows/       CI（Linux: SentinelCore テスト、macOS: アプリビルド）
-```
+MIT — see [LICENSE](LICENSE).
 
-## 10. 公開サイト
-
-App Store で配布しない以上、公開サイトが唯一の入口です。配布・使い方・プライバシー説明はすべてサイトが担います。
-
-- サイト: https://isitest1.github.io/XcodeSentinel/
-- 作者の他のプロジェクト: https://isitest1.github.io/portfolio-hub/ja
-
-## 11. ライセンス
-
-MIT License（[`LICENSE`](LICENSE)）。
+> Not an official Anthropic or Apple product.

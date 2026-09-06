@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>XcodeSentinel — Xcode の Claude セッションを止めない</title>
-    <meta name="description" content="Xcode 内の Claude コーディングセッションを監視し、停止したら自動で再開する macOS メニューバーアプリ。無料・オープンソース。" />
-    <meta name="keywords" content="Xcode, Claude, AIコーディング, macOS, メニューバー, 自動再開, 利用量制限, iOS開発, Swift, 生産性" />
+    <title>XcodeSentinel — 寝ている間も、Xcode の Claude にコードを書かせる</title>
+    <meta name="description" content="XcodeSentinel は Xcode の Claude セッションへプロンプトをスケジュール送信。利用量制限が解除された時刻に自動で再開するので、朝起きたらビルドが終わっています。無料・オープンソース。" />
+    <meta name="keywords" content="Xcode Claude, Claude AI, macOS, 自動再開, 利用量制限, スケジュール送信, Claude Agent, iOS開発, Swift, 生産性" />
     <meta name="author" content="isitest1" />
     <link rel="canonical" href="https://isitest1.github.io/XcodeSentinel/ja/" />
     <link rel="alternate" hreflang="ja" href="https://isitest1.github.io/XcodeSentinel/ja/" />
@@ -13,13 +13,13 @@
     <link rel="alternate" hreflang="x-default" href="https://isitest1.github.io/XcodeSentinel/en/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="XcodeSentinel" />
-    <meta property="og:title" content="XcodeSentinel — Xcode の Claude セッションを止めない" />
-    <meta property="og:description" content="Xcode 内の Claude コーディングセッションを監視し、停止したら自動で再開する macOS メニューバーアプリ。" />
+    <meta property="og:title" content="XcodeSentinel — 寝ている間も、Xcode の Claude にコードを書かせる" />
+    <meta property="og:description" content="利用量制限が解除されたらスケジュール送信で自動再開。朝起きたらビルドが終わっている。無料・オープンソース。" />
     <meta property="og:url" content="https://isitest1.github.io/XcodeSentinel/ja/" />
     <meta property="og:image" content="https://isitest1.github.io/XcodeSentinel/assets/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="XcodeSentinel — Xcode の Claude セッションを止めない" />
-    <meta name="twitter:description" content="Xcode の Claude セッションを自動で再開。無料・オープンソース・macOS 15+。" />
+    <meta name="twitter:title" content="XcodeSentinel — 寝ている間も、Xcode の Claude にコードを書かせる" />
+    <meta name="twitter:description" content="利用量制限リセット後にスケジュール送信で自動再開。無料・オープンソース・macOS 15+。" />
     <link rel="icon" href="../assets/favicon.svg" />
     <link rel="stylesheet" href="../assets/style.css" />
   </head>
@@ -42,10 +42,10 @@
           <!-- Left: text -->
           <div class="hero-text">
             <span class="hero-badge">無料 &amp; オープンソース · macOS 15+</span>
-            <h1><em>Xcode の Claude</em><wbr> <span class="h1-nobreak">セッションを止めない</span></h1>
-            <p class="lead">Mac を離れても、戻ってきたらビルドが完了している——止まったまま放置されない。XcodeSentinel がスケジュール送信でセッションを前進させ続けます。</p>
+            <h1>寝ている間も、<em>Xcode の Claude</em> に<wbr>コードを書かせる。</h1>
+            <p class="lead">利用量制限で止まった Claude セッションが、朝起きたら先へ進んでいる。XcodeSentinel はリセット時刻にあなたのプロンプトを自動送信します。</p>
             <div class="hero-cta">
-              <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest">⬇ macOS 版をダウンロード</a>
+              <a class="btn-hero" href="https://github.com/isitest1/XcodeSentinel/releases/latest/download/XcodeSentinel.dmg">⬇ macOS 版をダウンロード</a>
               <a class="btn-ghost" href="https://github.com/isitest1/XcodeSentinel">ソースを見る →</a>
             </div>
             <p class="hero-meta">macOS 15 以降 · オープンソース · 無料 · v0.1.0 開発プレビュー</p>
@@ -163,7 +163,7 @@
               <p>無料・オープンソース・Developer ID 署名済みです。</p>
               <p style="font-size:0.82rem;color:var(--muted);margin-top:4px">macOS 15 (Sequoia) 以降が必要です</p>
             </div>
-            <a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest">⬇ 最新版をダウンロード</a>
+            <a class="btn" href="https://github.com/isitest1/XcodeSentinel/releases/latest/download/XcodeSentinel.dmg">⬇ .dmg をダウンロード</a>
           </div>
 
           <!-- Use-case scenario -->

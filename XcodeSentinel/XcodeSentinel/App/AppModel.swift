@@ -3,6 +3,7 @@ import Foundation
 import IOKit.pwr_mgt
 import OSLog
 import Observation
+import ServiceManagement
 import SwiftUI
 import UserNotifications
 import SentinelCore
@@ -116,6 +117,29 @@ final class AppModel {
         }
     }
 
+    /// Whether the app is registered to launch automatically at login via SMAppService.
+    /// Setting this calls register() or unregister(); the stored value reflects the
+    /// desired intent (optimistic). If the OS call fails the value is reverted.
+    var launchAtLogin: Bool = false {
+        didSet {
+            guard oldValue != launchAtLogin else { return }
+            do {
+                if launchAtLogin {
+                    try SMAppService.mainApp.register()
+                } else {
+                    try SMAppService.mainApp.unregister()
+                }
+                launchAtLoginStatus = SMAppService.mainApp.status
+            } catch {
+                launchAtLogin = oldValue  // revert
+                launchAtLoginStatus = SMAppService.mainApp.status
+            }
+        }
+    }
+
+    /// Live status from SMAppService — used to show "needs approval" hint in UI.
+    private(set) var launchAtLoginStatus: SMAppService.Status = .notRegistered
+
     var menuBarSymbolName: String {
         schedules.contains { $0.isEnabled && $0.sendAt > Date() }
             ? "clock.badge.checkmark" : "clock"
@@ -148,6 +172,9 @@ final class AppModel {
         self.isAccessibilityTrusted = AccessibilityPermission.isTrusted
         self.notifier = Notifier(webhook: webhook.sender)
         self.preventScreenLock = UserDefaults.standard.bool(forKey: "preventScreenLock")
+        let svcStatus = SMAppService.mainApp.status
+        self.launchAtLogin = svcStatus == .enabled
+        self.launchAtLoginStatus = svcStatus
         loadLog()
 
         setupScreenLockObservers()

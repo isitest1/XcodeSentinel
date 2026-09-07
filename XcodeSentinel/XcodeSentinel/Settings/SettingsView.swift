@@ -1,3 +1,4 @@
+import ServiceManagement
 import SwiftUI
 import SentinelCore
 
@@ -6,6 +7,8 @@ struct SettingsView: View {
 
     var body: some View {
         TabView {
+            GeneralPane(model: model)
+                .tabItem { Label("General", systemImage: "gearshape") }
             SchedulesPane(model: model)
                 .tabItem { Label("Schedules", systemImage: "clock") }
             NotificationsPane(model: model)
@@ -14,6 +17,49 @@ struct SettingsView: View {
                 .tabItem { Label("Log", systemImage: "list.bullet.rectangle") }
         }
         .frame(width: 520, height: 480)
+    }
+}
+
+// MARK: - General pane
+
+private struct GeneralPane: View {
+    @Bindable var model: AppModel
+
+    var body: some View {
+        Form {
+            Section {
+                Toggle(isOn: $model.launchAtLogin) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Launch at Login")
+                            .font(.callout)
+                        Text("Automatically start XcodeSentinel when you log in to your Mac.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+
+                if model.launchAtLoginStatus == .requiresApproval {
+                    HStack(spacing: 6) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundStyle(.yellow)
+                            .font(.caption)
+                        Text("Waiting for approval. Open System Settings › General › Login Items & Extensions and enable XcodeSentinel.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Button("Open…") {
+                            SMAppService.openSystemSettingsLoginItems()
+                        }
+                        .font(.caption)
+                        .buttonStyle(.link)
+                    }
+                }
+            } header: {
+                Text("Startup")
+            }
+        }
+        .padding()
     }
 }
 

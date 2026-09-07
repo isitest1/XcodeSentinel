@@ -68,8 +68,13 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
 
           APP=staging/XcodeSentinel.app
+          # Find the imported Developer ID Application identity by fingerprint
+          # (more reliable than matching by name substring).
+          IDENTITY=$(security find-identity -v -p codesigning build.keychain \
+            | grep "Developer ID Application" | head -1 | awk '{print $2}')
+          echo "Signing with identity: $IDENTITY"
           codesign --force --deep --options runtime \
-            --sign "Developer ID Application: $TEAM_ID" "$APP"
+            --sign "$IDENTITY" "$APP"
           ditto -c -k --keepParent "$APP" XcodeSentinel.zip
           xcrun notarytool submit XcodeSentinel.zip \
             --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" \

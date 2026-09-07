@@ -166,22 +166,23 @@ public struct ResumeController {
     // MARK: - AX element location (verified against real Xcode AX dump 2026-08-31)
 
     private static func findChatInput(in window: AXUIElement) -> AXUIElement? {
-        // Strategy 1: Locate the AXGroup that is the Claude chat container:
+        // Locate the AXGroup that is the Claude chat container:
         // - has an AXScrollArea child containing AXOpaqueProviderGroup (message history)
         // - AND has at least one AXUnknown direct child (the text input)
         // The second requirement distinguishes Claude's panel from other AXGroups
         // (e.g. the Project Navigator list) that also contain AXOpaqueProviderGroup.
         if let chatGroup = findChatGroup(in: window),
            let input = findInputInChatGroup(chatGroup) {
-            log.info("findChatInput: strategy 1 (chat group) succeeded")
+            log.info("findChatInput: chat group strategy succeeded")
             return input
         }
-        // Strategy 2: Fallback for future Xcode versions that may expose a typed field.
-        log.warning("findChatInput: strategy 1 failed — falling back to AXTextArea/AXTextField search")
-        return findFirst(in: window, matching: { element in
-            guard let role = Self.string(element, kAXRoleAttribute) else { return false }
-            return role == "AXTextArea" || role == "AXTextField"
-        })
+        // Do NOT fall back to searching for any AXTextArea/AXTextField in the window.
+        // That risks matching Xcode's own filter/search fields (e.g. the TARGETS list
+        // filter box) and sending keystrokes or clicks to them, which can corrupt the
+        // Xcode UI or cause a crash. If we can't positively identify the Claude panel,
+        // fail safely and return nil.
+        log.warning("findChatInput: Claude chat group not found — returning nil (Claude panel may not be open)")
+        return nil
     }
 
     /// Returns the AXGroup that is the Claude chat container. It must satisfy

@@ -35,7 +35,7 @@ jobs:
         run: |
           xcodebuild \
             -project XcodeSentinel/XcodeSentinel.xcodeproj \
-            -scheme XcodeSentinel \
+            -scheme xcode \
             -configuration Release \
             -destination 'platform=macOS' \
             CODE_SIGNING_ALLOWED=NO \
@@ -45,7 +45,7 @@ jobs:
       - name: Create unsigned DMG (always)
         run: |
           mkdir -p dist staging
-          cp -R /tmp/xcs-install/Applications/XcodeSentinel.app staging/
+          cp -R /tmp/xcs-install/Applications/xcode.app staging/XcodeSentinel.app
           ln -sf /Applications staging/Applications
           hdiutil create -volname XcodeSentinel \
             -srcfolder staging -ov -format UDZO dist/XcodeSentinel.dmg

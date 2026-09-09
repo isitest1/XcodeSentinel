@@ -101,7 +101,7 @@
     var portfolioUrl = t(dict, "footer.portfolioUrl") || "https://isitest1.github.io/portfolio-hub";
     var portfolioLabel = t(dict, "footer.portfolio") || "Author's other projects";
     var contactLabel = t(dict, "footer.contact") || "Contact";
-    var contactEmail = "kouhei10@gmail.com";
+    var contactEmail = "support@margheritaworks.com";
     var disclaimer = t(dict, "footer.disclaimer") || "";
 
     var footer = document.getElementById("site-footer");
@@ -165,7 +165,7 @@
       "author": {
         "@type": "Person",
         "name": "isitest1",
-        "email": "kouhei10@gmail.com",
+        "email": "support@margheritaworks.com",
         "url": "https://isitest1.github.io/portfolio-hub"
       },
       "license": "https://github.com/isitest1/XcodeSentinel/blob/main/LICENSE"

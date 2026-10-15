@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://isitest1.github.io/XcodeSentinel/sitemap.xml
+Sitemap: https://xcode-sentinel.margheritaworks.com/sitemap.xml
